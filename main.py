@@ -2,22 +2,69 @@ import pygame
 import os
 from Image2 import Image
 from character import Character
-from graphic_elements import Graphic_elements*
+from graphic_elements import Graphic_elements
+from matrix import create_blocks
 
 pygame.init()
 
 screen = pygame.display.set_mode((1080, 720))
 
-background = Graphic_elements(0,0,1080,720,"\\image\\phone.png")
-buttonplay = Graphic_elements(700, 50, 180, 86, "\\image\\buttonplay1.png")
-buttonhelp = Graphic_elements(700, 302, 180, 86, "\\image\\buttonhelp1.png")
-buttonexit = Graphic_elements(700, 506, 180, 86, "\\image\\buttonexit1.png")
-mainchar = Character(300, 604, 21, 48, "\\image\\char.png")
+background = Image(0,0,1080,720,"\\image\\phone.png")
+buttonplay = Image(700, 50, 180, 86, "\\image\\buttonplay1.png")
+buttonhelp = Image(700, 302, 180, 86, "\\image\\buttonhelp1.png")
+buttonexit = Image(700, 506, 180, 86, "\\image\\buttonexit1.png")
+mainchar = Character(300, 604, 21, 48, 5, 5, 20, "\\image\\char.png")
 
-mainchar.load_image()
+# mainchar.load_image()
 
+list_block = ["111111111111111111111111111111",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "1111111111111111111110000011111111111101",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "100000000000000000000000000000000000001",
+              "111111111111111111111111111111",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
+]
+list_level = list()
+create_blocks(list_block, list_level)
+for i in list_level:
+    i.load_image()
 mouse_position = 1
-
 scene = 1
 game = True
 while game:
@@ -66,7 +113,11 @@ while game:
             buttonexit.show_image(screen)
         if scene == 2:
             screen.fill((255,255,255))
+            for i in list_level:
+                i.show_image(screen)
+            mainchar.move_character()
             mainchar.show_image(screen)
+            
 
     
     
