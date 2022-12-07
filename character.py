@@ -27,6 +27,8 @@ class Character():
         self.move_right = True
         self.index_image = 0
         self.speed_animation = 0
+        self.fall = True
+        # self.can_jump = True
 
 
 
@@ -48,17 +50,62 @@ class Character():
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LEFT] and self.move_left == True:
+            
             self.X_sprite -= self.Speed_sprite
+            if self.speed_animation == 10:
+                self.index_image += 1
+                self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
+            elif self.speed_animation == 20:
+                self.index_image += 1
+                self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
+            elif self.speed_animation == 30:
+                self.index_image += 1
+                self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
+            elif self.speed_animation == 40:
+                self.index_image += 1
+                self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
+                self.speed_animation += 1
+                self.index_image = 0 
+                self.speed_animation = 0 
+            # if self.speed_animation == 5:
+                
+            #     self.index_image += 1
+            #     if self.index_image == 4:
+            #         self.index_image = 1
+            #     self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
+            self.speed_animation += 1
+
+
         if keys[pygame.K_RIGHT] and self.move_right == True:
             self.X_sprite += self.Speed_sprite
+            if self.speed_animation == 5:
+                self.index_image += 1
+                self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
+            elif self.speed_animation == 10:
+                self.index_image += 1
+                self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
+            elif self.speed_animation == 15:
+                self.index_image += 1
+                self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
+            elif self.speed_animation == 20:
+                self.index_image += 1
+                self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
+                self.speed_animation += 1
+                self.index_image = 0 
+                self.speed_animation = 0 
+            self.speed_animation += 1
 
-            # if self.speed_animation == 0:
-            #     self.index_image += 1
-            # #если номер костюма доходит до пределов воможного 
-            # if self.index_image == 5:
-            #     self.index_image = 1
-
-
-
-
-
+    def gravity(self):
+        if self.fall:
+            self.Y_sprite += self.Gravity_sprite
+    
+    def jump(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE] and self.fall == False:
+            self.Y_sprite += self.Jump_sprite
+            self.fall = True
+            self.fall = False
+        else:
+            self.fall = False
+            self.Y_sprite += self.Jump_sprite
+            self.fall = True

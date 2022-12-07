@@ -10,16 +10,20 @@ def create_blocks(list, all_blocks):
             if p != '0':
                 if p == '1':
                     block = Image(x,y,48,27,'\\image\\stonebot.png')
-                # elif p == '2':
-                #     block = Graphic_elements(x,y,78,78,'images/grass2.png')
-                # elif p == '3':
-                #     block = Graphic_elementsk(x,y,78,78,'images/grassadirt1.png')
-                # elif p == '4':
-                #     block = Graphic_elementsk(x,y,78,78,'images/dirt1.png')
-                # elif p == '5':
-                #     block = Graphic_elements(x,y,78,78,'images/dirt2.png')
-                # elif p == '6':
-                #     block = Graphic_elements(x,y,78,78,'images/grassadirt2.png')
+                if p == '2':
+                    block = Image(x,y,48,27,'\\image\\stoneup.png')
+                elif p == '3':
+                    block = Image(x,y,48,27,'\\image\\stonesidel.png')
+                elif p == '4':
+                    block = Image(x,y,48,27,'\\image\\stonesider.png')
+                elif p == '5':
+                    block = Image(x,y,48,27,'\\image\\stoneangld.png')
+                elif p == '6':
+                    block = Image(x,y,48,27,'\\image\\stoneanglu.png')
+                elif p == '7':
+                    block = Image(x,y,48,27,'\\image\\stoneangrd.png')
+                elif p == '8':
+                    block = Image(x,y,48,27,'\\image\\stoneangru.png')
                 all_blocks.append(block)
             x += 48
         y += 27
