@@ -23,29 +23,22 @@ class Character():
         #путь к нашему спрайту
         self.Sprite_path = sprite_path
         self.jump_count = 0
+        self.Y_VELOCITY = self.Jump_sprite
         self.move_left = True
         self.move_right = True
         self.index_image = 0
         self.speed_animation = 0
         self.fall = True
-        # self.can_jump = True
+        self.img = None
+        self.load_image()
 
-
-
-        
-        
-#super().__init__(x, y, width, height, path)
-    #def load_image(self):
-        #path = os.path.abspath(__file__ + "/..")
-        #path = path + self.PATH
-       # self.IMG = pygame.image.load(path)
-        #self.IMG = pygame.transform.scale(self.IMG, (self.WIDTH, self.HEIGHT))
-    def show_image(self,screen):
-        img= os.path.abspath(__file__ + "/..")
-        img = img + self.Sprite_path
-        img = pygame.image.load(img).convert_alpha()
-        img = pygame.transform.scale(img, (self.Width_sprite,self.Height_sprite))
-        screen.blit(img, (self.X_sprite, self.Y_sprite)) 
+    def load_image(self):
+        self.img = os.path.abspath(__file__ + "/..")
+        self.img = self.img + self.Sprite_path
+        self.img = pygame.image.load(self.img).convert_alpha()
+        self.img = pygame.transform.scale(self.img, (self.Width_sprite,self.Height_sprite))
+    def show_image(self, screen):
+        screen.blit(self.img, (self.X_sprite, self.Y_sprite)) 
     def move_character(self):
         keys = pygame.key.get_pressed()
 
@@ -67,45 +60,44 @@ class Character():
                 self.speed_animation += 1
                 self.index_image = 0 
                 self.speed_animation = 0 
-            # if self.speed_animation == 5:
-                
-            #     self.index_image += 1
-            #     if self.index_image == 4:
-            #         self.index_image = 1
-            #     self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
-            self.speed_animation += 1
+            self.load_image()
+            self.speed_animation += 1 
 
 
         if keys[pygame.K_RIGHT] and self.move_right == True:
             self.X_sprite += self.Speed_sprite
-            if self.speed_animation == 5:
-                self.index_image += 1
-                self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
-            elif self.speed_animation == 10:
-                self.index_image += 1
-                self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
-            elif self.speed_animation == 15:
+            if self.speed_animation == 10:
                 self.index_image += 1
                 self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
             elif self.speed_animation == 20:
                 self.index_image += 1
                 self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
+            elif self.speed_animation == 30:
+                self.index_image += 1
+                self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
+            elif self.speed_animation == 40:
+                self.index_image += 1
+                self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
                 self.speed_animation += 1
                 self.index_image = 0 
                 self.speed_animation = 0 
+            self.load_image()
             self.speed_animation += 1
-
+        # if keys[pygame.K_LEFT] == False and keys[pygame.K_RIGHT] == False:
+        #     self.Speed_s
+            
     def gravity(self):
         if self.fall:
             self.Y_sprite += self.Gravity_sprite
     
     def jump(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE] and self.fall == False:
-            self.Y_sprite += self.Jump_sprite
+        if keys[pygame.K_SPACE]:
             self.fall = True
-            self.fall = False
-        else:
-            self.fall = False
-            self.Y_sprite += self.Jump_sprite
-            self.fall = True
+
+        if self.fall:
+            self.Y_sprite -= self.Y_VELOCITY
+            self.Y_VELOCITY -= self.jump_count
+            if self.Y_VELOCITY < -self.Jump_sprite:
+                self.fall = False
+                self.Y_VELOCITY = self.Jump_sprite
