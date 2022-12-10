@@ -3,7 +3,7 @@ import os
 from Image2 import Image
 from character import Character
 from graphic_elements import Graphic_elements
-from matrix import create_blocks
+from matrix import *
 import time
 
 pygame.init()
@@ -11,59 +11,14 @@ pygame.init()
 screen = pygame.display.set_mode((1080, 720))
 
 background = Image(0,0,1080,720,"\\image\\phone.png")
-buttonplay = Image(700, 50, 180, 86, "\\image\\buttonplay1.png")
-buttonhelp = Image(700, 302, 180, 86, "\\image\\buttonhelp1.png")
-buttonexit = Image(700, 506, 180, 86, "\\image\\buttonexit1.png")
+buttonplay = Image(690, 53, 180, 86, "\\image\\buttonplay1.png")
+buttonhelp = Image(690, 282, 180, 86, "\\image\\buttonhelp1.png")
+buttonexit = Image(690, 509, 180, 86, "\\image\\buttonexit1.png")
 mainchar = Character(300, 604, 21, 48, 3, 5, 20, "\\image\\char.png")
 
 
 
-list_block = [
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000011111000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "0000000000000000011100000000000000000000",
-               "1100000000000000011110000000000000000000",
-               "0100000000000000000000000000000000000000",
-               "0000000000000000000000000000000000000000",
-               "3111111111111111111111111111111111111111",
-               "3000000000000011000000000000000000000004",
-               "3110111011111101000001000000000000000004",
-               "3000000100000000100010000000000000001114",
-               "3000000000000000011100000000000000010004",
-               "3000000000000000000000000000000001000004",
-               "3000000000000000000000000000010111100004",
-               "3000000000000000000000001111000000000004",
-               "3111111100001000000000100000000000000004",
-               "3000000000011010000010100000000000000004",
-               "3000000000111010101010100000000000000004",
-               "3000000001111010101010100000000000000004",
-               "3000000111111010101010100000000000000004",
-               "5111111111111111111111111111111111111117",
-]
-list_level = list()
-create_blocks(list_block, list_level)
-for i in list_level:
-    i.load_image()
+
 
 clock = pygame.time.Clock()
 mouse_position = 1
@@ -121,18 +76,21 @@ while game:
         mainchar.gravity()
         mainchar.show_image(screen)
         # mainchar.jump()
-        for i in list_level:
-            if mainchar.Y_sprite <= i.Y:
-                if mainchar.X_sprite + mainchar.Width_sprite >= i.X:
-                    if   mainchar.X_sprite <= i.X + i.WIDTH:
-                        if mainchar.Y_sprite + mainchar.Height_sprite >= i.Y:
-                            mainchar.fall = False
-            if mainchar.X_sprite <= i.X + i.WIDTH:
-                if mainchar.X_sprite + mainchar.Width_sprite >= i.X:
-                    mainchar.move_left = False  
-            if mainchar.X_sprite >= i.X + i.WIDTH:
-                if mainchar.X_sprite + mainchar.Width_sprite <= i.X:
-                    mainchar.move_left = True 
+        mainchar.colision()
+        
+                # if i.X + i.WIDTH <= mainchar.X_sprite :
+                #     if mainchar.X_sprite + mainchar.Width_sprite < i.X :
+                #         if mainchar.Y_sprite + mainchar.Height_sprite > i.Y and mainchar.Y_sprite <= i.Y + i.HEIGHT:
+                #             mainchar.move_left = False  
+                # elif mainchar.X_sprite < i.X + i.WIDTH:
+                #     if mainchar.X_sprite + mainchar.Width_sprite > i.X :
+                #         if mainchar.Y_sprite + mainchar.Height_sprite < i.Y:
+                #             mainchar.move_left = True
+                # if i.X + i.WIDTH < mainchar.X_sprite:
+                #     mainchar.move_left = True
+            # if mainchar.X_sprite >= i.X + i.WIDTH:
+            #     if mainchar.X_sprite + mainchar.Width_sprite <= i.X:
+            #         mainchar.move_left = True 
             
 
     

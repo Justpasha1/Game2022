@@ -1,6 +1,7 @@
 import pygame
 import os
 import random 
+from matrix import *
 
 class Character():
     def __init__(self, x_sprite, y_sprite, width_sprite, height_sprite,speed_sprite,gravity_sprite,jump_sprite,sprite_path,):
@@ -22,13 +23,13 @@ class Character():
         self.Jump_sprite = jump_sprite
         #путь к нашему спрайту
         self.Sprite_path = sprite_path
-        self.jump_count = 0
+        self.jump_count = 0.5
         self.Y_VELOCITY = self.Jump_sprite
         self.move_left = True
         self.move_right = True
         self.index_image = 0
         self.speed_animation = 0
-        self.fall = True
+        self.fall = False
         self.img = None
         self.load_image()
 
@@ -101,3 +102,29 @@ class Character():
             if self.Y_VELOCITY < -self.Jump_sprite:
                 self.fall = False
                 self.Y_VELOCITY = self.Jump_sprite
+    def colision(self):
+        for i in list_level:
+            if self.Y_sprite <= i.Y:
+                if self.X_sprite + self.Width_sprite >= i.X:
+                    if   self.X_sprite <= i.X + i.WIDTH:
+                        if self.Y_sprite + self.Height_sprite >= i.Y:
+                            
+                            self.fall = False
+                        else:
+                            self.fall = True
+            if self.Y_sprite + 10 >= i.Y and self.Y_sprite + 10 <= i.Y + i.HEIGHT:
+                print(1)
+                if self.Y_sprite + self.Height_sprite - 10 <= i.Y + i.HEIGHT:
+                    print(2)
+                    if self.Y_sprite + self.Height_sprite - 10 >= i.Y:
+                        print(3)
+                        if self.X_sprite + self.Width_sprite >= i.X:
+                            self.move_right = False
+                            print("інвалід")
+                        else:
+                            self.move_right = True
+                        if self.X_sprite <= i.X + i.WIDTH:
+                            print("fdsfsdfsd")
+                            self.move_left = False
+                        else:
+                            self.move_left = True
