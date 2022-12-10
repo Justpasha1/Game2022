@@ -44,7 +44,7 @@ class Character():
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LEFT] and self.move_left == True:
-            
+            self.colisium_left()
             self.X_sprite -= self.Speed_sprite
             if self.speed_animation == 10:
                 self.index_image += 1
@@ -66,6 +66,7 @@ class Character():
 
 
         if keys[pygame.K_RIGHT] and self.move_right == True:
+            self.colisium_right()
             self.X_sprite += self.Speed_sprite
             if self.speed_animation == 10:
                 self.index_image += 1
@@ -112,19 +113,20 @@ class Character():
                             self.fall = False
                         else:
                             self.fall = True
-            if self.Y_sprite + 10 >= i.Y and self.Y_sprite + 10 <= i.Y + i.HEIGHT:
-                print(1)
-                if self.Y_sprite + self.Height_sprite - 10 <= i.Y + i.HEIGHT:
-                    print(2)
-                    if self.Y_sprite + self.Height_sprite - 10 >= i.Y:
-                        print(3)
-                        if self.X_sprite + self.Width_sprite >= i.X:
-                            self.move_right = False
-                            print("інвалід")
-                        else:
-                            self.move_right = True
-                        if self.X_sprite <= i.X + i.WIDTH:
-                            print("fdsfsdfsd")
-                            self.move_left = False
-                        else:
-                            self.move_left = True
+    def colisium_right(self):
+        if self.Y_sprite + 10 >= i.Y and self.Y_sprite + 10 <= i.Y + i.HEIGHT:
+            if self.Y_sprite - 21 + self.Height_sprite - 10 <= i.Y + i.HEIGHT:
+                if self.Y_sprite + self.Height_sprite - 10 >= i.Y:
+                    if self.X_sprite + self.Width_sprite >= i.X:
+                        self.move_right = False
+                    else:
+                        self.move_right = True
+    def colisium_left(self):
+        if self.Y_sprite + 10 >= i.Y and self.Y_sprite + 10 <= i.Y + i.HEIGHT:
+            if self.Y_sprite - 21 + self.Height_sprite - 10 <= i.Y + i.HEIGHT:
+                if self.Y_sprite + self.Height_sprite - 10 >= i.Y:
+                    if self.X_sprite <= i.X + i.WIDTH:
+                        self.move_left = False
+                    else:
+                        self.move_left = True
+                    
