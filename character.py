@@ -114,19 +114,19 @@ class Character():
                         else:
                             self.fall = True
     def colisium_right(self):
-        if self.Y_sprite + 10 >= i.Y and self.Y_sprite + 10 <= i.Y + i.HEIGHT:
-            if self.Y_sprite - 21 + self.Height_sprite - 10 <= i.Y + i.HEIGHT:
-                if self.Y_sprite + self.Height_sprite - 10 >= i.Y:
-                    if self.X_sprite + self.Width_sprite >= i.X:
+        if self.Y_sprite + 1 >= i.Y and self.Y_sprite + 1 <= i.Y + i.HEIGHT:
+            if self.Y_sprite + self.Height_sprite - 6 <= i.Y + i.HEIGHT:
+                if self.Y_sprite + self.Height_sprite - 1 >= i.Y:
+                    if self.X_sprite + self.Width_sprite <= i.X:
                         self.move_right = False
-                    else:
-                        self.move_right = True
+        else:
+            self.move_right = True
     def colisium_left(self):
-        if self.Y_sprite + 10 >= i.Y and self.Y_sprite + 10 <= i.Y + i.HEIGHT:
-            if self.Y_sprite - 21 + self.Height_sprite - 10 <= i.Y + i.HEIGHT:
-                if self.Y_sprite + self.Height_sprite - 10 >= i.Y:
+        if self.Y_sprite + 1 >= i.Y and self.Y_sprite + 1 <= i.Y + i.HEIGHT:
+            if self.Y_sprite + self.Height_sprite - 6 <= i.Y + i.HEIGHT:
+                if self.Y_sprite + self.Height_sprite - 1 >= i.Y:
                     if self.X_sprite <= i.X + i.WIDTH:
                         self.move_left = False
-                    else:
-                        self.move_left = True
+        else:
+            self.move_left = True
                     

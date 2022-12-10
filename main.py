@@ -14,7 +14,7 @@ background = Image(0,0,1080,720,"\\image\\phone.png")
 buttonplay = Image(690, 53, 180, 86, "\\image\\buttonplay1.png")
 buttonhelp = Image(690, 282, 180, 86, "\\image\\buttonhelp1.png")
 buttonexit = Image(690, 509, 180, 86, "\\image\\buttonexit1.png")
-mainchar = Character(300, 604, 21, 48, 3, 5, 20, "\\image\\char.png")
+mainchar = Character(300, 604, 21, 27, 3, 5, 20, "\\image\\char1.png")
 
 
 
