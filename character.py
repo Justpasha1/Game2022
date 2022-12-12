@@ -43,50 +43,55 @@ class Character():
     def move_character(self):
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_LEFT] and self.move_left == True:
-            self.colisium_left()
-            self.X_sprite -= self.Speed_sprite
-            if self.speed_animation == 10:
-                self.index_image += 1
-                self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
-            elif self.speed_animation == 20:
-                self.index_image += 1
-                self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
-            elif self.speed_animation == 30:
-                self.index_image += 1
-                self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
-            elif self.speed_animation == 40:
-                self.index_image += 1
-                self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
-                self.speed_animation += 1
-                self.index_image = 0 
-                self.speed_animation = 0 
-            self.load_image()
-            self.speed_animation += 1 
+        if keys[pygame.K_LEFT] :
+            # self.colisium_left()
+            if self.move_left == True:
+                
+                self.X_sprite -= self.Speed_sprite
+                if self.speed_animation == 10:
+                    self.index_image += 1
+                    self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
+                elif self.speed_animation == 20:
+                    self.index_image += 1
+                    self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
+                elif self.speed_animation == 30:
+                    self.index_image += 1
+                    self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
+                elif self.speed_animation == 40:
+                    self.index_image += 1
+                    self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
+                    self.speed_animation += 1
+                    self.index_image = 0 
+                    self.speed_animation = 0 
+                self.load_image()
+                self.speed_animation += 1 
+            
 
-
-        if keys[pygame.K_RIGHT] and self.move_right == True:
+        if keys[pygame.K_RIGHT]:
             self.colisium_right()
-            self.X_sprite += self.Speed_sprite
-            if self.speed_animation == 10:
-                self.index_image += 1
-                self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
-            elif self.speed_animation == 20:
-                self.index_image += 1
-                self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
-            elif self.speed_animation == 30:
-                self.index_image += 1
-                self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
-            elif self.speed_animation == 40:
-                self.index_image += 1
-                self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
+            if self.move_right == True:
+            
+                self.X_sprite += self.Speed_sprite
+                if self.speed_animation == 10:
+                    self.index_image += 1
+                    self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
+                elif self.speed_animation == 20:
+                    self.index_image += 1
+                    self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
+                elif self.speed_animation == 30:
+                    self.index_image += 1
+                    self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
+                elif self.speed_animation == 40:
+                    self.index_image += 1
+                    self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
+                    self.speed_animation += 1
+                    self.index_image = 0 
+                    self.speed_animation = 0 
+                self.load_image()
                 self.speed_animation += 1
-                self.index_image = 0 
-                self.speed_animation = 0 
-            self.load_image()
-            self.speed_animation += 1
+            
         # if keys[pygame.K_LEFT] == False and keys[pygame.K_RIGHT] == False:
-        #     self.Speed_s
+        #     self.move_right = True
             
     def gravity(self):
         if self.fall:
@@ -114,19 +119,23 @@ class Character():
                         else:
                             self.fall = True
     def colisium_right(self):
-        if self.Y_sprite + 1 >= i.Y and self.Y_sprite + 1 <= i.Y + i.HEIGHT:
-            if self.Y_sprite + self.Height_sprite - 6 <= i.Y + i.HEIGHT:
-                if self.Y_sprite + self.Height_sprite - 1 >= i.Y:
-                    if self.X_sprite + self.Width_sprite <= i.X:
-                        self.move_right = False
-        else:
-            self.move_right = True
+        for i in list_level:
+            if self.Y_sprite + 1 >= i.Y and self.Y_sprite - 1 <= i.Y + i.HEIGHT:
+                if self.Y_sprite + self.Height_sprite - 4 <= i.Y + i.HEIGHT:
+                    if self.Y_sprite + self.Height_sprite - 1 >= i.Y:
+                        if self.X_sprite + self.Width_sprite >= i.X:
+                            self.move_right = False
+                        else:
+                            self.move_right = True
     def colisium_left(self):
-        if self.Y_sprite + 1 >= i.Y and self.Y_sprite + 1 <= i.Y + i.HEIGHT:
-            if self.Y_sprite + self.Height_sprite - 6 <= i.Y + i.HEIGHT:
-                if self.Y_sprite + self.Height_sprite - 1 >= i.Y:
-                    if self.X_sprite <= i.X + i.WIDTH:
-                        self.move_left = False
-        else:
-            self.move_left = True
-                    
+        for i in list_level:
+            if self.Y_sprite + 1 >= i.Y and self.Y_sprite - 1 <= i.Y + i.HEIGHT:
+                if self.Y_sprite + self.Height_sprite - 4 <= i.Y + i.HEIGHT:
+                    if self.Y_sprite + self.Height_sprite - 1 >= i.Y:
+                        if self.X_sprite <= i.X + i.WIDTH:
+                            print(i.X + i.WIDTH)
+                            print(i.Y)
+                            print(4)
+                            self.move_left = False
+                        else:
+                            self.move_left = True
