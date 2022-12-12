@@ -75,7 +75,7 @@ while game:
         mainchar.move_character()
         mainchar.gravity()
         mainchar.show_image(screen)
-        # mainchar.jump()
+        mainchar.jump()
         mainchar.colision()
         
                 # if i.X + i.WIDTH <= mainchar.X_sprite :
