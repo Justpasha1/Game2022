@@ -106,6 +106,7 @@ class Character():
                 if self.Y_VELOCITY < -self.Jump_sprite:
                     self.fall = True
                     self.Y_VELOCITY = self.Jump_sprite
+                    
     def colision(self):
         for i in list_level:
             if self.Y_sprite <= i.Y:
