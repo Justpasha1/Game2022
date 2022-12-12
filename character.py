@@ -31,6 +31,7 @@ class Character():
         self.speed_animation = 0
         self.fall = False
         self.img = None
+        self.touch = False
         self.load_image()
 
     def load_image(self):
@@ -93,19 +94,20 @@ class Character():
         # if keys[pygame.K_LEFT] == False and keys[pygame.K_RIGHT] == False:
         #     self.move_right = True
             
-    def gravity(self):
-        if self.fall:
-            self.Y_sprite += self.Gravity_sprite
+    # def gravity(self):
+    #     if self.fall:
+    #         self.Y_sprite += self.Gravity_sprite
     
     def jump(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
-            if self.fall != True:
-                self.Y_sprite -= self.Y_VELOCITY
-                self.Y_VELOCITY -= self.jump_count
-                if self.Y_VELOCITY < -self.Jump_sprite:
-                    self.fall = True
-                    self.Y_VELOCITY = self.Jump_sprite
+        if keys[pygame.K_SPACE]:
+            self.fall = True
+
+        if self.fall:
+            self.Y_sprite -= self.Y_VELOCITY
+            self.Y_VELOCITY -= self.jump_count
+        # if self.touch == False and self.fall == True:
+            # self.gravity()
                     
     def colision(self):
         for i in list_level:
@@ -113,10 +115,12 @@ class Character():
                 if self.X_sprite + self.Width_sprite >= i.X:
                     if   self.X_sprite <= i.X + i.WIDTH:
                         if self.Y_sprite + self.Height_sprite >= i.Y:
-                            
+                            self.touch = True
                             self.fall = False
                         else:
                             self.fall = True
+                            self.touch = False
+                            
     def colisium_right(self):
         for i in list_level:
             if self.Y_sprite + 1 >= i.Y and self.Y_sprite - 1 <= i.Y + i.HEIGHT:
