@@ -31,6 +31,7 @@ class Character():
         self.index_image = 0
         self.speed_animation = 0
         self.fall = False
+        self.jumping = False
         self.img = None
         self.touch = False
         self.load_image()
@@ -98,16 +99,33 @@ class Character():
     # def gravity(self):
     #     if self.fall:
     #         self.Y_sprite += self.Gravity_sprite
-    
     def jump(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
-            if self.fall == False:
-                self.Y_sprite -= self.Y_VELOCITY
-                # self.Y_VELOCITY += self.jump_count
-                self.Y_VELOCITY = self.Jump_sprite
-                self.fall = True
-                self.touch = False
+            self.jumping = True
+            
+        if self.jumping:
+            self.Y_sprite -= self.Y_VELOCITY
+            # self.Y_VELOCITY -= self.jump_count
+            
+            # if self.Y_VELOCITY < -self.Jump_sprite: 
+            #     self.Y_VELOCITY = self.Jump_sprite
+            #     self.fall = True
+            #     self.touch = False
+            #     self.jumping = False
+                
+    # def jump(self):
+        # keys = pygame.key.get_pressed()
+        # if keys[pygame.K_UP]:
+            # if self.fall == False:
+                # self.Y_sprite -= self.Y_VELOCITY
+                # self.Y_VELOCITY -= self.jump_count
+                # self.Y_VELOCITY = self.Jump_sprite
+                # if self.Y_VELOCITY < -self.Jump_sprite:
+                    # self.Y_VELOCITY = self.Jump_sprite
+                    # self.fall = True
+                    # self.touch = False
+                    # self.jumping = False
         # if self.touch == False and self.fall == True:
             # self.gravity()
                     
@@ -116,14 +134,14 @@ class Character():
             if self.Y_sprite + self.Height_sprite + 1 >= i.Y:
                 if self.X_sprite >= i.X:
                     if self.X_sprite <= i.X + i.WIDTH:
-                        self.touch = True
-                        self.fall = False
+                        # self.touch = True
+                        # self.fall = False
                         break
                     else:
-                        self.touch = False
-                        self.fall = True
-        if self.touch == False and self.fall == True:
-            self.Y_sprite += self.gravity_count
+                        # self.touch = False
+                        # self.fall = True
+        # if self.touch == False and self.fall == True:
+        #     self.Y_sprite += self.Gravity_sprite
             # if self.Y_sprite <= i.Y:
                 # if self.X_sprite + self.Width_sprite >= i.X:
                     # if   self.X_sprite <= i.X + i.WIDTH:
