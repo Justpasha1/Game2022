@@ -20,12 +20,12 @@ class Character():
         #графитация спрайта
         self.Gravity_sprite = gravity_sprite
         #прыжок нашего спрайта
-        self.Jump_sprite = jump_sprite
+        self.Jump_distance = jump_sprite
         #путь к нашему спрайту
         self.Sprite_path = sprite_path
         self.jump_count = 0.5
         self.gravity_count = 0.5
-        self.Y_VELOCITY = self.Jump_sprite
+        self.Y_VELOCITY = self.Jump_distance
         self.move_left = True
         self.move_right = True
         self.index_image = 0
@@ -101,18 +101,25 @@ class Character():
     #         self.Y_sprite += self.Gravity_sprite
     def jump(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
-            self.jumping = True
-            
-        if self.jumping:
-            self.Y_sprite -= self.Y_VELOCITY
+        if self.touch == False:
+            if keys[pygame.K_UP]:
+                self.jumping = True
+
+            if self.jumping:
+                self.Y_sprite -= self.Y_VELOCITY
+                self.Y_VELOCITY -= self.Jump_distance
+                if self.Y_VELOCITY < self.Jump_distance:
+                    self.jumping = False
+                    self.Y_VELOCITY = self.Jump_distance
+                
+                
             # self.Y_VELOCITY -= self.jump_count
             
             # if self.Y_VELOCITY < -self.Jump_sprite: 
             #     self.Y_VELOCITY = self.Jump_sprite
-            #     self.fall = True
             #     self.touch = False
             #     self.jumping = False
+            #     self.fall = True
                 
     # def jump(self):
         # keys = pygame.key.get_pressed()
