@@ -23,17 +23,15 @@ class Character():
         self.Jump_distance = jump_sprite
         #путь к нашему спрайту
         self.Sprite_path = sprite_path
-        self.jump_count = 0.5
-        self.gravity_count = 0.5
+        self.jump_count = 1
         self.Y_VELOCITY = self.Jump_distance
         self.move_left = True
         self.move_right = True
         self.index_image = 0
         self.speed_animation = 0
-        self.fall = False
+        self.fall = True
         self.jumping = False
         self.img = None
-        self.touch = False
         self.load_image()
 
     def load_image(self):
@@ -93,70 +91,38 @@ class Character():
                 self.load_image()
                 self.speed_animation += 1
             
-        # if keys[pygame.K_LEFT] == False and keys[pygame.K_RIGHT] == False:
-        #     self.move_right = True
+    #-----Падение-----#
+    def gravity(self):
+        if self.fall:
+            self.Y_sprite += self.Gravity_sprite
             
-    # def gravity(self):
-    #     if self.fall:
-    #         self.Y_sprite += self.Gravity_sprite
+    #-----Прижок-----#
     def jump(self):
         keys = pygame.key.get_pressed()
-        if self.touch == False:
-            if keys[pygame.K_UP]:
-                self.jumping = True
-
-            if self.jumping:
-                self.Y_sprite -= self.Y_VELOCITY
-                self.Y_VELOCITY -= self.Jump_distance
-                if self.Y_VELOCITY < self.Jump_distance:
-                    self.jumping = False
-                    self.Y_VELOCITY = self.Jump_distance
-                
-                
-            # self.Y_VELOCITY -= self.jump_count
+        if keys[pygame.K_UP]:
+            self.jumping = True
             
-            # if self.Y_VELOCITY < -self.Jump_sprite: 
-            #     self.Y_VELOCITY = self.Jump_sprite
-            #     self.touch = False
-            #     self.jumping = False
-            #     self.fall = True
+        if self.jumping:
+            self.Y_sprite -= self.Y_VELOCITY
+            self.Y_VELOCITY -= self.jump_count
+            if self.Y_VELOCITY < self.jump_count:
+                self.Y_VELOCITY = self.Jump_distance
+                self.jumping = False
+
                 
-    # def jump(self):
-        # keys = pygame.key.get_pressed()
-        # if keys[pygame.K_UP]:
-            # if self.fall == False:
-                # self.Y_sprite -= self.Y_VELOCITY
-                # self.Y_VELOCITY -= self.jump_count
-                # self.Y_VELOCITY = self.Jump_sprite
-                # if self.Y_VELOCITY < -self.Jump_sprite:
-                    # self.Y_VELOCITY = self.Jump_sprite
-                    # self.fall = True
-                    # self.touch = False
-                    # self.jumping = False
-        # if self.touch == False and self.fall == True:
-            # self.gravity()
-                    
+                
+    #-----Верхняя коллизия-----#                
     def colision(self):
         for i in list_level:
             if self.Y_sprite + self.Height_sprite + 1 >= i.Y:
                 if self.X_sprite >= i.X:
                     if self.X_sprite <= i.X + i.WIDTH:
-                        # self.touch = True
-                        # self.fall = False
-                        break
+                        self.fall = False
+  
                     else:
-                        # self.touch = False
-                        # self.fall = True
-        # if self.touch == False and self.fall == True:
-        #     self.Y_sprite += self.Gravity_sprite
-            # if self.Y_sprite <= i.Y:
-                # if self.X_sprite + self.Width_sprite >= i.X:
-                    # if   self.X_sprite <= i.X + i.WIDTH:
-                        # if self.Y_sprite + self.Height_sprite >= i.Y:
-                            # self.touch = True
-                            # self.fall = False
-                        # else:
-                            # self.touch = False
+                        self.fall = True
+                        print(self.Y_sprite)
+                        
                             
     def colisium_right(self):
         for i in list_level:
@@ -169,6 +135,7 @@ class Character():
                                 break
                             else:
                                 self.move_right = True
+                                
     def colisium_left(self):
         for i in list_level:
             if self.Y_sprite + 1 >= i.Y and self.Y_sprite - 1 <= i.Y + i.HEIGHT:

@@ -4,7 +4,6 @@ from Image2 import Image
 from character import Character
 from graphic_elements import Graphic_elements
 from matrix import *
-import time
 
 pygame.init()
 
@@ -14,11 +13,7 @@ background = Image(0,0,1080,720,"\\image\\phone.png")
 buttonplay = Image(690, 53, 180, 86, "\\image\\buttonplay1.png")
 buttonhelp = Image(690, 282, 180, 86, "\\image\\buttonhelp1.png")
 buttonexit = Image(690, 509, 180, 86, "\\image\\buttonexit1.png")
-mainchar = Character(300, 604, 21, 27, 5, 6 , 20, "\\image\\char1.png")
-
-
-
-
+mainchar = Character(400, 550, 21, 27, 5, 5, 20, "\\image\\char1.png")
 
 clock = pygame.time.Clock()
 mouse_position = 1
@@ -73,30 +68,10 @@ while game:
         for i in list_level:
             i.show_image(screen)
         mainchar.move_character()
-        # mainchar.gravity()
         mainchar.show_image(screen)
-        mainchar.jump()
         mainchar.colision()
-        
-                # if i.X + i.WIDTH <= mainchar.X_sprite :
-                #     if mainchar.X_sprite + mainchar.Width_sprite < i.X :
-                #         if mainchar.Y_sprite + mainchar.Height_sprite > i.Y and mainchar.Y_sprite <= i.Y + i.HEIGHT:
-                #             mainchar.move_left = False  
-                # elif mainchar.X_sprite < i.X + i.WIDTH:
-                #     if mainchar.X_sprite + mainchar.Width_sprite > i.X :
-                #         if mainchar.Y_sprite + mainchar.Height_sprite < i.Y:
-                #             mainchar.move_left = True
-                # if i.X + i.WIDTH < mainchar.X_sprite:
-                #     mainchar.move_left = True
-            # if mainchar.X_sprite >= i.X + i.WIDTH:
-            #     if mainchar.X_sprite + mainchar.Width_sprite <= i.X:
-            #         mainchar.move_left = True 
-            
-
-    
-    
+        mainchar.gravity()
+        mainchar.jump()
     
     clock.tick(60)
     pygame.display.flip()
-    
-
