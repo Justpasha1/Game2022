@@ -23,7 +23,7 @@ class Character():
         self.Jump_distance = jump_sprite
         #путь к нашему спрайту
         self.Sprite_path = sprite_path
-        self.jump_count = 1
+        self.jump_count = 0
         self.Y_VELOCITY = self.Jump_distance
         self.move_left = True
         self.move_right = True
@@ -99,15 +99,20 @@ class Character():
     #-----Прижок-----#
     def jump(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
-            self.jumping = True
+        if keys[pygame.K_UP] and self.fall == False:
+            self.Y_sprite -= self.Jump_distance
+            self.jump_count += 1
+            if self.jump_count == 5:
+                self.jump_count = 0
+                self.fall = True
+        #     self.jumping = True
             
-        if self.jumping:
-            self.Y_sprite -= self.Y_VELOCITY
-            self.Y_VELOCITY -= self.jump_count
-            if self.Y_VELOCITY < self.jump_count:
-                self.Y_VELOCITY = self.Jump_distance
-                self.jumping = False
+        # if self.jumping:
+        #     self.Y_sprite -= self.Y_VELOCITY
+        #     self.Y_VELOCITY -= self.jump_count
+        #     if self.Y_VELOCITY < self.jump_count:
+        #         self.Y_VELOCITY = self.Jump_distance
+        #         self.jumping = False
 
                 
                 
@@ -117,11 +122,25 @@ class Character():
             if self.Y_sprite + self.Height_sprite + 1 >= i.Y:
                 if self.X_sprite >= i.X:
                     if self.X_sprite <= i.X + i.WIDTH:
-                        self.fall = False
-  
-                    else:
-                        self.fall = True
-                        print(self.Y_sprite)
+                        if self.X_sprite + self.Width_sprite >= i.WIDTH:
+                            if self.Y_sprite + self.Height_sprite + 1 >= i.Y:
+                                if self.Y_sprite + 1 < i.Y:
+                                    self.fall = False
+                                    break
+                                else:
+                                    self.fall = True
+    # def bottom_colision(self):
+    #      for i in list_level:
+    #          if self.Y_sprite + 1 <= i.Y + i.HEIGHT:
+    #              if self.X_sprite >= i.X:
+    #                 if self.X_sprite <= i.X + i.WIDTH:
+    #                     if self.X_sprite + self.Width_sprite >= i.WIDTH:
+    #                         self.fall = False
+    #                         break
+    #                     else:
+    #                         self.fall = True
+
+
                         
                             
     def colisium_right(self):
@@ -129,8 +148,8 @@ class Character():
             if self.Y_sprite + 1 >= i.Y and self.Y_sprite - 1 <= i.Y + i.HEIGHT:
                 if self.Y_sprite + self.Height_sprite - 4 <= i.Y + i.HEIGHT:
                     if self.Y_sprite + self.Height_sprite - 1 >= i.Y:
-                        if self.X_sprite + self.Width_sprite >= i.X:
-                            if self.X_sprite + self.Width_sprite <= i.X:
+                        if self.X_sprite + self.Width_sprite + 1 >= i.X:
+                            if self.X_sprite + self.Width_sprite + 1 <= i.X:
                                 self.move_right = False
                                 break
                             else:
@@ -141,8 +160,8 @@ class Character():
             if self.Y_sprite + 1 >= i.Y and self.Y_sprite - 1 <= i.Y + i.HEIGHT:
                 if self.Y_sprite + self.Height_sprite - 4 <= i.Y + i.HEIGHT:
                     if self.Y_sprite + self.Height_sprite - 1 >= i.Y:
-                        if self.X_sprite <= i.X + i.WIDTH:
-                            if self.X_sprite + self.Width_sprite >= i.X + i.WIDTH:
+                        if self.X_sprite - 1 <= i.X + i.WIDTH:
+                            if self.X_sprite + self.Width_sprite - 1 >= i.X + i.WIDTH:
                                 self.move_left = False
                                 break
                             else:
