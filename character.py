@@ -1,6 +1,5 @@
 import pygame
 import os
-import random 
 from matrix import *
 
 class Character():
@@ -100,7 +99,7 @@ class Character():
     #-----Прижок-----#
     def jump(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP] and self.fall == False:
+        if keys[pygame.K_UP] and self.fall == False and self.touch:
             self.check = False
             self.Y_sprite -= self.Jump_distance
             self.jump_count += 1
@@ -124,12 +123,20 @@ class Character():
         for i in list_level:
             if self.X_sprite <= i.X + i.WIDTH  and self.check:
                 if self.X_sprite + self.Width_sprite >= i.X:
-                    if self.Y_sprite + self.Height_sprite + 1 >= i.Y:
+                    if self.Y_sprite + self.Height_sprite >= i.Y and self.Y_sprite + self.Height_sprite <= i.Y + self.Gravity_sprite + 1:
                         self.fall = False
                         break
                     else:
                         self.fall = True
-            
+    def colision_bottom(self):
+        for i in list_level:
+            if self.X_sprite <= i.X + i.WIDTH:
+                if self.X_sprite + self.Width_sprite >= i.X:
+                    if self.Y_sprite <= i.Y + i.HEIGHT:
+                        self.touch = True
+                        break
+                    else:
+                        self.touch = False
                 
             # if self.Y_sprite + self.Height_sprite + 1 >= i.Y:
             #     if self.X_sprite >= i.X:
@@ -155,22 +162,22 @@ class Character():
                             
     def colisium_right(self):
         for i in list_level:
-            if 
-                        if self.X_sprite - 1 >= i.X + i.WIDTH:
-                            if self.X_sprite + self.Width_sprite - 1 <= i.X + i.WIDTH:
-                                self.move_right = False
-                                break
-                            else:
-                                self.move_right = True
+            if self.Y_sprite + 3 <= i.Y + i.HEIGHT:
+                if self.Y_sprite + self.Height_sprite - 5 >= i.Y:
+                    if self.X_sprite + self.Width_sprite >= i.X:
+                        if self.X_sprite < i.X:
+                            self.move_right = False
+                            break
+                        else:
+                            self.move_right = True
                                 
     def colisium_left(self):
         for i in list_level:
-            if self.Y_sprite + 1 >= i.Y and self.Y_sprite - 1 <= i.Y + i.HEIGHT:
-                if self.Y_sprite + self.Height_sprite - 4 <= i.Y + i.HEIGHT:
-                    if self.Y_sprite + self.Height_sprite - 1 >= i.Y:
-                        if self.X_sprite - 1 <= i.X + i.WIDTH:
-                            if self.X_sprite + self.Width_sprite - 1 >= i.X + i.WIDTH:
-                                self.move_left = False
-                                break
-                            else:
-                                self.move_left = True
+            if self.Y_sprite + 3 <= i.Y + i.HEIGHT:
+                if self.Y_sprite + self.Height_sprite - 5 >= i.Y:
+                    if self.X_sprite <= i.X + i.WIDTH:
+                        if self.X_sprite + self.Width_sprite > i.X:
+                            self.move_left = False
+                            break
+                        else:
+                            self.move_left = True

@@ -13,7 +13,7 @@ background = Image(0,0,1080,720,"\\image\\phone.png")
 buttonplay = Image(690, 53, 180, 86, "\\image\\buttonplay1.png")
 buttonhelp = Image(690, 282, 180, 86, "\\image\\buttonhelp1.png")
 buttonexit = Image(690, 509, 180, 86, "\\image\\buttonexit1.png")
-mainchar = Character(400, 550, 21, 27, 5, 7, 18, "\\image\\char1.png")
+mainchar = Character(400, 550, 21, 27, 5, 5, 13, "\\image\\char1.png")
 
 clock = pygame.time.Clock()
 mouse_position = 1
@@ -72,7 +72,7 @@ while game:
         mainchar.colision()
         mainchar.gravity()
         mainchar.jump()
-        # mainchar.bottom_colision()
+        mainchar.colision_bottom()
     
     clock.tick(60)
     pygame.display.flip()
