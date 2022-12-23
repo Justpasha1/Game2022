@@ -22,20 +22,16 @@ class Character():
         self.start_jump_distance = jump_sprite
         #путь к нашему спрайту
         self.Sprite_path = sprite_path
-        self.jump_count = 0
-        self.Y_VELOCITY = self.Jump_distance
-        # self.Jump_distance = self.Height_sprite*2
-        self.Jump_speed = 27
+        self.Jump_speed = 9
         self.move_left = True
         self.move_right = True
         self.index_image = 0
         self.speed_animation = 0
         self.fall = False
-        self.jumping = False
         self.img = None
         self.load_image()
-        self.flag_jump = True
-
+        self.flag_jump = False
+        
     def load_image(self):
         self.img = os.path.abspath(__file__ + "/..")
         self.img = self.img + self.Sprite_path
@@ -92,7 +88,7 @@ class Character():
                     self.speed_animation = 0 
                 self.load_image()
                 self.speed_animation += 1
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP] and not self.fall:
             self.flag_jump = True
         if self.flag_jump: 
             self.jump(list_level)
@@ -107,6 +103,7 @@ class Character():
     def jump(self, list_level):
         self.colision_up(list_level)
         if self.fall == False:
+            self.flag_jump = True
             self.Y_sprite -= self.Jump_speed
             self.Jump_distance -= self.Jump_speed
             if self.Jump_distance <= 0:
@@ -115,10 +112,10 @@ class Character():
                 
     #-----Верхняя коллизия-----#                
     def colision_bottom(self,list_level):
-        for i in list_level:
-            if self.X_sprite <= i.X + i.WIDTH  and not self.flag_jump:
-                if self.X_sprite + self.Width_sprite >= i.X:
-                    if self.Y_sprite + self.Height_sprite + 2 >= i.Y and self.Y_sprite + self.Height_sprite <= i.Y + self.Gravity_sprite + 1:
+        for block in list_level:
+            if self.X_sprite <= block.X + block.WIDTH  and not self.flag_jump:
+                if self.X_sprite + self.Width_sprite >= block.X:
+                    if self.Y_sprite + self.Height_sprite >= block.Y:
                          #and self.Y_sprite + self.Height_sprite <= i.Y + self.Gravity_sprite + 1:
                         self.fall = False
                         break
@@ -126,12 +123,14 @@ class Character():
                         self.fall = True
                 else:
                     self.fall = True
+            else:
+                self.fall = True
 
     def colision_up(self,list_level):
-        for i in list_level:
-            if self.X_sprite <= i.X + i.WIDTH:
-                if self.X_sprite + self.Width_sprite >= i.X:
-                    if self.Y_sprite <= i.Y + i.HEIGHT and self.Y_sprite >= i.Y:
+        for block in list_level:
+            if self.X_sprite <= block.X + block.WIDTH:
+                if self.X_sprite + self.Width_sprite >= block.X:
+                    # if self.Y_sprite <= block.Y + block.HEIGHT and self.Y_sprite >= block.Y:
                         self.fall = True
                         break
                     else:
@@ -142,11 +141,11 @@ class Character():
                 self.fall = False
 
     def colisium_right(self,list_level):
-        for i in list_level:
-            if self.Y_sprite + 3 <= i.Y + i.HEIGHT:
-                if self.Y_sprite + self.Height_sprite - 5 >= i.Y:
-                    if self.X_sprite + self.Width_sprite >= i.X:
-                        if self.X_sprite < i.X:
+        for block in list_level:
+            # if self.Y_sprite + 3 <= block.Y + block.HEIGHT:
+                # if self.Y_sprite + self.Height_sprite - 5 >= block.Y:
+                    if self.X_sprite + self.Width_sprite >= block.X:
+                        if self.X_sprite < block.X:
                             self.move_right = False
                             break
                         else:
@@ -155,13 +154,15 @@ class Character():
                         self.move_right = True
                 else:
                     self.move_right = True
+            else:
+                self.move_right = True
          
     def colisium_left(self,list_level):
-        for i in list_level:
-            if self.Y_sprite + 3 <= i.Y + i.HEIGHT:
-                if self.Y_sprite + self.Height_sprite - 5 >= i.Y:
-                    if self.X_sprite <= i.X + i.WIDTH:
-                        if self.X_sprite + self.Width_sprite >= i.X:
+        for block in list_level:
+            if self.Y_sprite  <= block.Y + block.HEIGHT:
+                if self.Y_sprite + self.Height_sprite >= block.Y:
+                    if self.X_sprite <= block.X + block.WIDTH:
+                        if self.X_sprite + self.Width_sprite >= block.X:
                             self.move_left = False
                             break
                         else:
@@ -170,3 +171,5 @@ class Character():
                         self.move_left = True
                 else:
                     self.move_left = True
+            else:
+                self.move_left = True

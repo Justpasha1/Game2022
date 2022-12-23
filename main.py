@@ -2,7 +2,6 @@ import pygame
 import os
 from Image2 import Image
 from character import Character
-from graphic_elements import Graphic_elements
 from matrix import *
 
 pygame.init()
@@ -13,7 +12,7 @@ background = Image(0,0,1080,720,"\\image\\phone.png")
 buttonplay = Image(690, 53, 180, 86, "\\image\\buttonplay1.png")
 buttonhelp = Image(690, 282, 180, 86, "\\image\\buttonhelp1.png")
 buttonexit = Image(690, 509, 180, 86, "\\image\\buttonexit1.png")
-mainchar = Character(400, 550, 17, 27, 5, 5, 135, "\\image\\char1.png")
+mainchar = Character(400, 550, 17, 27, 9, 5, 135, "\\image\\char1.png")
 
 clock = pygame.time.Clock()
 mouse_position = 1
@@ -69,9 +68,9 @@ while game:
             i.show_image(screen)
         mainchar.move_character(list_level)
         mainchar.show_image(screen)
-        mainchar.gravity()
+
         # mainchar.jump(list_level)
-        mainchar.colision_bottom(list_level)
+
         
     
     clock.tick(60)
