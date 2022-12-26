@@ -94,6 +94,7 @@ class Character():
             self.jump(list_level)
         if not self.flag_jump:
             self.gravity()
+        self.colision_bottom(list_level)
     #-----Падение-----#
     def gravity(self):
         if self.fall:
@@ -115,8 +116,10 @@ class Character():
         for block in list_level:
             if self.X_sprite <= block.X + block.WIDTH  and not self.flag_jump:
                 if self.X_sprite + self.Width_sprite >= block.X:
-                    if self.Y_sprite + self.Height_sprite >= block.Y:
+                    if self.Y_sprite + self.Height_sprite >= block.Y and self.Y_sprite + self.Height_sprite <= block.Y + self.Gravity_sprite:
                          #and self.Y_sprite + self.Height_sprite <= i.Y + self.Gravity_sprite + 1:
+                        self.Y_sprite = block.Y - self.Height_sprite 
+                        print(block.Y, self.Y_sprite + self.Height_sprite)
                         self.fall = False
                         break
                     else:
@@ -131,6 +134,7 @@ class Character():
             if self.X_sprite <= block.X + block.WIDTH:
                 if self.X_sprite + self.Width_sprite >= block.X:
                     # if self.Y_sprite <= block.Y + block.HEIGHT and self.Y_sprite >= block.Y:
+                    if self.Y_sprite <= block.Y + block.HEIGHT and self.Y_sprite + self.Height_sprite >= block.Y + block.HEIGHT:
                         self.fall = True
                         break
                     else:
@@ -142,8 +146,8 @@ class Character():
 
     def colisium_right(self,list_level):
         for block in list_level:
-            # if self.Y_sprite + 3 <= block.Y + block.HEIGHT:
-                # if self.Y_sprite + self.Height_sprite - 5 >= block.Y:
+            if self.Y_sprite <= block.Y + block.HEIGHT:
+                if self.Y_sprite + self.Height_sprite >= block.Y:
                     if self.X_sprite + self.Width_sprite >= block.X:
                         if self.X_sprite < block.X:
                             self.move_right = False
