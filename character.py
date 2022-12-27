@@ -146,10 +146,11 @@ class Character():
 
     def colisium_right(self,list_level):
         for block in list_level:
-            if self.Y_sprite + 1 <= block.Y + block.HEIGHT:
+            if self.Y_sprite + 1  <= block.Y + block.HEIGHT:
                 if self.Y_sprite + self.Height_sprite - 1 >= block.Y:
-                    if self.X_sprite + self.Width_sprite >= block.X:
-                        if self.X_sprite < block.X:
+                    if self.X_sprite + self.Width_sprite + self.Speed_sprite >= block.X:
+                        if self.X_sprite <= block.X + block.WIDTH:
+
                             self.move_right = False
                             break
                         else:
@@ -165,8 +166,9 @@ class Character():
         for block in list_level:
             if self.Y_sprite + 1  <= block.Y + block.HEIGHT:
                 if self.Y_sprite + self.Height_sprite - 1 >= block.Y:
-                    if self.X_sprite <= block.X + block.WIDTH:
+                    if self.X_sprite <= block.X + block.WIDTH + self.Speed_sprite:
                         if self.X_sprite + self.Width_sprite >= block.X:
+
                             self.move_left = False
                             break
                         else:
