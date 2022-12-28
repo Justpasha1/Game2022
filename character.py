@@ -32,6 +32,8 @@ class Character():
         self.load_image()
         self.flag_jump = False
         
+        self.space = False
+        
     def load_image(self):
         self.img = os.path.abspath(__file__ + "/..")
         self.img = self.img + self.Sprite_path
@@ -88,8 +90,11 @@ class Character():
                     self.speed_animation = 0 
                 self.load_image()
                 self.speed_animation += 1
-        if keys[pygame.K_UP] and not self.fall:
+        if keys[pygame.K_UP] and not self.fall and self.space == False:
             self.flag_jump = True
+            self.space = True
+        if keys[pygame.K_UP] == False:
+            self.space = False
         if self.flag_jump: 
             self.jump(list_level)
         if not self.flag_jump:
@@ -99,7 +104,7 @@ class Character():
     def gravity(self):
         if self.fall:
             self.Y_sprite += self.Gravity_sprite
-            
+
     #-----Прижок-----#
     def jump(self, list_level):
         self.colision_up(list_level)
@@ -110,7 +115,7 @@ class Character():
             if self.Jump_distance <= 0:
                 self.flag_jump = False
                 self.Jump_distance = self.start_jump_distance
-                
+
     #-----Верхняя коллизия-----#                
     def colision_bottom(self,list_level):
         for block in list_level:
@@ -134,9 +139,9 @@ class Character():
             if self.X_sprite <= block.X + block.WIDTH:
                 if self.X_sprite + self.Width_sprite >= block.X:
                     # if self.Y_sprite <= block.Y + block.HEIGHT and self.Y_sprite >= block.Y:
-                    if self.Y_sprite <= block.Y + block.HEIGHT and self.Y_sprite + self.Height_sprite >= block.Y + block.HEIGHT:
+                    if self.Y_sprite <= block.Y + block.HEIGHT + 10 and self.Y_sprite + self.Height_sprite >= block.Y + block.HEIGHT:
+                        self.Jump_distance = 0
                         self.fall = True
-                        break
                     else:
                         self.fall = False
                 else:
@@ -148,9 +153,9 @@ class Character():
         for block in list_level:
             if self.Y_sprite + 1  <= block.Y + block.HEIGHT:
                 if self.Y_sprite + self.Height_sprite - 1 >= block.Y:
-                    if self.X_sprite + self.Width_sprite + self.Speed_sprite >= block.X:
+                    if self.X_sprite + self.Width_sprite >= block.X - self.Speed_sprite :
                         if self.X_sprite <= block.X + block.WIDTH:
-
+                            self.X_sprite = block.X - self.Width_sprite  - 1
                             self.move_right = False
                             break
                         else:
@@ -168,7 +173,7 @@ class Character():
                 if self.Y_sprite + self.Height_sprite - 1 >= block.Y:
                     if self.X_sprite <= block.X + block.WIDTH + self.Speed_sprite:
                         if self.X_sprite + self.Width_sprite >= block.X:
-
+                            self.X_sprite = block.X + block.WIDTH + 1
                             self.move_left = False
                             break
                         else:
