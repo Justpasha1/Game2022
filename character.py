@@ -2,7 +2,7 @@ import pygame
 import os
 
 class Character():
-    def __init__(self, x_sprite, y_sprite, width_sprite, height_sprite,speed_sprite,gravity_sprite,jump_sprite,sprite_path,):
+    def __init__(self, x_sprite, y_sprite, width_sprite, height_sprite,speed_sprite,gravity_sprite,jump_sprite,sprite_path):
         #путь к спрайту
         self.Sprite_path = sprite_path
         #координата х спрайта
@@ -22,7 +22,7 @@ class Character():
         self.start_jump_distance = jump_sprite
         #путь к нашему спрайту
         self.Sprite_path = sprite_path
-        self.Jump_speed = 9
+        self.Jump_speed = 3
         self.move_left = True
         self.move_right = True
         self.index_image = 0
@@ -31,6 +31,10 @@ class Character():
         self.img = None
         self.load_image()
         self.flag_jump = False
+        self.ores_balance = 0
+        self.side = False #False - Лево, True - Право
+        self.space = False
+        self.can_entern_taverna = False
         
     def load_image(self):
         self.img = os.path.abspath(__file__ + "/..")
@@ -45,7 +49,7 @@ class Character():
         if keys[pygame.K_LEFT] :
             self.colisium_left(list_level)
             if self.move_left == True:
-                
+                self.side = False
                 self.X_sprite -= self.Speed_sprite
                 if self.speed_animation == 10:
                     self.index_image += 1
@@ -64,12 +68,12 @@ class Character():
                     self.speed_animation = 0 
                 self.load_image()
                 self.speed_animation += 1 
-            
+
 
         if keys[pygame.K_RIGHT]:
             self.colisium_right(list_level)
             if self.move_right == True:
-            
+                self.side = True
                 self.X_sprite += self.Speed_sprite
                 if self.speed_animation == 10:
                     self.index_image += 1
@@ -85,12 +89,19 @@ class Character():
                     self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
                     self.speed_animation += 1
                     self.index_image = 0 
-                    self.speed_animation = 0 
+                    self.speed_animation = 0
+                
                 self.load_image()
                 self.speed_animation += 1
-        if keys[pygame.K_UP] and not self.fall:
+
+
+        if keys[pygame.K_UP] and not self.fall and self.space == False:
             self.flag_jump = True
-        if self.flag_jump: 
+            self.space = True
+            
+        if keys[pygame.K_UP] == False:
+            self.space = False
+        if self.flag_jump:
             self.jump(list_level)
         if not self.flag_jump:
             self.gravity()
@@ -99,7 +110,12 @@ class Character():
     def gravity(self):
         if self.fall:
             self.Y_sprite += self.Gravity_sprite
-            
+            if self.side == True:
+                self.Sprite_path = "\\image\\char6.png"
+            elif self.side == False:
+                self.Sprite_path = "\\image\\charl6.png"
+            self.load_image()
+
     #-----Прижок-----#
     def jump(self, list_level):
         self.colision_up(list_level)
@@ -110,7 +126,12 @@ class Character():
             if self.Jump_distance <= 0:
                 self.flag_jump = False
                 self.Jump_distance = self.start_jump_distance
-                
+            if self.side == True:
+                self.Sprite_path = "\\image\\char5.png"
+            elif self.side == False:
+                self.Sprite_path = "\\image\\charl5.png"
+            self.load_image()
+
     #-----Верхняя коллизия-----#                
     def colision_bottom(self,list_level):
         for block in list_level:
@@ -119,7 +140,7 @@ class Character():
                     if self.Y_sprite + self.Height_sprite >= block.Y and self.Y_sprite + self.Height_sprite <= block.Y + self.Gravity_sprite:
                          #and self.Y_sprite + self.Height_sprite <= i.Y + self.Gravity_sprite + 1:
                         self.Y_sprite = block.Y - self.Height_sprite 
-                        print(block.Y, self.Y_sprite + self.Height_sprite)
+                        # print(block.Y, self.Y_sprite + self.Height_sprite)
                         self.fall = False
                         break
                     else:
@@ -134,9 +155,9 @@ class Character():
             if self.X_sprite <= block.X + block.WIDTH:
                 if self.X_sprite + self.Width_sprite >= block.X:
                     # if self.Y_sprite <= block.Y + block.HEIGHT and self.Y_sprite >= block.Y:
-                    if self.Y_sprite <= block.Y + block.HEIGHT and self.Y_sprite + self.Height_sprite >= block.Y + block.HEIGHT:
+                    if self.Y_sprite <= block.Y + block.HEIGHT + 10 and self.Y_sprite + self.Height_sprite >= block.Y + block.HEIGHT:
+                        self.Jump_distance = 0
                         self.fall = True
-                        break
                     else:
                         self.fall = False
                 else:
@@ -148,9 +169,9 @@ class Character():
         for block in list_level:
             if self.Y_sprite + 1  <= block.Y + block.HEIGHT:
                 if self.Y_sprite + self.Height_sprite - 1 >= block.Y:
-                    if self.X_sprite + self.Width_sprite + self.Speed_sprite >= block.X:
+                    if self.X_sprite + self.Width_sprite >= block.X - self.Speed_sprite :
                         if self.X_sprite <= block.X + block.WIDTH:
-
+                            self.X_sprite = block.X - self.Width_sprite  - 1
                             self.move_right = False
                             break
                         else:
@@ -168,7 +189,7 @@ class Character():
                 if self.Y_sprite + self.Height_sprite - 1 >= block.Y:
                     if self.X_sprite <= block.X + block.WIDTH + self.Speed_sprite:
                         if self.X_sprite + self.Width_sprite >= block.X:
-
+                            self.X_sprite = block.X + block.WIDTH + 1
                             self.move_left = False
                             break
                         else:
@@ -179,3 +200,31 @@ class Character():
                     self.move_left = True
             else:
                 self.move_left = True
+    def ores_collision(self,list_ores):
+        #Перебераем список руды
+        for i in list_ores:
+            #Условие касания с рудой
+            if self.Y_sprite + self.Height_sprite >= i.Y and  self.Y_sprite <= i.Y + i.HEIGHT and self.X_sprite + self.Width_sprite >= i.X and self.X_sprite <= i.X + i.WIDTH:
+                #Руда перемеается за экран(пропадает)
+               i.X = -100
+                #Увеличиваем счетчик руды
+               self.ores_balance += 1
+    def taverna(self, button, taverna, screen, scen):
+        keys = pygame.key.get_pressed()
+        if self.X_sprite + self.Width_sprite >= taverna.X:
+            if self.X_sprite <= taverna.X + taverna.WIDTH:
+                if self.Y_sprite <= taverna.Y + taverna.HEIGHT:
+                    if self.Y_sprite + self.Height_sprite >= taverna.Y:
+                        button.show_image(screen)
+                        self.can_entern_taverna = True
+                    else:
+                        self.can_entern_taverna = False
+                else:
+                    self.can_entern_taverna = False
+            else:
+                self.can_entern_taverna = False
+        else:
+            self.can_entern_taverna = False
+                        
+        if keys[pygame.K_x] and self.can_entern_taverna:
+            scen = 3
