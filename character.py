@@ -36,6 +36,8 @@ class Character():
         self.space = False
         self.can_entern_taverna = False
         
+        self.space = False
+        
     def load_image(self):
         self.img = os.path.abspath(__file__ + "/..")
         self.img = self.img + self.Sprite_path
@@ -93,6 +95,7 @@ class Character():
                 
                 self.load_image()
                 self.speed_animation += 1
+<<<<<<< HEAD
 
 
         if keys[pygame.K_UP] and not self.fall and self.space == False:
@@ -102,6 +105,14 @@ class Character():
         if keys[pygame.K_UP] == False:
             self.space = False
         if self.flag_jump:
+=======
+        if keys[pygame.K_UP] and not self.fall and self.space == False:
+            self.flag_jump = True
+            self.space = True
+        if keys[pygame.K_UP] == False:
+            self.space = False
+        if self.flag_jump: 
+>>>>>>> 03a25e28d60886387f14a499d43624c157716cd2
             self.jump(list_level)
         if not self.flag_jump:
             self.gravity()
@@ -110,11 +121,14 @@ class Character():
     def gravity(self):
         if self.fall:
             self.Y_sprite += self.Gravity_sprite
+<<<<<<< HEAD
             if self.side == True:
                 self.Sprite_path = "\\image\\char6.png"
             elif self.side == False:
                 self.Sprite_path = "\\image\\charl6.png"
             self.load_image()
+=======
+>>>>>>> 03a25e28d60886387f14a499d43624c157716cd2
 
     #-----Прижок-----#
     def jump(self, list_level):
@@ -126,11 +140,14 @@ class Character():
             if self.Jump_distance <= 0:
                 self.flag_jump = False
                 self.Jump_distance = self.start_jump_distance
+<<<<<<< HEAD
             if self.side == True:
                 self.Sprite_path = "\\image\\char5.png"
             elif self.side == False:
                 self.Sprite_path = "\\image\\charl5.png"
             self.load_image()
+=======
+>>>>>>> 03a25e28d60886387f14a499d43624c157716cd2
 
     #-----Верхняя коллизия-----#                
     def colision_bottom(self,list_level):
