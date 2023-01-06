@@ -35,8 +35,16 @@ class Character():
         self.side = False #False - Лево, True - Право
         self.space = False
         self.can_entern_taverna = False
-        
+        self.diamond = 0
+        self.emeralds = 0
+        self.gold = 0
+        self.iron = 0
+        self.silver = 0
+        self.coin = 0
+        self.hp = 100
+        self.hp_max = 100
         self.space = False
+        self.where_watching = 'right'
         
     def load_image(self):
         self.img = os.path.abspath(__file__ + "/..")
@@ -49,6 +57,7 @@ class Character():
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LEFT] :
+            self.where_watching = 'left'
             self.colisium_left(list_level)
             if self.move_left == True:
                 self.side = False
@@ -73,6 +82,7 @@ class Character():
 
 
         if keys[pygame.K_RIGHT]:
+            self.where_watching = 'right'
             self.colisium_right(list_level)
             if self.move_right == True:
                 self.side = True
@@ -95,7 +105,19 @@ class Character():
                 
                 self.load_image()
                 self.speed_animation += 1
-<<<<<<< HEAD
+        
+            #Если персонаж смотрит вправо
+        # else:
+        #     #То наш персонаж будет стоять и смотреть вправо
+        #     if self.where_watching == 'right':
+        #         if self.can_flying_now:
+        #                 self.Sprite_path = 'image/' + 'char1' + '.png'
+        #                 self.load_image()
+        #     else:
+        #         #То наш персонаж будет стоять и смотреть влево
+        #         if self.can_flying_now:
+        #             self.Sprite_path = 'image/' + 'charl1' + '.png'
+        #             self.load_image()
 
 
         if keys[pygame.K_UP] and not self.fall and self.space == False:
@@ -105,30 +127,29 @@ class Character():
         if keys[pygame.K_UP] == False:
             self.space = False
         if self.flag_jump:
-=======
-        if keys[pygame.K_UP] and not self.fall and self.space == False:
-            self.flag_jump = True
-            self.space = True
-        if keys[pygame.K_UP] == False:
-            self.space = False
-        if self.flag_jump: 
->>>>>>> 03a25e28d60886387f14a499d43624c157716cd2
             self.jump(list_level)
         if not self.flag_jump:
             self.gravity()
+       
+        # else:
+        #     #То наш персонаж будет стоять и смотреть вправо
+        #     if self.where_watching == 'right':
+        #             self.Sprite_path = '\\image/' + 'char1' + '.png'
+        #             self.load_image()
+        #     else:
+        #         #То наш персонаж будет стоять и смотреть влево
+        #         self.Sprite_path = '\\image/' + 'charl1' + '.png'
+        #         self.load_image()
         self.colision_bottom(list_level)
     #-----Падение-----#
     def gravity(self):
         if self.fall:
             self.Y_sprite += self.Gravity_sprite
-<<<<<<< HEAD
             if self.side == True:
                 self.Sprite_path = "\\image\\char6.png"
             elif self.side == False:
                 self.Sprite_path = "\\image\\charl6.png"
             self.load_image()
-=======
->>>>>>> 03a25e28d60886387f14a499d43624c157716cd2
 
     #-----Прижок-----#
     def jump(self, list_level):
@@ -140,14 +161,11 @@ class Character():
             if self.Jump_distance <= 0:
                 self.flag_jump = False
                 self.Jump_distance = self.start_jump_distance
-<<<<<<< HEAD
             if self.side == True:
                 self.Sprite_path = "\\image\\char5.png"
             elif self.side == False:
                 self.Sprite_path = "\\image\\charl5.png"
             self.load_image()
-=======
->>>>>>> 03a25e28d60886387f14a499d43624c157716cd2
 
     #-----Верхняя коллизия-----#                
     def colision_bottom(self,list_level):
@@ -223,25 +241,74 @@ class Character():
             #Условие касания с рудой
             if self.Y_sprite + self.Height_sprite >= i.Y and  self.Y_sprite <= i.Y + i.HEIGHT and self.X_sprite + self.Width_sprite >= i.X and self.X_sprite <= i.X + i.WIDTH:
                 #Руда перемеается за экран(пропадает)
-               i.X = -100
+                i.X = -100
                 #Увеличиваем счетчик руды
-               self.ores_balance += 1
-    def taverna(self, button, taverna, screen, scen):
+                if i.TYPE == 'diamond':
+                    self.diamond += 1
+                if i.TYPE == 'emerald':
+                    self.emeralds += 1
+                if i.TYPE == 'gold':
+                    self.gold += 1
+                if i.TYPE == 'silver':
+                    self.silver += 1
+                if i.TYPE == 'iron':
+                    self.iron += 1
+
+    def taverna(self, button, taverna, screen):
         keys = pygame.key.get_pressed()
         if self.X_sprite + self.Width_sprite >= taverna.X:
             if self.X_sprite <= taverna.X + taverna.WIDTH:
                 if self.Y_sprite <= taverna.Y + taverna.HEIGHT:
                     if self.Y_sprite + self.Height_sprite >= taverna.Y:
-                        button.show_image(screen)
-                        self.can_entern_taverna = True
-                    else:
-                        self.can_entern_taverna = False
-                else:
-                    self.can_entern_taverna = False
-            else:
-                self.can_entern_taverna = False
-        else:
+                        button.show_image(screen)  
+                        if keys[pygame.K_x]:
+                            self.can_entern_taverna = True
+    def leave_taverna(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE] and self.can_entern_taverna:
             self.can_entern_taverna = False
-                        
-        if keys[pygame.K_x] and self.can_entern_taverna:
-            scen = 3
+
+    def damage(self, enemies, scene):
+        for enemy in enemies:
+            if enemy.cd == 0:
+                # left
+                if self.Y_sprite + 1 <= enemy.y_enemie + enemy.height_enemie:
+                    if self.Y_sprite + self.Height_sprite - 1 >= enemy.y_enemie:
+                        if self.X_sprite <= enemy.x_enemie + enemy.width_enemie + self.Speed_sprite:
+                            if self.X_sprite + self.Width_sprite >= enemy.x_enemie:
+                                self.hp -= enemy.damage
+                                enemy.cd = 120
+                # right
+                elif self.Y_sprite + 1  <= enemy.y_enemie + enemy.height_enemie:
+                    if self.Y_sprite + self.Height_sprite - 1 >= enemy.y_enemie:
+                        if self.X_sprite + self.Width_sprite >= enemy.x_enemie - self.Speed_sprite :
+                            if self.X_sprite <= enemy.x_enemie + enemy.width_enemie:
+                                self.hp -= enemy.damage
+                                enemy.cd = 120
+
+
+            if enemy.cd > 0:
+                enemy.cd -= 1
+    def show_hp(self, screen):
+        if self.hp >= self.hp_max-(self.hp_max*0.2):
+            self.heart_path = "\\image\\hearts\\heart5.png"
+        elif self.hp >= self.hp_max-(self.hp_max*0.4):
+            self.heart_path = "\\image\\hearts\\heart4.png"
+        elif self.hp >= self.hp_max-(self.hp_max*0.6):
+            self.heart_path = "\\image\\hearts\\heart3.png"
+        elif self.hp >= self.hp_max-(self.hp_max*0.8):
+            self.heart_path = "\\image\\hearts\\heart2.png"
+        elif self.hp > self.hp_max-(self.hp_max*1):
+            self.heart_path = "\\image\\hearts\\heart1.png"
+        elif self.hp <= 0:
+            self.heart_path = "\\image\\hearts\\heart0.png"
+            
+        self.heart = os.path.abspath(__file__ + "/..")
+        self.heart = self.heart + self.heart_path
+        self.heart = pygame.image.load(self.heart).convert_alpha()
+        self.heart = pygame.transform.scale(self.heart, (19*2, 25*2))
+        # self.f1 = pygame.font.Font(None, 36)
+        # self.text1 = self.f1.render(str(self.hp), True, (180, 0, 0))
+        # screen.blit(self.text1, (200, 50))
+        screen.blit(self.heart, (2, 2))
+      

@@ -3,34 +3,93 @@ import os
 from Image2 import Image
 from character import Character
 from level import *
+from text import Text
+from ores import Ores
 
 pygame.init()
+pygame.font.init()
 
 screen = pygame.display.set_mode((1080, 720))
-scene = 1
+font = pygame.font.SysFont('Comic Sans MS', 27)
+
 background = Image(0,0,1080,720,"\\image\\phone.png")
 buttonplay = Image(690, 53, 180, 86, "\\image\\buttonplay1.png")
 buttonhelp = Image(690, 282, 180, 86, "\\image\\buttonhelp1.png")
 buttonexit = Image(690, 509, 180, 86, "\\image\\buttonexit1.png")
 mainchar = Character(400, 550, 17, 27, 2, 3, 100, "\\image\\char1.png")
-oressilver1 = Image(200,600,38,16,"/image/ores/silver.png")
-oresemeralds1 = Image(200,600,25,16,"/image/ores/emeralds.png")
-oresgold1 = Image(200,600,37,30,"/image/ores/gold.png")
-oresiron1 = Image(200,600,35,23,"/image/ores/iron.png")
-oresdiamond1 = Image(200,600,32,18,"/image/ores/diamond.png")
+oressilver1 = Ores(200,600,38,16,"/image/ores/silver.png",'silver')
+oresemeralds1 = Ores(200,600,25,16,"/image/ores/emeralds.png",'emerald')
+oresgold1 = Ores(200,600,37,30,"/image/ores/gold.png",'gold')
+oresiron1 = Ores(200,600,35,23,"/image/ores/iron.png",'iron')
+oresdiamond1 = Ores(200,600,32,18,"/image/ores/diamond.png",'diamond')
 bgstart = Image(0,0,1080,720,'\\image\\bg\\bgstart.png')
 taverna = Image(400,523,204,152,'\\image\\taverna1.png')
+tavernabg = Image(0,0,1080,720,'\\image\\bg\\tavernabg.png')
 X = Image(taverna.X + taverna.WIDTH/2-25, taverna.Y - 42,40,40,'\\image\\X.png')
+Esc = Image(10,10,40,40,'\\image\\Esc.png')
+buttonsell = Image(560, 400, 47*3,18*3,'\\image\\taverna\\sell1.png')
+buttonbuy = Image(560+47*3+20,400,47*3,18*3,'\\image\\taverna\\buy1.png')
+buttonselldiamond = Image(500, 60, 40*3,40*3,'\\image\\taverna\\diamondsell.png')
+buttonsellemeralds = Image(700, 60, 40*3,40*3,'\\image\\taverna\\emeraldssell.png')
+buttonsellgold = Image(900, 60, 40*3,40*3,'\\image\\taverna\\goldsell.png')
+buttonselliron = Image(600, 230, 40*3,40*3,'\\image\\taverna\\ironsell.png')
+buttonsellsilver = Image(800, 230, 40*3,40*3,'\\image\\taverna\\silversell.png')
+coin1 = Image(buttonselldiamond.X,buttonselldiamond.Y+buttonselldiamond.HEIGHT,27,27,'\\image\\taverna\\coin.png')
+coin2 = Image(buttonsellemeralds.X,buttonsellemeralds.Y+buttonsellemeralds.HEIGHT,27,27,'\\image\\taverna\\coin.png')
+coin3 = Image(buttonsellgold.X,buttonsellgold.Y+buttonsellgold.HEIGHT,27,27,'\\image\\taverna\\coin.png')
+coin4 = Image(buttonselliron.X,buttonselliron.Y+buttonselliron.HEIGHT,27,27,'\\image\\taverna\\coin.png')
+coin5 = Image(buttonsellsilver.X,buttonsellsilver.Y+buttonsellsilver.HEIGHT,27,27,'\\image\\taverna\\coin.png')
+coin6 = Image(buttonbuy.X + buttonbuy.WIDTH + 10, buttonbuy.Y + 12,27, 27,'\\image\\taverna\\coin.png')
+sellall = Image(buttonsellemeralds.X,0,40*3,20*3,'\\image\\taverna\\sellall.png')
+caveentertop = Image(1018,549,62,127,'\\image\\caveentertop.png')
+caveenterbottom = Image(1018,608,25,68,'\\image\\caveenterbottom.png')
+list_coin = [coin1,coin2,coin3,coin4,coin5]
 list_ores = [oresdiamond1]
+
+diamondprice = Text(coin2.X+coin2.WIDTH+5,coin2.Y,27,'arial','5',(0,0,0))
+emeraldsprice = Text(coin1.X+coin1.WIDTH+5,coin1.Y,27,'arial','4',(0,0,0))
+goldprice = Text(coin3.X+coin3.WIDTH+5,coin3.Y,27,'arial','3',(0,0,0))
+silverprice = Text(coin5.X+coin5.WIDTH+5,coin5.Y,27,'arial','2',(0,0,0))
+ironprice = Text(coin4.X+coin4.WIDTH+5,coin4.Y,27,'arial','1',(0,0,0))
+
+diamondcount = Text(buttonselldiamond.X+buttonselldiamond.WIDTH//2-10,buttonselldiamond.Y,27,'arial',str(mainchar.diamond),(0,0,0))
+emeraldscount = Text(buttonsellemeralds.X+buttonsellemeralds.WIDTH//2-10,buttonsellemeralds.Y,27,'arial',str(mainchar.emeralds),(0,0,0))
+goldcount = Text(buttonsellgold.X+buttonsellgold.WIDTH//2-10,buttonsellgold.Y,27,'arial',str(mainchar.gold),(0,0,0))
+silvercount = Text(buttonsellsilver.X+buttonsellsilver.WIDTH//2-10,buttonsellsilver.Y,27,'arial',str(mainchar.silver),(0,0,0))
+ironcount = Text(buttonselliron.X+buttonselliron.WIDTH//2-10,buttonselliron.Y,27,'arial',str(mainchar.iron),(0,0,0))
+monyewehave = Text(coin6.X+coin6.WIDTH + 5,coin6.Y,27,'arial',str(mainchar.coin),(0,0,0))
+
+# 
 
 for i in list_ores:
     i.load_image()
-
+for i in list_coin:
+    i.load_image()
+coin6.load_image()
+caveenterbottom.load_image()
+caveentertop.load_image()
+diamondprice.load_text()
+emeraldsprice.load_text()
+goldprice.load_text()
+silverprice.load_text()
+ironprice.load_text()
+sellall.load_image()
+buttonsellemeralds.load_image()
+buttonselldiamond.load_image()
+buttonsellgold.load_image()
+buttonselliron.load_image()
+buttonsellsilver.load_image()
+buttonbuy.load_image()
+buttonsell.load_image()
+tavernabg.load_image()
 bgstart.load_image()
 taverna.load_image()
+Esc.load_image()
+
+menu = None
 clock = pygame.time.Clock()
 mouse_position = 1
-
+scene = 1
 game = True
 while game:
     for event in pygame.event.get():
@@ -76,6 +135,104 @@ while game:
             buttonplay.show_image(screen)
             buttonhelp.show_image(screen)
             buttonexit.show_image(screen)
+        if scene == 3:
+            if event.type == pygame.MOUSEBUTTONUP:
+                if event.pos[0] > buttonsell.X and event.pos[0] < buttonsell.X + buttonsell.WIDTH and event.pos[1] > buttonsell.Y and event.pos[1] < buttonsell.Y + buttonsell.HEIGHT:
+                    menu = 'sell'
+                if event.pos[0] > buttonbuy.X and event.pos[0] < buttonbuy.X + buttonbuy.WIDTH and event.pos[1] > buttonbuy.Y and event.pos[1] < buttonbuy.Y + buttonbuy.HEIGHT:
+                    menu = 'buy'
+            
+
+            keys = pygame.key.get_pressed()
+            # screen.fill((0,0,0))
+            tavernabg.show_image(screen)
+            Esc.show_image(screen)
+            buttonsell.show_image(screen)
+            buttonbuy.show_image(screen)
+            coin6.show_image(screen)
+            
+            monyewehave.TEXT = str(mainchar.coin)
+            monyewehave.load_text()
+            monyewehave.show_text(screen)
+            if menu == 'sell':
+                sellall.show_image(screen)
+                diamondcount.TEXT = str(mainchar.diamond)
+                emeraldscount.TEXT = str(mainchar.emeralds)
+                goldcount.TEXT = str(mainchar.gold)
+                silvercount.TEXT = str(mainchar.silver)
+                ironcount.TEXT = str(mainchar.iron)
+                buttonsell.PATH = '\\image\\taverna\\sell2.png'
+                buttonbuy.PATH = '\\image\\taverna\\buy1.png'
+                buttonbuy.load_image()
+                buttonsell.load_image()
+                buttonsellemeralds.show_image(screen)
+                buttonselldiamond.show_image(screen)
+                buttonsellgold.show_image(screen)
+                buttonselliron.show_image(screen)
+                buttonsellsilver.show_image(screen)
+                diamondprice.show_text(screen)
+                emeraldsprice.show_text(screen)
+                goldprice.show_text(screen)
+                ironprice.show_text(screen)
+                silverprice.show_text(screen)
+                diamondcount.load_text()
+                diamondcount.show_text(screen)
+                emeraldscount.load_text()
+                emeraldscount.show_text(screen)
+                goldcount.load_text()
+                goldcount.show_text(screen)
+                silvercount.load_text()
+                silvercount.show_text(screen)
+                ironcount.load_text()
+                ironcount.show_text(screen)
+                for i in list_coin:
+                    i.show_image(screen)
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if event.pos[0] > buttonselldiamond.X and event.pos[0] < buttonselldiamond.X + buttonselldiamond.WIDTH and event.pos[1] > buttonselldiamond.Y and event.pos[1] < buttonselldiamond.Y + buttonselldiamond.HEIGHT:
+                        if mainchar.diamond > 0:
+                            mainchar.diamond -= 1
+                            mainchar.coin += 4
+                    if event.pos[0] > buttonsellemeralds.X and event.pos[0] < buttonsellemeralds.X + buttonsellemeralds.WIDTH and event.pos[1] > buttonsellemeralds.Y and event.pos[1] < buttonsellemeralds.Y + buttonsellemeralds.HEIGHT:
+                        if mainchar.emeralds > 0:
+                            mainchar.emeralds -= 1
+                            mainchar.coin += 5
+                    if event.pos[0] > buttonsellgold.X and event.pos[0] < buttonsellgold.X + buttonsellgold.WIDTH and event.pos[1] > buttonsellgold.Y and event.pos[1] < buttonsellgold.Y + buttonsellgold.HEIGHT:
+                        if mainchar.gold > 0:
+                            mainchar.gold -= 1
+                            mainchar.coin += 3
+                    if event.pos[0] > buttonsellsilver.X and event.pos[0] < buttonsellsilver.X + buttonsellsilver.WIDTH and event.pos[1] > buttonsellsilver.Y and event.pos[1] < buttonsellsilver.Y + buttonsellsilver.HEIGHT:
+                        if mainchar.silver > 0:
+                            mainchar.silver -= 1
+                            mainchar.coin += 2
+                    if event.pos[0] > buttonselliron.X and event.pos[0] < buttonselliron.X + buttonselliron.WIDTH and event.pos[1] > buttonselliron.Y and event.pos[1] < buttonselliron.Y + buttonselliron.HEIGHT:
+                        if mainchar.iron > 0:
+                            mainchar.iron -= 1
+                            mainchar.coin += 1
+                    if event.pos[0] > sellall.X and event.pos[0] < sellall.X + sellall.WIDTH and event.pos[1] > sellall.Y and event.pos[1] < sellall.Y + sellall.HEIGHT:
+                        if mainchar.iron > 0:
+                            mainchar.coin += 1 * mainchar.iron
+                            mainchar.iron = 0
+                        if mainchar.silver > 0:
+                            mainchar.coin += 2 * mainchar.silver
+                            mainchar.silver = 0
+                        if mainchar.gold > 0:
+                            mainchar.coin += 3 * mainchar.gold
+                            mainchar.gold = 0
+                        if mainchar.diamond > 0:
+                            mainchar.coin += 4 * mainchar.diamond
+                            mainchar.diamond = 0
+                        if mainchar.emeralds > 0:
+                            mainchar.coin += 5 * mainchar.emeralds
+                            mainchar.emeralds = 0
+            if menu == 'buy':
+                buttonsell.PATH = '\\image\\taverna\\sell1.png'
+                buttonbuy.PATH = '\\image\\taverna\\buy2.png'
+                buttonbuy.load_image()
+                buttonsell.load_image()
+            mainchar.leave_taverna()
+            if mainchar.can_entern_taverna != True:
+                scene = 2
+    
     if scene == 2:
         bgstart.show_image(screen)
         for i in list_ores:
@@ -83,13 +240,34 @@ while game:
         for i in list_levelstart:
             i.show_image(screen)
         taverna.show_image(screen)
+        caveenterbottom.show_image(screen)
         mainchar.move_character(list_levelstart)
         mainchar.ores_collision(list_ores)
-        mainchar.taverna(X,taverna,screen,scen=scene)
+        mainchar.taverna(X,taverna,screen)
+
+        if mainchar.can_entern_taverna:
+            scene = 3
         mainchar.show_image(screen)
-    if scene == 3:
+        caveentertop.show_image(screen)
+        if mainchar.X_sprite >= 1050:
+            scene = 4
+            mainchar.X_sprite = 20
+            mainchar.Y_sprite = 27*2
+    if scene == 4:
         screen.fill((0,0,0))
-        
-    
+        for i in list_level_1:
+            i.show_image(screen)
+        mainchar.move_character(list_level_1)
+        mainchar.show_hp(screen)
+        mainchar.show_image(screen)
+        print(mainchar.X_sprite,mainchar.Y_sprite)
+        if mainchar.X_sprite >= 1018:
+            scene= 5
+            mainchar.Y_sprite = 608
+            mainchar.X_sprite = 20
+    if scene == 5:
+        screen.fill((0,0,0))
+        for i in list_level_2:
+            i.show_screen(screen)
     clock.tick(60)
     pygame.display.flip()
