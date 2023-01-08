@@ -8,6 +8,7 @@ from ores import Ores
 
 pygame.init()
 pygame.font.init()
+pygame.mixer.init()
 
 screen = pygame.display.set_mode((1080, 720))
 font = pygame.font.SysFont('Comic Sans MS', 27)
@@ -46,6 +47,9 @@ caveenterbottom = Image(1018,608,25,68,'\\image\\caveenterbottom.png')
 cavebg = Image(0,0,1080,720,'\\image\\bg\\cavebg.png')
 list_coin = [coin1,coin2,coin3,coin4,coin5]
 list_ores = [oresdiamond1]
+
+buttonsound = pygame.mixer.Sound(os.path.abspath(__file__ + "/..") +'\\sounds\\buttonpressed.wav')
+walk_sound = pygame.mixer.Sound(os.path.abspath(__file__ + "/..") +'\\sounds\\step.wav')
 
 diamondprice = Text(coin2.X+coin2.WIDTH+5,coin2.Y,27,'arial','5',(0,0,0))
 emeraldsprice = Text(coin1.X+coin1.WIDTH+5,coin1.Y,27,'arial','4',(0,0,0))
@@ -91,7 +95,7 @@ Esc.load_image()
 menu = None
 clock = pygame.time.Clock()
 mouse_position = 1
-scene = 5
+scene = 9
 game = True
 while game:
     for event in pygame.event.get():
@@ -129,9 +133,12 @@ while game:
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.pos[0] > buttonplay.X and event.pos[0] < buttonplay.X + buttonplay.WIDTH and event.pos[1] > buttonplay.Y and event.pos[1] < buttonplay.Y + buttonplay.HEIGHT:
                     scene = 2
+                    buttonsound.play(1)
                 if event.pos[0] > buttonhelp.X and event.pos[0] < buttonhelp.X + buttonhelp.WIDTH and event.pos[1] > buttonhelp.Y and event.pos[1] < buttonhelp.Y + buttonhelp.HEIGHT:
                     scene = 3
+                    buttonsound.play(1)
                 if event.pos[0] > buttonexit.X and event.pos[0] < buttonexit.X + buttonexit.WIDTH and event.pos[1] > buttonexit.Y and event.pos[1] < buttonexit.Y + buttonexit.HEIGHT:
+                    buttonsound.play(1)
                     game = False
             background.show_image(screen)
             buttonplay.show_image(screen)
@@ -141,8 +148,10 @@ while game:
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.pos[0] > buttonsell.X and event.pos[0] < buttonsell.X + buttonsell.WIDTH and event.pos[1] > buttonsell.Y and event.pos[1] < buttonsell.Y + buttonsell.HEIGHT:
                     menu = 'sell'
+                    buttonsound.play(1)
                 if event.pos[0] > buttonbuy.X and event.pos[0] < buttonbuy.X + buttonbuy.WIDTH and event.pos[1] > buttonbuy.Y and event.pos[1] < buttonbuy.Y + buttonbuy.HEIGHT:
                     menu = 'buy'
+                    buttonsound.play(1)
             
 
             keys = pygame.key.get_pressed()
@@ -194,22 +203,27 @@ while game:
                         if mainchar.diamond > 0:
                             mainchar.diamond -= 1
                             mainchar.coin += 4
+                            buttonsound.play(1)
                     if event.pos[0] > buttonsellemeralds.X and event.pos[0] < buttonsellemeralds.X + buttonsellemeralds.WIDTH and event.pos[1] > buttonsellemeralds.Y and event.pos[1] < buttonsellemeralds.Y + buttonsellemeralds.HEIGHT:
                         if mainchar.emeralds > 0:
                             mainchar.emeralds -= 1
                             mainchar.coin += 5
+                            buttonsound.play(1)
                     if event.pos[0] > buttonsellgold.X and event.pos[0] < buttonsellgold.X + buttonsellgold.WIDTH and event.pos[1] > buttonsellgold.Y and event.pos[1] < buttonsellgold.Y + buttonsellgold.HEIGHT:
                         if mainchar.gold > 0:
                             mainchar.gold -= 1
                             mainchar.coin += 3
+                            buttonsound.play(1)
                     if event.pos[0] > buttonsellsilver.X and event.pos[0] < buttonsellsilver.X + buttonsellsilver.WIDTH and event.pos[1] > buttonsellsilver.Y and event.pos[1] < buttonsellsilver.Y + buttonsellsilver.HEIGHT:
                         if mainchar.silver > 0:
                             mainchar.silver -= 1
                             mainchar.coin += 2
+                            buttonsound.play(1)
                     if event.pos[0] > buttonselliron.X and event.pos[0] < buttonselliron.X + buttonselliron.WIDTH and event.pos[1] > buttonselliron.Y and event.pos[1] < buttonselliron.Y + buttonselliron.HEIGHT:
                         if mainchar.iron > 0:
                             mainchar.iron -= 1
                             mainchar.coin += 1
+                            buttonsound.play(1)
                     if event.pos[0] > sellall.X and event.pos[0] < sellall.X + sellall.WIDTH and event.pos[1] > sellall.Y and event.pos[1] < sellall.Y + sellall.HEIGHT:
                         if mainchar.iron > 0:
                             mainchar.coin += 1 * mainchar.iron
@@ -226,6 +240,7 @@ while game:
                         if mainchar.emeralds > 0:
                             mainchar.coin += 5 * mainchar.emeralds
                             mainchar.emeralds = 0
+                        buttonsound.play(1)
             if menu == 'buy':
                 buttonsell.PATH = '\\image\\taverna\\sell1.png'
                 buttonbuy.PATH = '\\image\\taverna\\buy2.png'
@@ -243,7 +258,7 @@ while game:
             i.show_image(screen)
         taverna.show_image(screen)
         caveenterbottom.show_image(screen)
-        mainchar.move_character(list_levelstart)
+        mainchar.move_character(list_levelstart,walk_sound)
         mainchar.ores_collision(list_ores)
         mainchar.taverna(X,taverna,screen)
 
@@ -260,36 +275,108 @@ while game:
         cavebg.show_image(screen)
         for i in list_level_1:
             i.show_image(screen)
-        mainchar.move_character(list_level_1)
+        mainchar.move_character(list_level_1,walk_sound)
         mainchar.show_hp(screen)
         mainchar.show_image(screen)
         # print(mainchar.X_sprite,mainchar.Y_sprite)
+        Mouse_x, Mouse_y = pygame.mouse.get_pos()
+        print(Mouse_x,Mouse_y)
         if mainchar.X_sprite >= 1050:
             mainchar.Y_sprite = 432
-            mainchar.X_sprite = 6
+            mainchar.X_sprite = 20
             scene= 5
             
     if scene == 5:
         cavebg.show_image(screen)
         for i in list_level_2:
             i.show_image(screen)
-        mainchar.move_character(list_level_2)
-        mainchar.show_hp(screen)
-        mainchar.show_image(screen)
-        # print(mainchar.X_sprite,mainchar.Y_sprite)
-        
-        if mainchar.Y_sprite >= 716:
-            scene = 6
-            mainchar.X_sprite = 951
-            mainchar.Y_sprite = 6
-    if scene == 6:
-        cavebg.show_image(screen)
-        for i in list_level_3:
-            i.show_image(screen)
-        mainchar.move_character(list_level_3)
+        mainchar.move_character(list_level_2,walk_sound)
         mainchar.show_hp(screen)
         mainchar.show_image(screen)
         Mouse_x, Mouse_y = pygame.mouse.get_pos()
         print(Mouse_x,Mouse_y)
+
+        # print(mainchar.X_sprite,mainchar.Y_sprite)
+        if mainchar.X_sprite <= 15:
+            mainchar.X_sprite = 1041
+            mainchar.Y_sprite = 420
+            scene = 4
+
+        if mainchar.Y_sprite >= 720:
+            scene = 6
+            mainchar.X_sprite = 951
+            mainchar.Y_sprite = 20
+        if mainchar.X_sprite >= 1079:
+            mainchar.X_sprite = 48
+            mainchar.Y_sprite = 39
+            scene = 8
+    if scene == 6:
+        cavebg.show_image(screen)
+        for i in list_level_3:
+            i.show_image(screen)
+        mainchar.move_character(list_level_3,walk_sound)
+        mainchar.show_hp(screen)
+        mainchar.show_image(screen)
+        Mouse_x, Mouse_y = pygame.mouse.get_pos()
+        print(Mouse_x,Mouse_y)
+        if mainchar.Y_sprite <= 14:
+            mainchar.X_sprite = 930
+            mainchar.Y_sprite = 663
+            scene = 5
+        if mainchar.X_sprite >= 1074:
+            mainchar.X_sprite = 42
+            mainchar.Y_sprite = 660
+            scene = 7
+        if mainchar.X_sprite <= 20:
+            mainchar.X_sprite = 1047
+            mainchar.Y_sprite = 150
+            scene = 9
+    if scene == 7:
+        cavebg.show_image(screen)
+        for i in list_level_4:
+            i.show_image(screen)
+        mainchar.move_character(list_level_4,walk_sound)
+        mainchar.show_hp(screen)
+        mainchar.show_image(screen)
+        Mouse_x, Mouse_y = pygame.mouse.get_pos()
+        print(Mouse_x,Mouse_y)
+        if mainchar.X_sprite <= 12:
+            mainchar.X_sprite = 1044
+            mainchar.Y_sprite = 663
+            scene = 6
+        if mainchar.Y_sprite <= 14:
+            mainchar.X_sprite = 405
+            mainchar.Y_sprite = 666
+            scene = 8
+    if scene == 8:
+        cavebg.show_image(screen)
+        for i in list_level_5:
+            i.show_image(screen)
+        mainchar.move_character(list_level_5,walk_sound)
+        mainchar.show_hp(screen)
+        mainchar.show_image(screen)
+        Mouse_x, Mouse_y = pygame.mouse.get_pos()
+        print(Mouse_x,Mouse_y)
+        if mainchar.X_sprite <=15:
+            mainchar.X_sprite = 1059
+            mainchar.Y_sprite = 30
+            scene = 5
+        if mainchar.Y_sprite >= 720:
+            mainchar.X_sprite = 302
+            mainchar.Y_sprite = 21
+            scene = 7
+    if scene == 9:
+        cavebg.show_image(screen)
+        for i in list_level_6:
+            i.show_image(screen)
+        mainchar.move_character(list_level_6,walk_sound)
+        mainchar.show_hp(screen)
+        mainchar.show_image(screen)
+        Mouse_x, Mouse_y = pygame.mouse.get_pos()
+        print(Mouse_x,Mouse_y)
+        if mainchar.X_sprite >= 1074:
+            mainchar.X_sprite = 42
+            mainchar.Y_sprite = 144
+            scene = 6
     clock.tick(60)
     pygame.display.flip()

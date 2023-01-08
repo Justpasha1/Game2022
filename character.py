@@ -53,7 +53,7 @@ class Character():
         self.img = pygame.transform.scale(self.img, (self.Width_sprite,self.Height_sprite))
     def show_image(self, screen):
         screen.blit(self.img, (self.X_sprite, self.Y_sprite)) 
-    def move_character(self, list_level):
+    def move_character(self, list_level,walk_sound):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LEFT] :
@@ -62,22 +62,31 @@ class Character():
             if self.move_left == True:
                 self.side = False
                 self.X_sprite -= self.Speed_sprite
-                if self.speed_animation == 10:
+                if self.speed_animation >= 5:
                     self.index_image += 1
                     self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
-                elif self.speed_animation == 20:
-                    self.index_image += 1
-                    self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
-                elif self.speed_animation == 30:
-                    self.index_image += 1
-                    self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
-                elif self.speed_animation == 40:
-                    self.index_image += 1
-                    self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
-                    self.speed_animation += 1
-                    self.index_image = 0 
-                    self.speed_animation = 0 
-                self.load_image()
+                    self.speed_animation = 0
+                    self.load_image()
+                    if self.index_image == 4:
+                        self.index_image = 0
+                # elif self.speed_animation >= 10:
+                #     self.index_image += 1
+                #     self.Sprite_path = "\\image\\charl" + '2' + ".png"
+                #     # if not self.flag_jump:
+                #     #     walk_sound.play()
+                # elif self.speed_animation >= 15:
+                #     self.index_image += 1
+                #     self.Sprite_path = "\\image\\charl" + '3' + ".png"
+                #     if not self.flag_jump:
+                #         walk_sound.play()
+                # elif self.speed_animation >= 20:
+                #     self.index_image += 1
+                #     self.Sprite_path = "\\image\\charl" + '4' + ".png"
+                #     self.speed_animation += 1
+                #     self.index_image = 0 
+                #     self.speed_animation = 0 
+                    
+                
                 self.speed_animation += 1 
 
 
@@ -87,25 +96,34 @@ class Character():
             if self.move_right == True:
                 self.side = True
                 self.X_sprite += self.Speed_sprite
-                if self.speed_animation == 10:
+                if self.speed_animation >= 5:
                     self.index_image += 1
                     self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
-                elif self.speed_animation == 20:
-                    self.index_image += 1
-                    self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
-                elif self.speed_animation == 30:
-                    self.index_image += 1
-                    self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
-                elif self.speed_animation == 40:
-                    self.index_image += 1
-                    self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
-                    self.speed_animation += 1
-                    self.index_image = 0 
                     self.speed_animation = 0
+                    self.load_image()
+                    if self.index_image == 4:
+                        self.index_image = 0
+                # elif self.speed_animation >= 10:
+                #     self.index_image += 1
+                #     self.Sprite_path = "\\image\\char" + '2' + ".png"
+                #     # if not self.flag_jump:
+                #     #     walk_sound.play()
+                # elif self.speed_animation >= 15:
+                #     self.index_image += 1
+                #     self.Sprite_path = "\\image\\char" + '3' + ".png"
+                #     if not self.flag_jump:
+                #         walk_sound.play()
+                # elif self.speed_animation >= 20:
+                #     self.index_image += 1
+                #     self.Sprite_path = "\\image\\char" + '4' + ".png"
+                #     self.speed_animation += 1
+                #     self.index_image = 0 
+                #     self.speed_animation = 0
+                    
                 
-                self.load_image()
+                # self.load_image()
                 self.speed_animation += 1
-        
+                
             #Если персонаж смотрит вправо
         # else:
         #     #То наш персонаж будет стоять и смотреть вправо
@@ -141,6 +159,8 @@ class Character():
         #         self.Sprite_path = '\\image\\' + 'charl1' + '.png'
         #         self.load_image()
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT] and not self.fall and not self.flag_jump:
+            self.speed_animation = 0
+            self.index_image = 0
             if self.where_watching == 'right':
                 self.Sprite_path = '\\image\\char1.png'
                 self.load_image()
