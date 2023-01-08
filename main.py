@@ -16,7 +16,7 @@ background = Image(0,0,1080,720,"\\image\\phone.png")
 buttonplay = Image(690, 53, 180, 86, "\\image\\buttonplay1.png")
 buttonhelp = Image(690, 282, 180, 86, "\\image\\buttonhelp1.png")
 buttonexit = Image(690, 509, 180, 86, "\\image\\buttonexit1.png")
-mainchar = Character(400, 550, 17, 27, 2, 3, 100, "\\image\\char1.png")
+mainchar = Character(400, 550, 17, 27, 4, 5, 27*2+7, "\\image\\char1.png")
 oressilver1 = Ores(200,600,38,16,"/image/ores/silver.png",'silver')
 oresemeralds1 = Ores(200,600,25,16,"/image/ores/emeralds.png",'emerald')
 oresgold1 = Ores(200,600,37,30,"/image/ores/gold.png",'gold')
@@ -43,6 +43,7 @@ coin6 = Image(buttonbuy.X + buttonbuy.WIDTH + 10, buttonbuy.Y + 12,27, 27,'\\ima
 sellall = Image(buttonsellemeralds.X,0,40*3,20*3,'\\image\\taverna\\sellall.png')
 caveentertop = Image(1018,549,62,127,'\\image\\caveentertop.png')
 caveenterbottom = Image(1018,608,25,68,'\\image\\caveenterbottom.png')
+cavebg = Image(0,0,1080,720,'\\image\\bg\\cavebg.png')
 list_coin = [coin1,coin2,coin3,coin4,coin5]
 list_ores = [oresdiamond1]
 
@@ -66,6 +67,7 @@ for i in list_ores:
 for i in list_coin:
     i.load_image()
 coin6.load_image()
+cavebg.load_image()
 caveenterbottom.load_image()
 caveentertop.load_image()
 diamondprice.load_text()
@@ -89,7 +91,7 @@ Esc.load_image()
 menu = None
 clock = pygame.time.Clock()
 mouse_position = 1
-scene = 1
+scene = 5
 game = True
 while game:
     for event in pygame.event.get():
@@ -250,24 +252,44 @@ while game:
         mainchar.show_image(screen)
         caveentertop.show_image(screen)
         if mainchar.X_sprite >= 1050:
-            scene = 4
             mainchar.X_sprite = 20
             mainchar.Y_sprite = 27*2
+            scene = 4
+            
     if scene == 4:
-        screen.fill((0,0,0))
+        cavebg.show_image(screen)
         for i in list_level_1:
             i.show_image(screen)
         mainchar.move_character(list_level_1)
         mainchar.show_hp(screen)
         mainchar.show_image(screen)
-        print(mainchar.X_sprite,mainchar.Y_sprite)
-        if mainchar.X_sprite >= 1018:
+        # print(mainchar.X_sprite,mainchar.Y_sprite)
+        if mainchar.X_sprite >= 1050:
+            mainchar.Y_sprite = 432
+            mainchar.X_sprite = 6
             scene= 5
-            mainchar.Y_sprite = 608
-            mainchar.X_sprite = 20
+            
     if scene == 5:
-        screen.fill((0,0,0))
+        cavebg.show_image(screen)
         for i in list_level_2:
-            i.show_screen(screen)
+            i.show_image(screen)
+        mainchar.move_character(list_level_2)
+        mainchar.show_hp(screen)
+        mainchar.show_image(screen)
+        # print(mainchar.X_sprite,mainchar.Y_sprite)
+        
+        if mainchar.Y_sprite >= 716:
+            scene = 6
+            mainchar.X_sprite = 951
+            mainchar.Y_sprite = 6
+    if scene == 6:
+        cavebg.show_image(screen)
+        for i in list_level_3:
+            i.show_image(screen)
+        mainchar.move_character(list_level_3)
+        mainchar.show_hp(screen)
+        mainchar.show_image(screen)
+        Mouse_x, Mouse_y = pygame.mouse.get_pos()
+        print(Mouse_x,Mouse_y)
     clock.tick(60)
     pygame.display.flip()

@@ -22,7 +22,7 @@ class Character():
         self.start_jump_distance = jump_sprite
         #путь к нашему спрайту
         self.Sprite_path = sprite_path
-        self.Jump_speed = 3
+        self.Jump_speed = 6
         self.move_left = True
         self.move_right = True
         self.index_image = 0
@@ -134,12 +134,19 @@ class Character():
         # else:
         #     #То наш персонаж будет стоять и смотреть вправо
         #     if self.where_watching == 'right':
-        #             self.Sprite_path = '\\image/' + 'char1' + '.png'
+        #             self.Sprite_path = '\\image\\' + 'char1' + '.png'
         #             self.load_image()
         #     else:
         #         #То наш персонаж будет стоять и смотреть влево
-        #         self.Sprite_path = '\\image/' + 'charl1' + '.png'
+        #         self.Sprite_path = '\\image\\' + 'charl1' + '.png'
         #         self.load_image()
+        if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT] and not self.fall and not self.flag_jump:
+            if self.where_watching == 'right':
+                self.Sprite_path = '\\image\\char1.png'
+                self.load_image()
+            if self.where_watching == 'left':
+                self.Sprite_path = '\\image\\charl1.png'
+                self.load_image()
         self.colision_bottom(list_level)
     #-----Падение-----#
     def gravity(self):
