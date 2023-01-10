@@ -18,11 +18,11 @@ buttonplay = Image(690, 53, 180, 86, "\\image\\buttonplay1.png")
 buttonhelp = Image(690, 282, 180, 86, "\\image\\buttonhelp1.png")
 buttonexit = Image(690, 509, 180, 86, "\\image\\buttonexit1.png")
 mainchar = Character(400, 550, 17, 27, 4, 5, 27*2+7, "\\image\\char1.png")
-oressilver1 = Ores(200,600,38,16,"/image/ores/silver.png",'silver')
-oresemeralds1 = Ores(200,600,25,16,"/image/ores/emeralds.png",'emerald')
-oresgold1 = Ores(200,600,37,30,"/image/ores/gold.png",'gold')
-oresiron1 = Ores(200,600,35,23,"/image/ores/iron.png",'iron')
-oresdiamond1 = Ores(200,600,32,18,"/image/ores/diamond.png",'diamond')
+# oressilver1 = Ores(200,600,38,16,"/image/ores/silver.png",'silver')
+# oresemeralds1 = Ores(200,600,25,16,"/image/ores/emeralds.png",'emerald')
+# oresgold1 = Ores(200,600,37,30,"/image/ores/gold.png",'gold')
+# oresiron1 = Ores(200,600,35,23,"/image/ores/iron.png",'iron')
+# oresdiamond1 = Ores(200,600,32,18,"/image/ores/diamond.png",'diamond')
 bgstart = Image(0,0,1080,720,'\\image\\bg\\bgstart.png')
 taverna = Image(400,523,204,152,'\\image\\taverna1.png')
 tavernabg = Image(0,0,1080,720,'\\image\\bg\\tavernabg.png')
@@ -42,11 +42,98 @@ coin4 = Image(buttonselliron.X,buttonselliron.Y+buttonselliron.HEIGHT,27,27,'\\i
 coin5 = Image(buttonsellsilver.X,buttonsellsilver.Y+buttonsellsilver.HEIGHT,27,27,'\\image\\taverna\\coin.png')
 coin6 = Image(buttonbuy.X + buttonbuy.WIDTH + 10, buttonbuy.Y + 12,27, 27,'\\image\\taverna\\coin.png')
 sellall = Image(buttonsellemeralds.X,0,40*3,20*3,'\\image\\taverna\\sellall.png')
+heart = Image(359,27,588,675,'\\image\\heart.png')
 caveentertop = Image(1018,549,62,127,'\\image\\caveentertop.png')
 caveenterbottom = Image(1018,608,25,68,'\\image\\caveenterbottom.png')
 cavebg = Image(0,0,1080,720,'\\image\\bg\\cavebg.png')
+grassbg = Image(0,0,1080,720,'\\image\\bg\\grassbg.png')
+deathbg = Image(0,0,1080,720,'\\image\\bg\\dethbg.png')
+heartupgrade = Image(620, 60,39*5,45*5,'\\image\\hearts\\heartupgrade.png')
+coin7 = Image(heartupgrade.X +20,heartupgrade.Y+heartupgrade.HEIGHT+20,27*2,27*2,'\\image\\taverna\\coin.png')
+heartupgradeprice = Text(coin7.X + coin7.WIDTH + 5,coin7.Y -3,27*2,'arial','15',(0,0,0))
+rope = Image(50, 2,50,50,'\\image\\rope.png')
 list_coin = [coin1,coin2,coin3,coin4,coin5]
-list_ores = [oresdiamond1]
+
+oresiron1 = Ores(348,139,35,23,"/image/ores/iron.png",'iron')
+oresiron2 = Ores(899,193,35,23,"/image/ores/iron.png",'iron')
+oresiron3 = Ores(613,382,35,23,"/image/ores/iron.png",'iron')
+oresiron4 = Ores(106,490,35,23,"/image/ores/iron.png",'iron')
+oressilver1 = Ores(891,687,38,16,"/image/ores/silver.png",'silver')
+oressilver2 = Ores(180,227,38,16,"/image/ores/silver.png",'silver')
+oresgold1 = Ores(341,402,37,30,"/image/ores/gold.png",'gold')
+oresgold2 = Ores(597,565,37,30,"/image/ores/gold.png",'gold')
+list_ores1 = [oresiron1,oresiron2,oresiron3,oresiron4,oressilver1,oressilver2,oresgold1,oresgold2]
+
+oresiron5 = Ores(570,680,35,23,"/image/ores/iron.png",'iron')
+oresiron6 = Ores(468,436,35,23,"/image/ores/iron.png",'iron')
+oresiron7 = Ores(825,112,35,23,"/image/ores/iron.png",'iron')
+oressilver3 = Ores(293,92,38,16,"/image/ores/silver.png",'silver')
+oressilver4 = Ores(840,254,38,16,"/image/ores/silver.png",'silver')
+oressilver5 = Ores(193,524,38,16,"/image/ores/silver.png",'silver')
+oresgold3 = Ores(460,240,37,30,"/image/ores/gold.png",'gold')
+oresgold4 = Ores(880,510,37,30,"/image/ores/gold.png",'gold')
+oresgold5 = Ores(798,673,37,30,"/image/ores/gold.png",'gold')
+oresdiamond1 = Ores(53,225,32,18,"/image/ores/diamond.png",'diamond')
+oresdiamond2 = Ores(102,685,32,18,"/image/ores/diamond.png",'diamond')
+list_ores2 = [oresiron5,oresiron6,oresiron7,oressilver3,oressilver4,oressilver5,oresgold3,oresgold4,oresgold5,oresdiamond1,oresdiamond2]
+
+oresiron8 = Ores(549,140,35,23,"/image/ores/iron.png",'iron')
+oresiron9 = Ores(275,599,35,23,"/image/ores/iron.png",'iron')
+oressilver6 = Ores(889,254,38,16,"/image/ores/silver.png",'silver')
+oressilver7 = Ores(289,281,38,16,"/image/ores/silver.png",'silver')
+oressilver8 = Ores(542,497,38,16,"/image/ores/silver.png",'silver')
+oresgold6 = Ores(502,294,37,30,"/image/ores/gold.png",'gold')
+oresdiamond3 = Ores(1016,441,32,18,"/image/ores/diamond.png",'diamond')
+list_ores3 = [
+    oresiron8,
+    oresiron9,
+    oressilver6,
+    oressilver7,
+    oressilver8,
+    oresgold6,
+    oresdiamond3
+]
+
+oresiron10 = Ores(635,436,35,23,"/image/ores/iron.png",'iron')
+oressilver9 = Ores(587,687,38,16,"/image/ores/silver.png",'silver')
+oressilver10 = Ores(198,227,38,16,"/image/ores/silver.png",'silver')
+oresgold7 = Ores(706,240,37,30,"/image/ores/gold.png",'gold')
+oresgold8 = Ores(1003,78,37,30,"/image/ores/gold.png",'gold')
+oresdiamond4 = Ores(102,415,32,18,"/image/ores/diamond.png",'diamond')
+oresemeralds1 = Ores(53,92,25,16,"/image/ores/emeralds.png",'emerald')
+list_ores4 = [oresiron10,oressilver9,oressilver10,oresgold7,oresgold8,oresdiamond4,oresemeralds1]
+
+oresiron11 = Ores(316,436,35,23,"/image/ores/iron.png",'iron')
+oresiron12 = Ores(1013,328,35,23,"/image/ores/iron.png",'iron')
+oressilver11 = Ores(617,497,38,16,"/image/ores/silver.png",'silver')
+oressilver12 = Ores(654,119,38,16,"/image/ores/silver.png",'silver')
+oressilver13 = Ores(231,280,38,16,"/image/ores/silver.png",'silver')
+oresgold9 = Ores(1002,429,37,30,"/image/ores/gold.png",'gold')
+oresgold10 = Ores(441,105,37,30,"/image/ores/gold.png",'gold')
+oresdiamond5 = Ores(784,252,32,18,"/image/ores/diamond.png",'diamond')
+list_ores5 = [oresiron11,oresiron12,oressilver11,oressilver12,oressilver13,oresgold9,oresgold10,oresdiamond5]
+
+oresiron13 = Ores(741,166,35,23,"/image/ores/iron.png",'iron')
+oresiron14 = Ores(558,409,35,23,"/image/ores/iron.png",'iron')
+oressilver14 = Ores(389,227,38,16,"/image/ores/silver.png",'silver')
+oresgold11 = Ores(98,321,37,30,"/image/ores/gold.png",'gold')
+oresgold12 = Ores(780,375,37,30,"/image/ores/gold.png",'gold')
+oresdiamond6 = Ores(54,252,32,18,"/image/ores/diamond.png",'diamond')
+oresemeralds2 = Ores(612,579,25,16,"/image/ores/emeralds.png",'emerald')
+oresemeralds3 = Ores(990,551,25,16,"/image/ores/emeralds.png",'emerald')
+list_ores6 = [oresiron13,oresiron14,oressilver14,oresgold11,oresgold12,oresdiamond6,oresemeralds2,oresemeralds3]
+
+oresiron15 = Ores(397,383,35,23,"/image/ores/iron.png",'iron')
+oresiron16 = Ores(739,220,35,23,"/image/ores/iron.png",'iron')
+oresgold13 = Ores(568,538,37,30,"/image/ores/gold.png",'gold')
+oresgold14 = Ores(224,78,37,30,"/image/ores/gold.png",'gold')
+oresdiamond7 = Ores(191,577,32,18,"/image/ores/diamond.png",'diamond')
+oresdiamond8 = Ores(869,468,32,18,"/image/ores/diamond.png",'diamond')
+oresdiamond9 = Ores(989,685,32,18,"/image/ores/diamond.png",'diamond')
+oresemeralds4 = Ores(52,416,25,16,"/image/ores/emeralds.png",'emerald')
+oresemeralds5 = Ores(98,687,25,16,"/image/ores/emeralds.png",'emerald')
+oresemeralds6 = Ores(937,687,25,16,"/image/ores/emeralds.png",'emerald')
+list_ores7 = [oresiron15,oresiron16,oresgold13,oresgold14,oresdiamond7,oresdiamond8,oresdiamond9,oresemeralds4,oresemeralds5,oresemeralds6]
 
 buttonsound = pygame.mixer.Sound(os.path.abspath(__file__ + "/..") +'\\sounds\\buttonpressed.wav')
 walk_sound = pygame.mixer.Sound(os.path.abspath(__file__ + "/..") +'\\sounds\\step.wav')
@@ -66,12 +153,28 @@ monyewehave = Text(coin6.X+coin6.WIDTH + 5,coin6.Y,27,'arial',str(mainchar.coin)
 
 # 
 
-for i in list_ores:
+for i in list_ores1:
     i.load_image()
 for i in list_coin:
     i.load_image()
+for i in list_ores2:
+    i.load_image()
+for i in list_ores3:
+    i.load_image()
+for i in list_ores4:
+    i.load_image()
+for i in list_ores5:
+    i.load_image()
+for i in list_ores6:
+    i.load_image()
+rope.load_image()
+heart.load_image()
+heartupgradeprice.load_text()
+deathbg.load_image()
+heartupgrade.load_image()
 coin6.load_image()
 cavebg.load_image()
+grassbg.load_image()
 caveenterbottom.load_image()
 caveentertop.load_image()
 diamondprice.load_text()
@@ -95,7 +198,7 @@ Esc.load_image()
 menu = None
 clock = pygame.time.Clock()
 mouse_position = 1
-scene = 9
+scene = 11
 game = True
 while game:
     for event in pygame.event.get():
@@ -133,6 +236,8 @@ while game:
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.pos[0] > buttonplay.X and event.pos[0] < buttonplay.X + buttonplay.WIDTH and event.pos[1] > buttonplay.Y and event.pos[1] < buttonplay.Y + buttonplay.HEIGHT:
                     scene = 2
+                    mainchar.X_sprite = 20
+                    mainchar.Y_sprite = 720 - 27 * 3
                     buttonsound.play(1)
                 if event.pos[0] > buttonhelp.X and event.pos[0] < buttonhelp.X + buttonhelp.WIDTH and event.pos[1] > buttonhelp.Y and event.pos[1] < buttonhelp.Y + buttonhelp.HEIGHT:
                     scene = 3
@@ -246,20 +351,26 @@ while game:
                 buttonbuy.PATH = '\\image\\taverna\\buy2.png'
                 buttonbuy.load_image()
                 buttonsell.load_image()
+                heartupgrade.show_image(screen)
+                coin7.show_image(screen)
+                if mainchar.hp_max == 3:
+                    heartupgradeprice.TEXT = '40'
+                    heartupgradeprice.load_text()
+                if mainchar.hp_max == 4:
+                    heartupgradeprice.TEXT = '70'
+                    heartupgradeprice.load_text()
+                heartupgradeprice.show_text(screen)
             mainchar.leave_taverna()
             if mainchar.can_entern_taverna != True:
                 scene = 2
-    
+    keys = pygame.key.get_pressed()
     if scene == 2:
         bgstart.show_image(screen)
-        for i in list_ores:
-            i.show_image(screen)
         for i in list_levelstart:
             i.show_image(screen)
         taverna.show_image(screen)
         caveenterbottom.show_image(screen)
         mainchar.move_character(list_levelstart,walk_sound)
-        mainchar.ores_collision(list_ores)
         mainchar.taverna(X,taverna,screen)
 
         if mainchar.can_entern_taverna:
@@ -267,7 +378,7 @@ while game:
         mainchar.show_image(screen)
         caveentertop.show_image(screen)
         if mainchar.X_sprite >= 1050:
-            mainchar.X_sprite = 20
+            mainchar.X_sprite = 25
             mainchar.Y_sprite = 27*2
             scene = 4
             
@@ -275,23 +386,41 @@ while game:
         cavebg.show_image(screen)
         for i in list_level_1:
             i.show_image(screen)
+        for i in list_ores1:
+            if i.X > -100:
+                i.show_image(screen)
         mainchar.move_character(list_level_1,walk_sound)
+        mainchar.ores_collision(list_ores1)
         mainchar.show_hp(screen)
+        rope.show_image(screen)
         mainchar.show_image(screen)
         # print(mainchar.X_sprite,mainchar.Y_sprite)
-        Mouse_x, Mouse_y = pygame.mouse.get_pos()
-        print(Mouse_x,Mouse_y)
         if mainchar.X_sprite >= 1050:
             mainchar.Y_sprite = 432
             mainchar.X_sprite = 20
             scene= 5
+        if mainchar.X_sprite <= 20:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
+        if mainchar.hp == 0:
+            scene = 11
+        if keys[pygame.K_x] and mainchar.hp > 0:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
             
     if scene == 5:
         cavebg.show_image(screen)
         for i in list_level_2:
             i.show_image(screen)
+        for i in list_ores2:
+            if i.X > -100:
+                i.show_image(screen)
         mainchar.move_character(list_level_2,walk_sound)
+        mainchar.ores_collision(list_ores2)
         mainchar.show_hp(screen)
+        rope.show_image(screen)
         mainchar.show_image(screen)
         Mouse_x, Mouse_y = pygame.mouse.get_pos()
         print(Mouse_x,Mouse_y)
@@ -310,12 +439,23 @@ while game:
             mainchar.X_sprite = 48
             mainchar.Y_sprite = 39
             scene = 8
+        if mainchar.hp == 0:
+            scene = 11
+        if keys[pygame.K_x] and mainchar.hp > 0:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
     if scene == 6:
         cavebg.show_image(screen)
         for i in list_level_3:
             i.show_image(screen)
+        for i in list_ores3:
+            if i.X > -100:
+                i.show_image(screen)
         mainchar.move_character(list_level_3,walk_sound)
+        mainchar.ores_collision(list_ores3)
         mainchar.show_hp(screen)
+        rope.show_image(screen)
         mainchar.show_image(screen)
         Mouse_x, Mouse_y = pygame.mouse.get_pos()
         print(Mouse_x,Mouse_y)
@@ -331,12 +471,23 @@ while game:
             mainchar.X_sprite = 1047
             mainchar.Y_sprite = 150
             scene = 9
+        if mainchar.hp == 0:
+            scene = 11
+        if keys[pygame.K_x] and mainchar.hp > 0:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
     if scene == 7:
         cavebg.show_image(screen)
         for i in list_level_4:
             i.show_image(screen)
+        for i in list_ores4:
+            if i.X > -100:
+                i.show_image(screen)
         mainchar.move_character(list_level_4,walk_sound)
+        mainchar.ores_collision(list_ores4)
         mainchar.show_hp(screen)
+        rope.show_image(screen)
         mainchar.show_image(screen)
         Mouse_x, Mouse_y = pygame.mouse.get_pos()
         print(Mouse_x,Mouse_y)
@@ -348,12 +499,23 @@ while game:
             mainchar.X_sprite = 405
             mainchar.Y_sprite = 666
             scene = 8
+        if mainchar.hp == 0:
+            scene = 11
+        if keys[pygame.K_x] and mainchar.hp > 0:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
     if scene == 8:
         cavebg.show_image(screen)
         for i in list_level_5:
             i.show_image(screen)
+        for i in list_ores5:
+            if i.X > -100:
+                i.show_image(screen)
         mainchar.move_character(list_level_5,walk_sound)
+        mainchar.ores_collision(list_ores5)
         mainchar.show_hp(screen)
+        rope.show_image(screen)
         mainchar.show_image(screen)
         Mouse_x, Mouse_y = pygame.mouse.get_pos()
         print(Mouse_x,Mouse_y)
@@ -365,12 +527,23 @@ while game:
             mainchar.X_sprite = 302
             mainchar.Y_sprite = 21
             scene = 7
+        if mainchar.hp == 0:
+            scene = 11
+        if keys[pygame.K_x] and mainchar.hp > 0:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
     if scene == 9:
-        cavebg.show_image(screen)
+        grassbg.show_image(screen)
         for i in list_level_6:
             i.show_image(screen)
+        for i in list_ores6:
+            if i.X > -100:
+                i.show_image(screen)
         mainchar.move_character(list_level_6,walk_sound)
+        mainchar.ores_collision(list_ores6)
         mainchar.show_hp(screen)
+        rope.show_image(screen)
         mainchar.show_image(screen)
         Mouse_x, Mouse_y = pygame.mouse.get_pos()
         print(Mouse_x,Mouse_y)
@@ -378,5 +551,83 @@ while game:
             mainchar.X_sprite = 42
             mainchar.Y_sprite = 144
             scene = 6
+        if mainchar.Y_sprite >= 720:
+            mainchar.X_sprite = 828
+            mainchar.Y_sprite = 61
+            scene = 10
+        if mainchar.hp == 0:
+            scene = 11
+        if keys[pygame.K_x] and mainchar.hp > 0:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
+    if scene == 10:
+        grassbg.show_image(screen)
+        for i in list_level_7:
+            i.show_image(screen)
+        for i in list_ores7:
+            if i.X > -100:
+                i.show_image(screen)
+        mainchar.move_character(list_level_7,walk_sound)
+        mainchar.ores_collision(list_ores7)
+        mainchar.show_hp(screen)
+        rope.show_image(screen)
+        mainchar.show_image(screen)
+        Mouse_x, Mouse_y = pygame.mouse.get_pos()
+        print(Mouse_x,Mouse_y)
+        if mainchar.Y_sprite <= 6:
+            mainchar.X_sprite = 792
+            mainchar.Y_sprite = 663
+            scene = 9
+        if mainchar.hp == 0:
+            scene = 11
+        if mainchar.X_sprite>= 1075:
+            mainchar.X_sprite = 50
+            mainchar.Y_sprite = 30
+            scene = 12
+        if keys[pygame.K_x] and mainchar.hp > 0:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
+    if scene == 12:
+        grassbg.show_image(screen)
+        for i in list_level_final:
+            i.show_image(screen)
+        heart.show_image(screen)
+        
+        mainchar.move_character(list_level_final,walk_sound)
+        mainchar.show_image(screen)
+    if scene == 11:
+        buttonplay.X = 860
+        buttonexit.X = 860
+        buttonplay.Y = 230
+        buttonexit.Y = 430
+        deathbg.show_image(screen)
+        for event in pygame.event.get():
+            if  event.type == pygame.MOUSEMOTION:
+                if event.pos[0] > buttonplay.X and event.pos[0] < buttonplay.X + buttonplay.WIDTH and event.pos[1] > buttonplay.Y and event.pos[1] < buttonplay.Y + buttonplay.HEIGHT:
+                    buttonplay.PATH = "\\image\\buttonplay2.png"
+                    buttonplay.load_image()
+                else:
+                    buttonplay.PATH = "\\image\\buttonplay1.png"
+                    buttonplay.load_image()
+                if event.pos[0] > buttonexit.X and event.pos[0] < buttonexit.X + buttonexit.WIDTH and event.pos[1] > buttonexit.Y and event.pos[1] < buttonexit.Y + buttonexit.HEIGHT:
+                    buttonexit.PATH = "\\image\\buttonexit2.png"
+                    buttonexit.load_image()
+                else:
+                    buttonexit.PATH = "\\image\\buttonexit1.png"
+                    buttonexit.load_image()
+            if event.type == pygame.MOUSEBUTTONUP:
+                if event.pos[0] > buttonplay.X and event.pos[0] < buttonplay.X + buttonplay.WIDTH and event.pos[1] > buttonplay.Y and event.pos[1] < buttonplay.Y + buttonplay.HEIGHT:
+                    scene = 2
+                    mainchar.X_sprite = 20
+                    mainchar.Y_sprite = 720 - 27 * 3
+                    buttonsound.play(1)
+                if event.pos[0] > buttonexit.X and event.pos[0] < buttonexit.X + buttonexit.WIDTH and event.pos[1] > buttonexit.Y and event.pos[1] < buttonexit.Y + buttonexit.HEIGHT:
+                    buttonsound.play(1)
+                    game = False
+        buttonplay.show_image(screen)
+        buttonexit.show_image(screen)
+    
     clock.tick(60)
     pygame.display.flip()

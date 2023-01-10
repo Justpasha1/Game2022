@@ -41,8 +41,8 @@ class Character():
         self.iron = 0
         self.silver = 0
         self.coin = 0
-        self.hp = 100
-        self.hp_max = 100
+        self.hp = 2
+        self.hp_max = 2
         self.space = False
         self.where_watching = 'right'
         
