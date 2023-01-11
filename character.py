@@ -49,7 +49,7 @@ class Character():
     def load_image(self):
         self.img = os.path.abspath(__file__ + "/..")
         self.img = self.img + self.Sprite_path
-        self.img = pygame.image.load(self.img).convert_alpha()
+        self.img = pygame.image.load(self.img)
         self.img = pygame.transform.scale(self.img, (self.Width_sprite,self.Height_sprite))
     def show_image(self, screen):
         screen.blit(self.img, (self.X_sprite, self.Y_sprite)) 
@@ -68,25 +68,7 @@ class Character():
                     self.speed_animation = 0
                     self.load_image()
                     if self.index_image == 4:
-                        self.index_image = 0
-                # elif self.speed_animation >= 10:
-                #     self.index_image += 1
-                #     self.Sprite_path = "\\image\\charl" + '2' + ".png"
-                #     # if not self.flag_jump:
-                #     #     walk_sound.play()
-                # elif self.speed_animation >= 15:
-                #     self.index_image += 1
-                #     self.Sprite_path = "\\image\\charl" + '3' + ".png"
-                #     if not self.flag_jump:
-                #         walk_sound.play()
-                # elif self.speed_animation >= 20:
-                #     self.index_image += 1
-                #     self.Sprite_path = "\\image\\charl" + '4' + ".png"
-                #     self.speed_animation += 1
-                #     self.index_image = 0 
-                #     self.speed_animation = 0 
-                    
-                
+                        self.index_image = 0  
                 self.speed_animation += 1 
 
 
@@ -103,41 +85,7 @@ class Character():
                     self.load_image()
                     if self.index_image == 4:
                         self.index_image = 0
-                # elif self.speed_animation >= 10:
-                #     self.index_image += 1
-                #     self.Sprite_path = "\\image\\char" + '2' + ".png"
-                #     # if not self.flag_jump:
-                #     #     walk_sound.play()
-                # elif self.speed_animation >= 15:
-                #     self.index_image += 1
-                #     self.Sprite_path = "\\image\\char" + '3' + ".png"
-                #     if not self.flag_jump:
-                #         walk_sound.play()
-                # elif self.speed_animation >= 20:
-                #     self.index_image += 1
-                #     self.Sprite_path = "\\image\\char" + '4' + ".png"
-                #     self.speed_animation += 1
-                #     self.index_image = 0 
-                #     self.speed_animation = 0
-                    
-                
-                # self.load_image()
                 self.speed_animation += 1
-                
-            #Если персонаж смотрит вправо
-        # else:
-        #     #То наш персонаж будет стоять и смотреть вправо
-        #     if self.where_watching == 'right':
-        #         if self.can_flying_now:
-        #                 self.Sprite_path = 'image/' + 'char1' + '.png'
-        #                 self.load_image()
-        #     else:
-        #         #То наш персонаж будет стоять и смотреть влево
-        #         if self.can_flying_now:
-        #             self.Sprite_path = 'image/' + 'charl1' + '.png'
-        #             self.load_image()
-
-
         if keys[pygame.K_UP] and not self.fall and self.space == False:
             self.flag_jump = True
             self.space = True
@@ -148,16 +96,6 @@ class Character():
             self.jump(list_level)
         if not self.flag_jump:
             self.gravity()
-       
-        # else:
-        #     #То наш персонаж будет стоять и смотреть вправо
-        #     if self.where_watching == 'right':
-        #             self.Sprite_path = '\\image\\' + 'char1' + '.png'
-        #             self.load_image()
-        #     else:
-        #         #То наш персонаж будет стоять и смотреть влево
-        #         self.Sprite_path = '\\image\\' + 'charl1' + '.png'
-        #         self.load_image()
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT] and not self.fall and not self.flag_jump:
             self.speed_animation = 0
             self.index_image = 0
@@ -200,9 +138,7 @@ class Character():
             if self.X_sprite <= block.X + block.WIDTH  and not self.flag_jump:
                 if self.X_sprite + self.Width_sprite >= block.X:
                     if self.Y_sprite + self.Height_sprite >= block.Y and self.Y_sprite + self.Height_sprite <= block.Y + self.Gravity_sprite:
-                         #and self.Y_sprite + self.Height_sprite <= i.Y + self.Gravity_sprite + 1:
                         self.Y_sprite = block.Y - self.Height_sprite 
-                        # print(block.Y, self.Y_sprite + self.Height_sprite)
                         self.fall = False
                         break
                     else:
@@ -216,7 +152,6 @@ class Character():
         for block in list_level:
             if self.X_sprite <= block.X + block.WIDTH:
                 if self.X_sprite + self.Width_sprite >= block.X:
-                    # if self.Y_sprite <= block.Y + block.HEIGHT and self.Y_sprite >= block.Y:
                     if self.Y_sprite <= block.Y + block.HEIGHT + 10 and self.Y_sprite + self.Height_sprite >= block.Y + block.HEIGHT:
                         self.Jump_distance = 0
                         self.fall = True
@@ -334,8 +269,5 @@ class Character():
         self.heart = self.heart + self.heart_path
         self.heart = pygame.image.load(self.heart).convert_alpha()
         self.heart = pygame.transform.scale(self.heart, (19*2, 25*2))
-        # self.f1 = pygame.font.Font(None, 36)
-        # self.text1 = self.f1.render(str(self.hp), True, (180, 0, 0))
-        # screen.blit(self.text1, (200, 50))
         screen.blit(self.heart, (2, 2))
       
