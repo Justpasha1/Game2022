@@ -10,7 +10,7 @@ import os
 # Створення всіх об'єктів та гравця в грі
     # Фони гри
 background = Image(0,0,1080,720,"\\image\\phonee.png")
-mainchar = Character(400, 550, 17, 27, 4, 5, 27*2+7, "\\image\\char1.png")
+mainchar = Character(400, 550, 20, 27, 4, 5, 27*2+7, "\\image\\char1.png")
 tavernabg = Image(0,0,1080,720,'\\image\\bg\\tavernabg.png')
 bgstart = Image(0,0,1080,720,'\\image\\bg\\bgstart.png')
 cavebg = Image(0,0,1080,720,'\\image\\bg\\cavebg.png')

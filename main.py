@@ -226,7 +226,7 @@ while game:
             mainchar.Y_sprite = 432
             mainchar.X_sprite = 20
             scene= 5
-        if mainchar.X_sprite <= 20:
+        if mainchar.X_sprite <= 20 and mainchar.Y_sprite <= 200:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
