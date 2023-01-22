@@ -6,6 +6,9 @@ import pygame
 import os
 
 
+# лого гри
+logo = Image(100, 250, 95*5, 23*5,'\\image\\logo.png')
+
 
 # Створення всіх об'єктів та гравця в грі
     # Фони гри
@@ -16,7 +19,9 @@ bgstart = Image(0,0,1080,720,'\\image\\bg\\bgstart.png')
 cavebg = Image(0,0,1080,720,'\\image\\bg\\cavebg.png')
 grassbg = Image(0,0,1080,720,'\\image\\bg\\grassbg.png')
 deathbg = Image(0,0,1080,720,'\\image\\bg\\dethbg.png')
-
+history1 = Image(0,0,1080,720,'\\image\\story\\history1.png')
+history2 = Image(0,0,1080,720,'\\image\\story\\history2.png')
+kywshbg = Image(0,0,1080,720,"\\image\\bg\\kywshbg.png")
     # Кнопки гри
         # Кнопки меню
 buttonplay = Image(690, 53, 180, 86, "\\image\\buttonplay1.png")
@@ -32,6 +37,10 @@ buttonselliron = Image(600, 230, 40*3,40*3,'\\image\\taverna\\ironsell.png')
 buttonsellsilver = Image(800, 230, 40*3,40*3,'\\image\\taverna\\silversell.png')
 heartupgrade = Image(620, 60,39*5,45*5,'\\image\\hearts\\heartupgrade.png')
 sellall = Image(buttonsellemeralds.X,0,40*3,20*3,'\\image\\taverna\\sellall.png')
+recover = Image(buttonsell.X-64*3-20,buttonsell.Y+3, 64*3,16*3,'\\image\\taverna\\recoverybutton.png')
+        # Кнопки історії
+buttonnext = Image(870,630,200,80,'\\image\\story\\nextbutton.png')
+buttonnext1 = Image(870,630,200,80,'\\image\\story\\nextbutton.png')
 
 # Текстури для переходів
 
@@ -56,6 +65,7 @@ coin6 = Image(buttonbuy.X + buttonbuy.WIDTH + 10, buttonbuy.Y + 12,27, 27,'\\ima
 coin7 = Image(heartupgrade.X +20,heartupgrade.Y+heartupgrade.HEIGHT+20,27*2,27*2,'\\image\\taverna\\coin.png')
 list_coin = [coin1,coin2,coin3,coin4,coin5]
 heartupgradeprice = Text(coin7.X + coin7.WIDTH + 5,coin7.Y -3,27*2,'arial','15',(0,0,0))
+coin8 = Image(recover.X+recover.WIDTH//2-30,recover.Y-30,27,27,'\\image\\taverna\\coin.png')
 
 # Текстури для рівнів
 
@@ -149,6 +159,7 @@ emeraldsprice = Text(coin1.X+coin1.WIDTH+5,coin1.Y,27,'arial','4',(0,0,0))
 goldprice = Text(coin3.X+coin3.WIDTH+5,coin3.Y,27,'arial','3',(0,0,0))
 silverprice = Text(coin5.X+coin5.WIDTH+5,coin5.Y,27,'arial','2',(0,0,0))
 ironprice = Text(coin4.X+coin4.WIDTH+5,coin4.Y,27,'arial','1',(0,0,0))
+recoverprice = Text(coin8.X+coin8.WIDTH+5,coin8.Y,27,'arial','10',(0,0,0))
         # Для показу що ми маємо в таверні
 diamondcount = Text(buttonselldiamond.X+buttonselldiamond.WIDTH//2-10,buttonselldiamond.Y,27,'arial',str(mainchar.diamond),(0,0,0))
 emeraldscount = Text(buttonsellemeralds.X+buttonsellemeralds.WIDTH//2-10,buttonsellemeralds.Y,27,'arial',str(mainchar.emeralds),(0,0,0))
@@ -173,6 +184,9 @@ for i in list_ores5:
     i.load_image()
 for i in list_ores6:
     i.load_image()
+recoverprice.load_text()
+coin8.load_image()
+recover.load_image()
 rope.load_image()
 heart.load_image()
 heartupgradeprice.load_text()
@@ -200,3 +214,9 @@ tavernabg.load_image()
 bgstart.load_image()
 taverna.load_image()
 Esc.load_image()
+history2.load_image()
+history1.load_image()
+buttonnext.load_image()
+buttonnext1.load_image()
+logo.load_image()
+kywshbg.load_image()

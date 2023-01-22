@@ -31,7 +31,6 @@ class Character():
         self.img = None
         self.load_image()
         self.flag_jump = False
-        self.ores_balance = 0
         self.side = False #False - Лево, True - Право
         self.space = False
         self.can_entern_taverna = False
@@ -40,8 +39,8 @@ class Character():
         self.gold = 0
         self.iron = 0
         self.silver = 0
-        self.coin = 0
-        self.hp = 2
+        self.coin = 300
+        self.hp = 1
         self.hp_max = 2
         self.space = False
         self.where_watching = 'right'

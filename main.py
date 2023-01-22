@@ -59,12 +59,12 @@ while game:
                     buttonexit.load_image()
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.pos[0] > buttonplay.X and event.pos[0] < buttonplay.X + buttonplay.WIDTH and event.pos[1] > buttonplay.Y and event.pos[1] < buttonplay.Y + buttonplay.HEIGHT:
-                    scene = 2
+                    scene = 18
                     mainchar.X_sprite = 20
                     mainchar.Y_sprite = 720 - 27 * 3
                     buttonsound.play(1)
                 if event.pos[0] > buttonhelp.X and event.pos[0] < buttonhelp.X + buttonhelp.WIDTH and event.pos[1] > buttonhelp.Y and event.pos[1] < buttonhelp.Y + buttonhelp.HEIGHT:
-                    scene = 3
+                    scene = 13
                     buttonsound.play(1)
                 if event.pos[0] > buttonexit.X and event.pos[0] < buttonexit.X + buttonexit.WIDTH and event.pos[1] > buttonexit.Y and event.pos[1] < buttonexit.Y + buttonexit.HEIGHT:
                     buttonsound.play(1)
@@ -73,6 +73,7 @@ while game:
             buttonplay.show_image(screen)
             buttonhelp.show_image(screen)
             buttonexit.show_image(screen)
+            logo.show_image(screen)
         # Таверна
         if scene == 3:
             if event.type == pygame.MOUSEBUTTONUP:
@@ -82,8 +83,19 @@ while game:
                 if event.pos[0] > buttonbuy.X and event.pos[0] < buttonbuy.X + buttonbuy.WIDTH and event.pos[1] > buttonbuy.Y and event.pos[1] < buttonbuy.Y + buttonbuy.HEIGHT:
                     menu = 'buy'
                     buttonsound.play(1)
-            
-
+                if mainchar.hp != mainchar.hp_max:
+                    if event.pos[0] > recover.X and event.pos[0] < recover.X + recover.WIDTH and event.pos[1] > recover.Y and event.pos[1] < recover.Y + recover.HEIGHT:
+                        if mainchar.coin >= 10 and mainchar.hp != mainchar.hp_max:
+                            mainchar.coin -= 10
+                            mainchar.hp = mainchar.hp_max
+            if mainchar.hp != mainchar.hp_max:
+                if event.type == pygame.MOUSEMOTION:
+                    if event.pos[0] > recover.X and event.pos[0] < recover.X + recover.WIDTH and event.pos[1] > recover.Y and event.pos[1] < recover.Y + recover.HEIGHT:
+                        recover.PATH = '\\image\\taverna\\recoverybutton2.png'
+                        recover.load_image()
+                    else:
+                        recover.PATH = '\\image\\taverna\\recoverybutton.png'
+                        recover.load_image()
             keys = pygame.key.get_pressed()
             # screen.fill((0,0,0))
             tavernabg.show_image(screen)
@@ -91,7 +103,10 @@ while game:
             buttonsell.show_image(screen)
             buttonbuy.show_image(screen)
             coin6.show_image(screen)
-            
+            if mainchar.hp != mainchar.hp_max:
+                recover.show_image(screen)
+                coin8.show_image(screen)
+                recoverprice.show_text(screen)
             monyewehave.TEXT = str(mainchar.coin)
             monyewehave.load_text()
             monyewehave.show_text(screen)
@@ -126,6 +141,7 @@ while game:
                 silvercount.show_text(screen)
                 ironcount.load_text()
                 ironcount.show_text(screen)
+                
                 for i in list_coin:
                     i.show_image(screen)
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -176,18 +192,53 @@ while game:
                 buttonbuy.PATH = '\\image\\taverna\\buy2.png'
                 buttonbuy.load_image()
                 buttonsell.load_image()
-                heartupgrade.show_image(screen)
-                coin7.show_image(screen)
+                if mainchar.hp_max != 5:
+                    heartupgrade.show_image(screen)
+                    heartupgradeprice.show_text(screen)
+                    coin7.show_image(screen)
+                print(mainchar.hp_max,mainchar.coin)
+                if mainchar.hp_max == 2:
+                    heartupgradeprice.TEXT = '20'
+                    heartupgradeprice.load_text()
                 if mainchar.hp_max == 3:
                     heartupgradeprice.TEXT = '40'
                     heartupgradeprice.load_text()
                 if mainchar.hp_max == 4:
                     heartupgradeprice.TEXT = '70'
                     heartupgradeprice.load_text()
-                heartupgradeprice.show_text(screen)
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if event.pos[0] > heartupgrade.X and event.pos[0] < heartupgrade.X + heartupgrade.WIDTH and event.pos[1] > heartupgrade.Y and event.pos[1] < heartupgrade.Y + heartupgrade.HEIGHT:
+                        if mainchar.hp_max == 2:
+                            if mainchar.coin >= 20:
+                                mainchar.hp_max = 3
+                                mainchar.coin -= 20
+                        elif mainchar.hp_max == 3:
+                            if mainchar.coin >= 40:
+                                mainchar.hp_max = 4
+                                mainchar.coin -= 40
+                        elif mainchar.hp_max == 4:
+                            if mainchar.coin >= 50:
+                                mainchar.hp_max = 5
+                                mainchar.coin -= 70
+                
             mainchar.leave_taverna()
             if mainchar.can_entern_taverna != True:
                 scene = 2
+        #Початкова заставка 1
+        if scene == 18:
+            history1.show_image(screen)
+            buttonnext.show_image(screen)
+            if event.type == pygame.MOUSEBUTTONUP:
+                if event.pos[0] > buttonnext.X and event.pos[0] < buttonnext.X + buttonnext.WIDTH and event.pos[1] > buttonnext.Y and event.pos[1] < buttonnext.Y + buttonnext.HEIGHT:
+                    scene = 19
+        #Початкова заставка 2
+        if scene == 19:
+            history2.show_image(screen)
+            buttonnext1.show_image(screen)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.pos[0] > buttonnext1.X and event.pos[0] < buttonnext1.X + buttonnext1.WIDTH and event.pos[1] > buttonnext1.Y and event.pos[1] < buttonnext1.Y + buttonnext1.HEIGHT:
+                    scene = 2
+
     keys = pygame.key.get_pressed()
     # Місто
     if scene == 2:
@@ -413,19 +464,120 @@ while game:
             scene = 11
         if mainchar.X_sprite>= 1075:
             mainchar.X_sprite = 50
-            mainchar.Y_sprite = 30
             scene = 12
         if keys[pygame.K_x] and mainchar.hp > 0:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
-        # кінцівка з сердцем
+        # кінцівка з сердцем не тепер це 8 рівень >:)
     if scene == 12:
-        grassbg.show_image(screen)
+        kywshbg.show_image(screen)
+        for i in list_level_8:
+            i.show_image(screen)
+        Mouse_x, Mouse_y = pygame.mouse.get_pos()
+        print(Mouse_x,Mouse_y)
+        mainchar.move_character(list_level_8,walk_sound)
+        mainchar.show_hp(screen)
+        rope.show_image(screen)
+        mainchar.show_image(screen)
+
+        if mainchar.X_sprite <= 20:
+            mainchar.X_sprite = 1050
+            scene = 10
+        if mainchar.X_sprite >= 1060:
+            mainchar.X_sprite = 30
+            scene = 13
+        if keys[pygame.K_x] and mainchar.hp > 0:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
+        if mainchar.hp == 0:
+            scene = 11
+        # рівень 9 
+    if scene == 13:
+        kywshbg.show_image(screen)
+        for i in list_level_9:
+            i.show_image(screen)
+        mainchar.move_character(list_level_9,walk_sound)
+        mainchar.show_hp(screen)
+        rope.show_image(screen)
+        mainchar.show_image(screen)
+        if mainchar.X_sprite <= 20:
+            mainchar.X_sprite = 1050
+            scene = 12
+        if mainchar.X_sprite >= 1060:
+            mainchar.X_sprite = 30
+            scene = 14
+        if keys[pygame.K_x] and mainchar.hp > 0:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
+        if mainchar.hp == 0:
+            scene = 11
+        # рівень 10
+    if scene == 14:
+        kywshbg.show_image(screen)
+        for i in list_level_10:
+            i.show_image(screen)
+        mainchar.move_character(list_level_10,walk_sound)
+        mainchar.show_hp(screen)
+        rope.show_image(screen)
+        mainchar.show_image(screen)
+        if mainchar.X_sprite <= 20:
+            mainchar.X_sprite = 1050
+            scene = 13
+        if mainchar.X_sprite >= 1060:
+            mainchar.X_sprite = 30
+            scene = 15
+        if keys[pygame.K_x] and mainchar.hp > 0:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
+        if mainchar.hp == 0:
+            scene = 11
+    if scene == 15:
+        kywshbg.show_image(screen)
+        for i in list_level_11:
+            i.show_image(screen)
+        mainchar.move_character(list_level_11,walk_sound)
+        mainchar.show_hp(screen)
+        rope.show_image(screen)
+        mainchar.show_image(screen)
+        if mainchar.X_sprite <= 20:
+            mainchar.X_sprite = 1050
+            scene = 14
+        if mainchar.Y_sprite >= 720:
+            mainchar.Y_sprite = 2
+            scene = 16
+        if keys[pygame.K_x] and mainchar.hp > 0:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
+        if mainchar.hp == 0:
+            scene = 11
+        # рівень 12
+    if scene == 16:
+        kywshbg.show_image(screen)
+        for i in list_level_12:
+            i.show_image(screen)
+        mainchar.move_character(list_level_12,walk_sound)
+        mainchar.show_hp(screen)
+        rope.show_image(screen)
+        mainchar.show_image(screen)
+        if mainchar.Y_sprite >= 720:
+            mainchar.Y_sprite = 2
+            scene = 17
+        if keys[pygame.K_x] and mainchar.hp > 0:
+            mainchar.X_sprite = 900
+            mainchar.Y_sprite = 720 - 27*3
+            scene = 2
+        if mainchar.hp == 0:
+            scene = 11
+    if scene == 17:
+        kywshbg.show_image(screen)
         for i in list_level_final:
             i.show_image(screen)
         heart.show_image(screen)
-        
         mainchar.move_character(list_level_final,walk_sound)
         mainchar.show_image(screen)
     # меню смерті
