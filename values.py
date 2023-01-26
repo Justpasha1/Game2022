@@ -4,7 +4,8 @@ from text import Text
 from ores import Ores
 import pygame
 import os
-
+from enemies import Enemie, Static_Enemie, Chonky_enemie
+from pygame import mixer
 
 # лого гри
 logo = Image(100, 250, 95*5, 23*5,'\\image\\logo.png')
@@ -13,7 +14,7 @@ logo = Image(100, 250, 95*5, 23*5,'\\image\\logo.png')
 # Створення всіх об'єктів та гравця в грі
     # Фони гри
 background = Image(0,0,1080,720,"\\image\\phonee.png")
-mainchar = Character(400, 550, 20, 27, 4, 5, 27*2+7, "\\image\\char1.png")
+mainchar = Character(400, 550, 20, 27, 4, 5, 27*2+14, "\\image\\char1.png")
 tavernabg = Image(0,0,1080,720,'\\image\\bg\\tavernabg.png')
 bgstart = Image(0,0,1080,720,'\\image\\bg\\bgstart.png')
 cavebg = Image(0,0,1080,720,'\\image\\bg\\cavebg.png')
@@ -21,8 +22,13 @@ grassbg = Image(0,0,1080,720,'\\image\\bg\\grassbg.png')
 deathbg = Image(0,0,1080,720,'\\image\\bg\\dethbg.png')
 history1 = Image(0,0,1080,720,'\\image\\story\\history1.png')
 history2 = Image(0,0,1080,720,'\\image\\story\\history2.png')
+history3 = Image(0,0,1080,720,'\\image\\story\\history3.png')
+history4 = Image(0,0,1080,720,'\\image\\story\\history4.png')
+history5 = Image(0,0,1080,720,'\\image\\story\\history5.png')
 kywshbg = Image(0,0,1080,720,"\\image\\bg\\kywshbg.png")
-    # Кнопки гри
+help1 = Image(0,0,1080,720,"\\image\\help\\help1.png")
+help2 = Image(0,0,1080,720,"\\image\\help\\help2.png")
+# Кнопки гри
         # Кнопки меню
 buttonplay = Image(690, 53, 180, 86, "\\image\\buttonplay1.png")
 buttonhelp = Image(690, 282, 180, 86, "\\image\\buttonhelp1.png")
@@ -40,8 +46,11 @@ sellall = Image(buttonsellemeralds.X,0,40*3,20*3,'\\image\\taverna\\sellall.png'
 recover = Image(buttonsell.X-64*3-20,buttonsell.Y+3, 64*3,16*3,'\\image\\taverna\\recoverybutton.png')
         # Кнопки історії
 buttonnext = Image(870,630,200,80,'\\image\\story\\nextbutton.png')
-buttonnext1 = Image(870,630,200,80,'\\image\\story\\nextbutton.png')
-
+buttonleave = Image(64,593,60*3,20*3,'\\image\\story\\leavebutton.png')
+buttontry = Image(64 +(60*3) +20,593,60*3,20*3,'\\image\\story\\trybutton.png')
+    # кнопки допомоги
+backbutton = Image(10,670,100,40,"\\image\\help\\backbutton.png")
+buttonnext1 = Image(970,670,100,40,'\\image\\story\\nextbutton.png')
 # Текстури для переходів
 
 heart = Image(359,27,588,675,'\\image\\heart.png')
@@ -51,6 +60,7 @@ caveenterbottom = Image(1018,608,25,68,'\\image\\caveenterbottom.png')
 
 # Текстури кнопок
 
+C = Image((heart.X + heart.WIDTH)-heart.WIDTH//2-15,heart.Y+100,40,40,'\\image\\C.png')
 X = Image(taverna.X + taverna.WIDTH/2-25, taverna.Y - 42,40,40,'\\image\\X.png')
 Esc = Image(10,10,40,40,'\\image\\Esc.png')
 
@@ -148,9 +158,14 @@ list_ores7 = [oresiron15,oresiron16,oresgold13,oresgold14,oresdiamond7,oresdiamo
 
 # Всі звуки
 
-buttonsound = pygame.mixer.Sound(os.path.abspath(__file__ + "/..") +'\\sounds\\buttonpressed.wav')
-walk_sound = pygame.mixer.Sound(os.path.abspath(__file__ + "/..") +'\\sounds\\step.wav')
-
+buttonsound = mixer.Sound(os.path.abspath(__file__ + "/..") +'\\sounds\\buttonpressed.wav')
+walk_sound = mixer.Sound(os.path.abspath(__file__ + "/..") +'\\sounds\\step.wav')
+walk_sound.set_volume(0.3)
+orespickup = mixer.Sound(os.path.abspath(__file__ + '/..') + "\\sounds\\orespickup.wav")
+pageturn = mixer.Sound(os.path.abspath(__file__ + '/..') + "\\sounds\\pageturn.wav")
+tavernaost = mixer.Sound(os.path.abspath(__file__ + '/..') + "\\sounds\\tavernaost.wav")
+caveost = mixer.Sound(os.path.abspath(__file__ + '/..') + "\\sounds\\caveost.wav")
+# tavernaost = pygame.mixer.music.load(os.path.abspath(__file__ + '/..') + '\\sounds\\tavernaost.wav')
 # Весь текст
     # Таверна
         # Ціни
@@ -168,6 +183,131 @@ silvercount = Text(buttonsellsilver.X+buttonsellsilver.WIDTH//2-10,buttonsellsil
 ironcount = Text(buttonselliron.X+buttonselliron.WIDTH//2-10,buttonselliron.Y,27,'arial',str(mainchar.iron),(0,0,0))
 monyewehave = Text(coin6.X+coin6.WIDTH + 5,coin6.Y,27,'arial',str(mainchar.coin),(0,0,0))
 
+# вороги
+        # chonky
+chonky1_1 = Chonky_enemie(391, 137, 40, 26, 1, "\\image\\chonky.png", 0)
+chonky1_2 = Chonky_enemie(817, 81, 40, 26, 1, "\\image\\chonky.png", 0)
+chonky1_3 = Chonky_enemie(473, 379, 40, 26, 1, "\\image\\chonky.png", 0)
+chonky1_4 = Chonky_enemie(171, 486, 40, 26, 1, "\\image\\chonky.png", 0)
+
+chonky2_1 = Chonky_enemie(653, 191 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky2_2 = Chonky_enemie(168, 433 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky2_3 = Chonky_enemie(817, 433 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky2_4 = Chonky_enemie(341, 649 ,40, 26, 1, "\\image\\chonky.png", 0)
+
+
+chonky3_1 = Chonky_enemie(409, 109, 40, 26, 1, "\\image\\chonky.png", 0)
+chonky3_2 = Chonky_enemie(103, 163, 40, 26, 1, "\\image\\chonky.png", 0)
+chonky3_3 = Chonky_enemie(583, 407, 40, 26, 1, "\\image\\chonky.png", 0)
+chonky3_4 = Chonky_enemie(75, 569, 40, 26, 1, "\\image\\chonky.png", 0)
+
+chonky4_1 = Chonky_enemie(967, 299 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky4_2 = Chonky_enemie(486, 325 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky4_3 = Chonky_enemie(534, 460 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky4_4 = Chonky_enemie(432, 650 ,40, 26, 1, "\\image\\chonky.png", 0)
+
+chonky5_1 = Chonky_enemie(824, 245 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky5_2 = Chonky_enemie(199, 434 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky5_3 = Chonky_enemie(121, 677 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky5_4 = Chonky_enemie(577, 677 ,40, 26, 1, "\\image\\chonky.png", 0)
+
+chonky6_1 = Chonky_enemie(530, 136 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky6_2 = Chonky_enemie(674, 433 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky6_3 = Chonky_enemie(196, 460 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky6_4 = Chonky_enemie(916, 569 ,40, 26, 1, "\\image\\chonky.png", 0)
+
+chonky7_1 = Chonky_enemie(865, 216 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky7_2 = Chonky_enemie(810, 460 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky7_3 = Chonky_enemie(287, 677 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky7_4 = Chonky_enemie(579, 677 ,40, 26, 1, "\\image\\chonky.png", 0)
+
+chonky8_1 = Chonky_enemie(716, 189 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky8_2 = Chonky_enemie(530, 406 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky8_3 = Chonky_enemie(387, 677 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky8_4 = Chonky_enemie(481, 677 ,40, 26, 1, "\\image\\chonky.png", 0)
+
+chonky9_1 = Chonky_enemie(963, 244 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky9_2 = Chonky_enemie(164, 406 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky9_3 = Chonky_enemie(1012, 649 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky9_4 = Chonky_enemie(869, 677 ,40, 26, 1, "\\image\\chonky.png", 0)
+
+chonky10_1 = Chonky_enemie(248, 217 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky10_2 = Chonky_enemie(410, 326 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky10_3 = Chonky_enemie(746, 380 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky10_4 = Chonky_enemie(195, 677 ,40, 26, 1, "\\image\\chonky.png", 0)
+
+chonky11_1 = Chonky_enemie(504, 298 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky11_2 = Chonky_enemie(247, 460 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky11_3 = Chonky_enemie(722, 596 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky11_4 = Chonky_enemie(51, 677 ,40, 26, 1, "\\image\\chonky.png", 0)
+
+chonkys_1 = [
+    chonky1_1,
+    chonky1_2,
+    chonky1_3,
+    chonky1_4
+]
+chonkys_2 = [
+    chonky2_1,
+    chonky2_2,
+    chonky2_3,
+    chonky2_4
+]
+chonkys_3 = [
+    chonky3_1,
+    chonky3_2,
+    chonky3_3,
+    chonky3_4
+]
+chonkys_4 = [
+    chonky4_1,
+    chonky4_2,
+    chonky4_3,
+    chonky4_4
+]
+chonkys_5 = [
+    chonky5_1,
+    chonky5_2,
+    chonky5_3,
+    chonky5_4
+]
+chonkys_6 = [
+    chonky6_1,
+    chonky6_2,
+    chonky6_3,
+    chonky6_4
+]
+chonkys_7 = [
+    chonky7_1,
+    chonky7_2,
+    chonky7_3,
+    chonky7_4
+]
+chonkys_8 = [
+    chonky8_1,
+    chonky8_2,
+    chonky8_3,
+    chonky8_4
+]
+chonkys_9 = [
+    chonky9_1,
+    chonky9_2,
+    chonky9_3,
+    chonky9_4
+]
+chonkys_10 = [
+    chonky10_1,
+    chonky10_2,
+    chonky10_3,
+    chonky10_4
+]
+chonkys_11 = [
+    chonky11_1,
+    chonky11_2,
+    chonky11_3,
+    chonky11_4
+]
+
 # Загружаємо всі текстури
 
 for i in list_ores1:
@@ -184,6 +324,11 @@ for i in list_ores5:
     i.load_image()
 for i in list_ores6:
     i.load_image()
+buttonnext1.load_image()
+backbutton.load_image()
+help1.load_image()
+help2.load_image()
+C.load_image()
 recoverprice.load_text()
 coin8.load_image()
 recover.load_image()
@@ -214,9 +359,13 @@ tavernabg.load_image()
 bgstart.load_image()
 taverna.load_image()
 Esc.load_image()
-history2.load_image()
 history1.load_image()
+history2.load_image()
+history3.load_image()
+history4.load_image()
+history5.load_image()
 buttonnext.load_image()
-buttonnext1.load_image()
+buttonleave.load_image()
+buttontry.load_image()
 logo.load_image()
 kywshbg.load_image()

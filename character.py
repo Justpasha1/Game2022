@@ -40,7 +40,7 @@ class Character():
         self.iron = 0
         self.silver = 0
         self.coin = 300
-        self.hp = 1
+        self.hp = 2
         self.hp_max = 2
         self.space = False
         self.where_watching = 'right'
@@ -66,6 +66,8 @@ class Character():
                     self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
                     self.speed_animation = 0
                     self.load_image()
+                    if self.index_image == 2 or self.index_image == 4 and not self.flag_jump and not self.space:
+                        walk_sound.play(0)
                     if self.index_image == 4:
                         self.index_image = 0  
                 self.speed_animation += 1 
@@ -82,19 +84,22 @@ class Character():
                     self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
                     self.speed_animation = 0
                     self.load_image()
+                    if self.index_image == 2 or self.index_image == 4 and not self.flag_jump and not self.space:
+                        walk_sound.play(0)
                     if self.index_image == 4:
                         self.index_image = 0
                 self.speed_animation += 1
         if keys[pygame.K_UP] and not self.fall and self.space == False:
             self.flag_jump = True
             self.space = True
+            walk_sound.stop()
             
         if keys[pygame.K_UP] == False:
             self.space = False
         if self.flag_jump:
-            self.jump(list_level)
+            self.jump(list_level,walk_sound)
         if not self.flag_jump:
-            self.gravity()
+            self.gravity(walk_sound)
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT] and not self.fall and not self.flag_jump:
             self.speed_animation = 0
             self.index_image = 0
@@ -106,9 +111,11 @@ class Character():
                 self.load_image()
         self.colision_bottom(list_level)
     #-----Падение-----#
-    def gravity(self):
+    def gravity(self,walk_sound):
+
         if self.fall:
             self.Y_sprite += self.Gravity_sprite
+            walk_sound.stop()
             if self.side == True:
                 self.Sprite_path = "\\image\\char6.png"
             elif self.side == False:
@@ -116,8 +123,9 @@ class Character():
             self.load_image()
 
     #-----Прижок-----#
-    def jump(self, list_level):
+    def jump(self, list_level,walk_sound):
         self.colision_up(list_level)
+        walk_sound.stop()
         if self.fall == False:
             self.flag_jump = True
             self.Y_sprite -= self.Jump_speed
@@ -196,7 +204,7 @@ class Character():
                     self.move_left = True
             else:
                 self.move_left = True
-    def ores_collision(self,list_ores):
+    def ores_collision(self,list_ores,sound):
         #Перебераем список руды
         for i in list_ores:
             #Условие касания с рудой
@@ -214,6 +222,7 @@ class Character():
                     self.silver += 1
                 if i.TYPE == 'iron':
                     self.iron += 1
+                sound.play(0)
 
     def taverna(self, button, taverna, screen):
         keys = pygame.key.get_pressed()

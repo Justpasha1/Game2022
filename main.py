@@ -1,6 +1,7 @@
 # Налаштування гри та підгрузка класів
     # Підлкючення бібліотек
 import pygame
+from pygame import mixer
 import os
 from Image2 import Image
 from character import Character
@@ -17,11 +18,16 @@ screen = pygame.display.set_mode((1080, 720))
 font = pygame.font.SysFont('Comic Sans MS', 27)
 pygame.display.set_caption('Unknown Depths')
     #Налаштування гри
+mixer.music.load(os.path.abspath(__file__ + "/..") + '\\sounds\\mainmenuost.wav')
 menu = None
 clock = pygame.time.Clock()
 mouse_position = 1
-scene = 1
+scene = 15
+page = 1
+helppage = 1
 game = True
+music = True
+ost = True
 
 while game:
     for event in pygame.event.get():
@@ -29,7 +35,7 @@ while game:
             game = False
         # Меню
         if scene == 1:
-    #кнопки
+        #кнопки
             #кнопка play
             if  event.type == pygame.MOUSEMOTION:
                 if event.pos[0] > buttonplay.X and event.pos[0] < buttonplay.X + buttonplay.WIDTH and event.pos[1] > buttonplay.Y and event.pos[1] < buttonplay.Y + buttonplay.HEIGHT:
@@ -38,10 +44,7 @@ while game:
                 else:
                     buttonplay.PATH = "\\image\\buttonplay1.png"
                     buttonplay.load_image()
-                
-
             #кнопка help
-            if  event.type == pygame.MOUSEMOTION:
                 if event.pos[0] > buttonhelp.X and event.pos[0] < buttonhelp.X + buttonhelp.WIDTH and event.pos[1] > buttonhelp.Y and event.pos[1] < buttonhelp.Y + buttonhelp.HEIGHT:
                     buttonhelp.PATH = "\\image\\buttonhelp2.png"
                     buttonhelp.load_image()
@@ -50,7 +53,6 @@ while game:
                     buttonhelp.load_image()
             
             #кнопка exit
-            if  event.type == pygame.MOUSEMOTION:
                 if event.pos[0] > buttonexit.X and event.pos[0] < buttonexit.X + buttonexit.WIDTH and event.pos[1] > buttonexit.Y and event.pos[1] < buttonexit.Y + buttonexit.HEIGHT:
                     buttonexit.PATH = "\\image\\buttonexit2.png"
                     buttonexit.load_image()
@@ -63,19 +65,24 @@ while game:
                     mainchar.X_sprite = 20
                     mainchar.Y_sprite = 720 - 27 * 3
                     buttonsound.play(1)
+                    mixer.music.set_volume(0.3)
                 if event.pos[0] > buttonhelp.X and event.pos[0] < buttonhelp.X + buttonhelp.WIDTH and event.pos[1] > buttonhelp.Y and event.pos[1] < buttonhelp.Y + buttonhelp.HEIGHT:
-                    scene = 13
+                    scene = 21
                     buttonsound.play(1)
                 if event.pos[0] > buttonexit.X and event.pos[0] < buttonexit.X + buttonexit.WIDTH and event.pos[1] > buttonexit.Y and event.pos[1] < buttonexit.Y + buttonexit.HEIGHT:
                     buttonsound.play(1)
                     game = False
+            
             background.show_image(screen)
             buttonplay.show_image(screen)
             buttonhelp.show_image(screen)
             buttonexit.show_image(screen)
             logo.show_image(screen)
         # Таверна
-        if scene == 3:
+        elif scene == 3:
+            if ost:
+                tavernaost.play(-1)
+                ost = False
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.pos[0] > buttonsell.X and event.pos[0] < buttonsell.X + buttonsell.WIDTH and event.pos[1] > buttonsell.Y and event.pos[1] < buttonsell.Y + buttonsell.HEIGHT:
                     menu = 'sell'
@@ -96,8 +103,8 @@ while game:
                     else:
                         recover.PATH = '\\image\\taverna\\recoverybutton.png'
                         recover.load_image()
+            # tavernaost.play(0)
             keys = pygame.key.get_pressed()
-            # screen.fill((0,0,0))
             tavernabg.show_image(screen)
             Esc.show_image(screen)
             buttonsell.show_image(screen)
@@ -196,7 +203,6 @@ while game:
                     heartupgrade.show_image(screen)
                     heartupgradeprice.show_text(screen)
                     coin7.show_image(screen)
-                print(mainchar.hp_max,mainchar.coin)
                 if mainchar.hp_max == 2:
                     heartupgradeprice.TEXT = '20'
                     heartupgradeprice.load_text()
@@ -220,25 +226,70 @@ while game:
                             if mainchar.coin >= 50:
                                 mainchar.hp_max = 5
                                 mainchar.coin -= 70
+                        buttonsound.play(1)
                 
             mainchar.leave_taverna()
             if mainchar.can_entern_taverna != True:
+                tavernaost.stop()
+                ost = True
                 scene = 2
         #Початкова заставка 1
-        if scene == 18:
+        elif scene == 18:
             history1.show_image(screen)
             buttonnext.show_image(screen)
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.pos[0] > buttonnext.X and event.pos[0] < buttonnext.X + buttonnext.WIDTH and event.pos[1] > buttonnext.Y and event.pos[1] < buttonnext.Y + buttonnext.HEIGHT:
                     scene = 19
+                    pageturn.play(0)
         #Початкова заставка 2
-        if scene == 19:
+        elif scene == 19:
             history2.show_image(screen)
-            buttonnext1.show_image(screen)
+            buttonnext.show_image(screen)
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.pos[0] > buttonnext1.X and event.pos[0] < buttonnext1.X + buttonnext1.WIDTH and event.pos[1] > buttonnext1.Y and event.pos[1] < buttonnext1.Y + buttonnext1.HEIGHT:
+                if event.pos[0] > buttonnext.X and event.pos[0] < buttonnext.X + buttonnext.WIDTH and event.pos[1] > buttonnext.Y and event.pos[1] < buttonnext.Y + buttonnext.HEIGHT:
                     scene = 2
+                    pageturn.play(0)
+                    mixer.music.stop()
 
+        # Кінцева заставка 
+        elif scene == 20:
+            if page == 1:
+                history3.show_image(screen)
+                buttontry.show_image(screen)
+                buttonleave.show_image(screen)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.pos[0] > buttonleave.X and event.pos[0] < buttonleave.X + buttonleave.WIDTH and event.pos[1] > buttonleave.Y and event.pos[1] < buttonleave.Y + buttonnext.HEIGHT:
+                        page = 2
+                        pageturn.play(0)
+                    if event.pos[0] > buttontry.X and event.pos[0] < buttontry.X + buttontry.WIDTH and event.pos[1] > buttontry.Y and event.pos[1] < buttontry.Y + buttontry.HEIGHT:
+                        page = 3
+                        pageturn.play(0)
+            if page == 2:
+                history4.show_image(screen)
+            if page == 3:
+                history5.show_image(screen)
+        elif scene == 21:
+            eys = pygame.key.get_pressed()
+            mixer.music.set_volume(0.3)
+            if helppage == 1:
+                help1.show_image(screen)
+                buttonnext1.show_image(screen)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.pos[0] > buttonnext1.X and event.pos[0] < buttonnext1.X + buttonnext1.WIDTH and event.pos[1] > buttonnext1.Y and event.pos[1] < buttonnext1.Y + buttonnext1.HEIGHT:
+                        pageturn.play()
+                        helppage = 2
+            if helppage == 2:
+                help2.show_image(screen)
+                backbutton.show_image(screen)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.pos[0] > backbutton.X and event.pos[0] < backbutton.X + backbutton.WIDTH and event.pos[1] > backbutton.Y and event.pos[1] < backbutton.Y + backbutton.HEIGHT:
+                        pageturn.play()
+                        helppage = 1
+            Esc.show_image(screen)
+            if keys[pygame.K_ESCAPE]:
+                mixer.music.set_volume(0.6)
+                scene = 1
+                helppage = 1
     keys = pygame.key.get_pressed()
     # Місто
     if scene == 2:
@@ -260,7 +311,10 @@ while game:
             scene = 4
     # Печера
         # 1 рівень
-    if scene == 4:
+    elif scene == 4:
+        if ost:
+            caveost.play(-1)
+            ost = False
         cavebg.show_image(screen)
         for i in list_level_1:
             i.show_image(screen)
@@ -268,11 +322,13 @@ while game:
             if i.X > -100:
                 i.show_image(screen)
         mainchar.move_character(list_level_1,walk_sound)
-        mainchar.ores_collision(list_ores1)
+        mainchar.ores_collision(list_ores1,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        # print(mainchar.X_sprite,mainchar.Y_sprite)
+        for stay_enemy in chonkys_1:
+            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.show_image(screen)
         if mainchar.X_sprite >= 1050:
             mainchar.Y_sprite = 432
             mainchar.X_sprite = 20
@@ -283,12 +339,16 @@ while game:
             scene = 2
         if mainchar.hp == 0:
             scene = 11
+            ost = True
+            caveost.stop()
         if keys[pygame.K_x] and mainchar.hp > 0:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
+            ost = True
+            caveost.stop()
         # 2 рівень   
-    if scene == 5:
+    elif scene == 5:
         cavebg.show_image(screen)
         for i in list_level_2:
             i.show_image(screen)
@@ -296,14 +356,13 @@ while game:
             if i.X > -100:
                 i.show_image(screen)
         mainchar.move_character(list_level_2,walk_sound)
-        mainchar.ores_collision(list_ores2)
+        mainchar.ores_collision(list_ores2,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        Mouse_x, Mouse_y = pygame.mouse.get_pos()
-        print(Mouse_x,Mouse_y)
-
-        # print(mainchar.X_sprite,mainchar.Y_sprite)
+        for stay_enemy in chonkys_2:
+            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.show_image(screen)
         if mainchar.X_sprite <= 15:
             mainchar.X_sprite = 1041
             mainchar.Y_sprite = 420
@@ -319,12 +378,16 @@ while game:
             scene = 8
         if mainchar.hp == 0:
             scene = 11
+            ost = True
+            caveost.stop()
         if keys[pygame.K_x] and mainchar.hp > 0:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
+            ost = True
+            caveost.stop()
         # 3 рівень
-    if scene == 6:
+    elif scene == 6:
         cavebg.show_image(screen)
         for i in list_level_3:
             i.show_image(screen)
@@ -332,12 +395,13 @@ while game:
             if i.X > -100:
                 i.show_image(screen)
         mainchar.move_character(list_level_3,walk_sound)
-        mainchar.ores_collision(list_ores3)
+        mainchar.ores_collision(list_ores3,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        Mouse_x, Mouse_y = pygame.mouse.get_pos()
-        print(Mouse_x,Mouse_y)
+        for stay_enemy in chonkys_3:
+            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.show_image(screen)
         if mainchar.Y_sprite <= 14:
             mainchar.X_sprite = 930
             mainchar.Y_sprite = 663
@@ -352,12 +416,16 @@ while game:
             scene = 9
         if mainchar.hp == 0:
             scene = 11
+            ost = True
+            caveost.stop()
         if keys[pygame.K_x] and mainchar.hp > 0:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
+            ost = True
+            caveost.stop()
         # 4 рівень
-    if scene == 7:
+    elif scene == 7:
         cavebg.show_image(screen)
         for i in list_level_4:
             i.show_image(screen)
@@ -365,12 +433,13 @@ while game:
             if i.X > -100:
                 i.show_image(screen)
         mainchar.move_character(list_level_4,walk_sound)
-        mainchar.ores_collision(list_ores4)
+        mainchar.ores_collision(list_ores4,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        Mouse_x, Mouse_y = pygame.mouse.get_pos()
-        print(Mouse_x,Mouse_y)
+        for stay_enemy in chonkys_4:
+            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.show_image(screen)
         if mainchar.X_sprite <= 12:
             mainchar.X_sprite = 1044
             mainchar.Y_sprite = 663
@@ -381,12 +450,16 @@ while game:
             scene = 8
         if mainchar.hp == 0:
             scene = 11
+            ost = True
+            caveost.stop()
         if keys[pygame.K_x] and mainchar.hp > 0:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
+            ost = True
+            caveost.stop()
         # 5 рівень
-    if scene == 8:
+    elif scene == 8:
         cavebg.show_image(screen)
         for i in list_level_5:
             i.show_image(screen)
@@ -394,12 +467,13 @@ while game:
             if i.X > -100:
                 i.show_image(screen)
         mainchar.move_character(list_level_5,walk_sound)
-        mainchar.ores_collision(list_ores5)
+        mainchar.ores_collision(list_ores5,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        Mouse_x, Mouse_y = pygame.mouse.get_pos()
-        print(Mouse_x,Mouse_y)
+        for stay_enemy in chonkys_5:
+            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.show_image(screen)
         if mainchar.X_sprite <=15:
             mainchar.X_sprite = 1059
             mainchar.Y_sprite = 30
@@ -410,12 +484,16 @@ while game:
             scene = 7
         if mainchar.hp == 0:
             scene = 11
+            ost = True
+            caveost.stop()
         if keys[pygame.K_x] and mainchar.hp > 0:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
+            ost = True
+            caveost.stop()
         # 6 рівень 
-    if scene == 9:
+    elif scene == 9:
         grassbg.show_image(screen)
         for i in list_level_6:
             i.show_image(screen)
@@ -423,12 +501,13 @@ while game:
             if i.X > -100:
                 i.show_image(screen)
         mainchar.move_character(list_level_6,walk_sound)
-        mainchar.ores_collision(list_ores6)
+        mainchar.ores_collision(list_ores6,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        Mouse_x, Mouse_y = pygame.mouse.get_pos()
-        print(Mouse_x,Mouse_y)
+        for stay_enemy in chonkys_6:
+            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.show_image(screen)
         if mainchar.X_sprite >= 1074:
             mainchar.X_sprite = 42
             mainchar.Y_sprite = 144
@@ -439,12 +518,16 @@ while game:
             scene = 10
         if mainchar.hp == 0:
             scene = 11
+            ost = True
+            caveost.stop()
         if keys[pygame.K_x] and mainchar.hp > 0:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
+            ost = True
+            caveost.stop()
         # 7 рівень
-    if scene == 10:
+    elif scene == 10:
         grassbg.show_image(screen)
         for i in list_level_7:
             i.show_image(screen)
@@ -452,35 +535,43 @@ while game:
             if i.X > -100:
                 i.show_image(screen)
         mainchar.move_character(list_level_7,walk_sound)
-        mainchar.ores_collision(list_ores7)
+        mainchar.ores_collision(list_ores7,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
+        for stay_enemy in chonkys_7:
+            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.show_image(screen)
         if mainchar.Y_sprite <= 6:
             mainchar.X_sprite = 792
             mainchar.Y_sprite = 663
             scene = 9
-        if mainchar.hp == 0:
-            scene = 11
+            
         if mainchar.X_sprite>= 1075:
             mainchar.X_sprite = 50
             scene = 12
+        if mainchar.hp == 0:
+            scene = 11
+            ost = True
+            caveost.stop()
         if keys[pygame.K_x] and mainchar.hp > 0:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
+            ost = True
+            caveost.stop()
         # кінцівка з сердцем не тепер це 8 рівень >:)
-    if scene == 12:
+    elif scene == 12:
         kywshbg.show_image(screen)
         for i in list_level_8:
             i.show_image(screen)
-        Mouse_x, Mouse_y = pygame.mouse.get_pos()
-        print(Mouse_x,Mouse_y)
         mainchar.move_character(list_level_8,walk_sound)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-
+        for stay_enemy in chonkys_8:
+            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.show_image(screen)
         if mainchar.X_sprite <= 20:
             mainchar.X_sprite = 1050
             scene = 10
@@ -491,10 +582,14 @@ while game:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
+            ost = True
+            caveost.stop()
         if mainchar.hp == 0:
             scene = 11
+            ost = True
+            caveost.stop()
         # рівень 9 
-    if scene == 13:
+    elif scene == 13:
         kywshbg.show_image(screen)
         for i in list_level_9:
             i.show_image(screen)
@@ -502,6 +597,9 @@ while game:
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
+        for stay_enemy in chonkys_9:
+            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.show_image(screen)
         if mainchar.X_sprite <= 20:
             mainchar.X_sprite = 1050
             scene = 12
@@ -512,10 +610,14 @@ while game:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
+            ost = True
+            caveost.stop()
         if mainchar.hp == 0:
             scene = 11
+            ost = True
+            caveost.stop()
         # рівень 10
-    if scene == 14:
+    elif scene == 14:
         kywshbg.show_image(screen)
         for i in list_level_10:
             i.show_image(screen)
@@ -523,6 +625,9 @@ while game:
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
+        for stay_enemy in chonkys_10:
+            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.show_image(screen)
         if mainchar.X_sprite <= 20:
             mainchar.X_sprite = 1050
             scene = 13
@@ -533,9 +638,13 @@ while game:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
+            ost = True
+            caveost.stop()
         if mainchar.hp == 0:
             scene = 11
-    if scene == 15:
+            ost = True
+            caveost.stop()
+    elif scene == 15:
         kywshbg.show_image(screen)
         for i in list_level_11:
             i.show_image(screen)
@@ -543,6 +652,9 @@ while game:
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
+        for stay_enemy in chonkys_11:
+            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.show_image(screen)
         if mainchar.X_sprite <= 20:
             mainchar.X_sprite = 1050
             scene = 14
@@ -553,10 +665,14 @@ while game:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
+            ost = True
+            caveost.stop()
         if mainchar.hp == 0:
             scene = 11
+            ost = True
+            caveost.stop()
         # рівень 12
-    if scene == 16:
+    elif scene == 16:
         kywshbg.show_image(screen)
         for i in list_level_12:
             i.show_image(screen)
@@ -571,17 +687,26 @@ while game:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
+            ost = True
+            caveost.stop()
         if mainchar.hp == 0:
             scene = 11
-    if scene == 17:
+            ost = True
+            caveost.stop()
+        # Фінал
+    elif scene == 17:
         kywshbg.show_image(screen)
         for i in list_level_final:
             i.show_image(screen)
         heart.show_image(screen)
         mainchar.move_character(list_level_final,walk_sound)
         mainchar.show_image(screen)
+        if mainchar.X_sprite + mainchar.Width_sprite >= heart.X and mainchar.X_sprite <= heart.X + heart.WIDTH:
+            C.show_image(screen)
+            if keys[pygame.K_c]:
+                scene = 20
     # меню смерті
-    if scene == 11:
+    elif scene == 11:
         buttonplay.X = 860
         buttonexit.X = 860
         buttonplay.Y = 230
@@ -604,6 +729,7 @@ while game:
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.pos[0] > buttonplay.X and event.pos[0] < buttonplay.X + buttonplay.WIDTH and event.pos[1] > buttonplay.Y and event.pos[1] < buttonplay.Y + buttonplay.HEIGHT:
                     scene = 2
+                    mainchar.hp = mainchar.hp_max
                     mainchar.X_sprite = 20
                     mainchar.Y_sprite = 720 - 27 * 3
                     mainchar.coin = 0
@@ -618,6 +744,9 @@ while game:
                     game = False
         buttonplay.show_image(screen)
         buttonexit.show_image(screen)
+    if music:
+        mixer.music.play(-1)    
+        music = False
     
     clock.tick(60)
     pygame.display.flip()
