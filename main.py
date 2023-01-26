@@ -22,7 +22,7 @@ mixer.music.load(os.path.abspath(__file__ + "/..") + '\\sounds\\mainmenuost.wav'
 menu = None
 clock = pygame.time.Clock()
 mouse_position = 1
-scene = 15
+scene = 16
 page = 1
 helppage = 1
 game = True
@@ -680,6 +680,9 @@ while game:
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
+        for stay_enemy in chonkys_12:
+            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.show_image(screen)
         if mainchar.Y_sprite >= 720:
             mainchar.Y_sprite = 2
             scene = 17

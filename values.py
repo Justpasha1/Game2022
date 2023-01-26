@@ -241,6 +241,11 @@ chonky11_2 = Chonky_enemie(247, 460 ,40, 26, 1, "\\image\\chonky.png", 0)
 chonky11_3 = Chonky_enemie(722, 596 ,40, 26, 1, "\\image\\chonky.png", 0)
 chonky11_4 = Chonky_enemie(51, 677 ,40, 26, 1, "\\image\\chonky.png", 0)
 
+chonky12_1 = Chonky_enemie(626, 136 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky12_2 = Chonky_enemie(387, 163 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky12_3 = Chonky_enemie(385, 569 ,40, 26, 1, "\\image\\chonky.png", 0)
+chonky12_4 = Chonky_enemie(213, 677 ,40, 26, 1, "\\image\\chonky.png", 0)
+
 chonkys_1 = [
     chonky1_1,
     chonky1_2,
@@ -306,6 +311,12 @@ chonkys_11 = [
     chonky11_2,
     chonky11_3,
     chonky11_4
+]
+chonkys_12 = [
+    chonky12_1,
+    chonky12_2,
+    chonky12_3,
+    chonky12_4
 ]
 
 # Загружаємо всі текстури
