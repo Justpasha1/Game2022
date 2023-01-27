@@ -320,6 +320,7 @@ class Enemie(Static_Enemie):
         self.x_finished = move_distance# Кінець руху
         self.move_side = True #False - вліво, True - вправо
         self.stop_timer = stop_timer# Лічильник паузи руху
+        self.y_enemie = y_enemie - height_enemie
         # -------------------------------------------------------------------------------------------------#
 
     '''#--------------------------------------/MOVE_ENEMIES/{---------------------------------------------#'''

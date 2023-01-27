@@ -22,7 +22,7 @@ mixer.music.load(os.path.abspath(__file__ + "/..") + '\\sounds\\mainmenuost.wav'
 menu = None
 clock = pygame.time.Clock()
 mouse_position = 1
-scene = 16
+scene = 8
 page = 1
 helppage = 1
 game = True
@@ -329,6 +329,10 @@ while game:
         for stay_enemy in chonkys_1:
             stay_enemy.damage(mainchar, stay_enemy)
             stay_enemy.show_image(screen)
+        for enemy in enemys_1:
+            enemy.move()
+            enemy.damage(mainchar, enemy)
+            enemy.show_image(screen)
         if mainchar.X_sprite >= 1050:
             mainchar.Y_sprite = 432
             mainchar.X_sprite = 20
@@ -337,7 +341,7 @@ while game:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
-        if mainchar.hp == 0:
+        if mainchar.hp <= 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -376,7 +380,7 @@ while game:
             mainchar.X_sprite = 48
             mainchar.Y_sprite = 39
             scene = 8
-        if mainchar.hp == 0:
+        if mainchar.hp <= 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -414,7 +418,7 @@ while game:
             mainchar.X_sprite = 1047
             mainchar.Y_sprite = 150
             scene = 9
-        if mainchar.hp == 0:
+        if mainchar.hp <= 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -448,7 +452,7 @@ while game:
             mainchar.X_sprite = 405
             mainchar.Y_sprite = 666
             scene = 8
-        if mainchar.hp == 0:
+        if mainchar.hp <= 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -474,6 +478,10 @@ while game:
         for stay_enemy in chonkys_5:
             stay_enemy.damage(mainchar, stay_enemy)
             stay_enemy.show_image(screen)
+        for enemy in enemys_5:
+            enemy.move()
+            enemy.damage(mainchar, enemy)
+            enemy.show_image(screen)
         if mainchar.X_sprite <=15:
             mainchar.X_sprite = 1059
             mainchar.Y_sprite = 30
@@ -482,7 +490,7 @@ while game:
             mainchar.X_sprite = 302
             mainchar.Y_sprite = 21
             scene = 7
-        if mainchar.hp == 0:
+        if mainchar.hp <= 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -508,6 +516,10 @@ while game:
         for stay_enemy in chonkys_6:
             stay_enemy.damage(mainchar, stay_enemy)
             stay_enemy.show_image(screen)
+        for enemy in enemys_6:
+            enemy.move()
+            enemy.damage(mainchar, enemy)
+            enemy.show_image(screen)
         if mainchar.X_sprite >= 1074:
             mainchar.X_sprite = 42
             mainchar.Y_sprite = 144
@@ -516,7 +528,7 @@ while game:
             mainchar.X_sprite = 828
             mainchar.Y_sprite = 61
             scene = 10
-        if mainchar.hp == 0:
+        if mainchar.hp <= 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -542,6 +554,10 @@ while game:
         for stay_enemy in chonkys_7:
             stay_enemy.damage(mainchar, stay_enemy)
             stay_enemy.show_image(screen)
+        for enemy in enemys_7:
+            enemy.move()
+            enemy.damage(mainchar, enemy)
+            enemy.show_image(screen)
         if mainchar.Y_sprite <= 6:
             mainchar.X_sprite = 792
             mainchar.Y_sprite = 663
@@ -550,7 +566,7 @@ while game:
         if mainchar.X_sprite>= 1075:
             mainchar.X_sprite = 50
             scene = 12
-        if mainchar.hp == 0:
+        if mainchar.hp <= 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -572,6 +588,10 @@ while game:
         for stay_enemy in chonkys_8:
             stay_enemy.damage(mainchar, stay_enemy)
             stay_enemy.show_image(screen)
+        for enemy in enemys_8:
+            enemy.move()
+            enemy.damage(mainchar, enemy)
+            enemy.show_image(screen)
         if mainchar.X_sprite <= 20:
             mainchar.X_sprite = 1050
             scene = 10
@@ -584,7 +604,7 @@ while game:
             scene = 2
             ost = True
             caveost.stop()
-        if mainchar.hp == 0:
+        if mainchar.hp <= 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -600,6 +620,10 @@ while game:
         for stay_enemy in chonkys_9:
             stay_enemy.damage(mainchar, stay_enemy)
             stay_enemy.show_image(screen)
+        for enemy in enemys_9:
+            enemy.move()
+            enemy.damage(mainchar, enemy)
+            enemy.show_image(screen)
         if mainchar.X_sprite <= 20:
             mainchar.X_sprite = 1050
             scene = 12
@@ -612,7 +636,7 @@ while game:
             scene = 2
             ost = True
             caveost.stop()
-        if mainchar.hp == 0:
+        if mainchar.hp <= 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -628,6 +652,10 @@ while game:
         for stay_enemy in chonkys_10:
             stay_enemy.damage(mainchar, stay_enemy)
             stay_enemy.show_image(screen)
+        for enemy in enemys_10:
+            enemy.move()
+            enemy.damage(mainchar, enemy)
+            enemy.show_image(screen)
         if mainchar.X_sprite <= 20:
             mainchar.X_sprite = 1050
             scene = 13
@@ -640,7 +668,7 @@ while game:
             scene = 2
             ost = True
             caveost.stop()
-        if mainchar.hp == 0:
+        if mainchar.hp <= 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -655,6 +683,10 @@ while game:
         for stay_enemy in chonkys_11:
             stay_enemy.damage(mainchar, stay_enemy)
             stay_enemy.show_image(screen)
+        for enemy in enemys_11:
+            enemy.move()
+            enemy.damage(mainchar, enemy)
+            enemy.show_image(screen)
         if mainchar.X_sprite <= 20:
             mainchar.X_sprite = 1050
             scene = 14
@@ -667,7 +699,7 @@ while game:
             scene = 2
             ost = True
             caveost.stop()
-        if mainchar.hp == 0:
+        if mainchar.hp <= 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -683,6 +715,10 @@ while game:
         for stay_enemy in chonkys_12:
             stay_enemy.damage(mainchar, stay_enemy)
             stay_enemy.show_image(screen)
+        for enemy in enemys_12:
+            enemy.move()
+            enemy.damage(mainchar, enemy)
+            enemy.show_image(screen)
         if mainchar.Y_sprite >= 720:
             mainchar.Y_sprite = 2
             scene = 17
@@ -692,7 +728,7 @@ while game:
             scene = 2
             ost = True
             caveost.stop()
-        if mainchar.hp == 0:
+        if mainchar.hp <= 0:
             scene = 11
             ost = True
             caveost.stop()

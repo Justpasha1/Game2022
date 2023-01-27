@@ -213,7 +213,6 @@ chonky5_4 = Chonky_enemie(577, 677 ,40, 26, 1, "\\image\\chonky.png", 0)
 
 chonky6_1 = Chonky_enemie(530, 136 ,40, 26, 1, "\\image\\chonky.png", 0)
 chonky6_2 = Chonky_enemie(674, 433 ,40, 26, 1, "\\image\\chonky.png", 0)
-chonky6_3 = Chonky_enemie(196, 460 ,40, 26, 1, "\\image\\chonky.png", 0)
 chonky6_4 = Chonky_enemie(916, 569 ,40, 26, 1, "\\image\\chonky.png", 0)
 
 chonky7_1 = Chonky_enemie(865, 216 ,40, 26, 1, "\\image\\chonky.png", 0)
@@ -279,7 +278,6 @@ chonkys_5 = [
 chonkys_6 = [
     chonky6_1,
     chonky6_2,
-    chonky6_3,
     chonky6_4
 ]
 chonkys_7 = [
@@ -317,6 +315,149 @@ chonkys_12 = [
     chonky12_2,
     chonky12_3,
     chonky12_4
+]
+
+"""--------------------------------------------MOVE_Enemys-----------------------------------------------"""
+zombie1_1 = Enemie(773, 215, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right', 220, 120)
+zombie1_2 = Enemie(105, 243, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right', 200, 120)
+zombie1_3 = Enemie(582, 405, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right', 110, 0)
+zombie1_4 = Enemie(777, 702, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right', 250, 120)
+zombie1_5 = Enemie(780, 702, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right', 250, -120)
+zombie1_6 = Enemie(102, 702, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right', 400, -200)
+zombie1_7 = Enemie(102, 702, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right', 400, 120)
+zombie1_8 = Enemie(200, 702, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right', 200, 120)
+zombie1_9 = Enemie(153, 620, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right', 160, 120)
+zombie1_10 = Enemie(580, 702, 21, 40, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right', 120, 120)
+zombie1_11 = Enemie(490, 487, 21, 40, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right', 160, 120)
+zombie1_12 = Enemie(200, 325, 21, 40, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right', 120, 120)
+
+zombie5_1 = Enemie(386, 134, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+zombie5_2 = Enemie(481, 215, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',60, 120)
+zombie5_3 = Enemie(721, 269, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',80, 120)
+zombie5_4 = Enemie(193, 296, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',110, 120)
+zombie5_5 = Enemie(289, 458, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',110, 120)
+zombie5_6 = Enemie(530, 512, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',150, 120)
+zombie5_7 = Enemie(722, 621, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',110, 120)
+zombie5_8 = Enemie(620, 702, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',240, 120)
+zombie5_9 = Enemie(386, 702, 21, 30, 1, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',100, 120)
+
+zombie6_1 = Enemie(530, 323, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',500, 120)
+zombie6_2 = Enemie(534, 431, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',130, 120)
+zombie6_3 = Enemie(240, 351, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',160, 120)
+zombie6_4 = Enemie(338, 107, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',170, 120)
+zombie6_5 = Enemie(721, 594, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+zombie6_6 = Enemie(290, 702, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',350, 120)
+zombie6_7 = Enemie(385, 485, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',60, 120)
+
+zombie7_1 = Enemie(625, 242, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',160, 120)
+zombie7_2 = Enemie(914, 269, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+zombie7_3 = Enemie(339, 405, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',160, 120)
+zombie7_4 = Enemie(529, 431, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',160, 120)
+zombie7_5 = Enemie(820, 351, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',210, 120)
+zombie7_6 = Enemie(103, 594, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',230, 120)
+zombie7_7 = Enemie(483, 567, 21, 30, 1.5, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',150, 120)
+
+zombie8_1 = Enemie(386, 188, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+zombie8_2 = Enemie(914, 269, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',70, 120)
+zombie8_3 = Enemie(144, 377, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',150, 120)
+zombie8_4 = Enemie(721, 512, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',70, 120)
+zombie8_5 = Enemie(626, 702, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',310, 120)
+zombie8_6 = Enemie(769, 404, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+
+zombie9_1 = Enemie(241, 214, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+zombie9_2 = Enemie(528, 160, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+zombie9_3 = Enemie(384, 323, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',170, 120)
+zombie9_4 = Enemie(673, 404, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',110, 120)
+zombie9_5 = Enemie(288, 702, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',220, 120)
+zombie9_6 = Enemie(578, 702, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',210, 120)
+
+zombie10_1 = Enemie(533, 215, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+zombie10_2 = Enemie(819, 188, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+zombie10_3 = Enemie(192, 485, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+zombie10_4 = Enemie(289, 702, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+zombie10_5 = Enemie(530, 648, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+
+zombie11_1 = Enemie(243, 215, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',170, 120)
+zombie11_2 = Enemie(578, 161, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+zombie11_3 = Enemie(387, 431, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',130, 120)
+zombie11_4 = Enemie(437, 539, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',180, 120)
+zombie11_5 = Enemie(199, 620, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+
+zombie12_1 = Enemie(436, 702, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',200, 120)
+zombie12_2 = Enemie(778, 702, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',260, 120)
+zombie12_3 = Enemie(442, 594, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',170, 120)
+zombie12_4 = Enemie(200, 296, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+zombie12_5 = Enemie(780, 296, 21, 30, 2, "\\image\\enemiewalk\\walkingdude1.png", 0, 2, 2, 'Right',120, 120)
+
+enemys_1 = [
+    zombie1_1, zombie1_2, zombie1_3,
+    zombie1_4, zombie1_5, zombie1_6,
+    zombie1_7, zombie1_8, zombie1_9,
+    zombie1_10, zombie1_11, zombie1_12
+]
+enemys_5 = [
+    zombie5_1,
+    zombie5_2,
+    zombie5_3,
+    zombie5_4,
+    zombie5_5,
+    zombie5_6,
+    zombie5_7,
+    zombie5_8,
+    zombie5_9
+]
+enemys_6 = [
+    zombie6_1,
+    zombie6_2,
+    zombie6_3,
+    zombie6_4,
+    zombie6_5,
+    zombie6_6,
+    zombie6_7
+]
+enemys_7 = [
+    zombie7_1,
+    zombie7_2,
+    zombie7_3,
+    zombie7_4,
+    zombie7_5,
+    zombie7_6,
+    zombie7_7
+]
+enemys_8 = [
+    zombie8_1,
+    zombie8_2,
+    zombie8_3,
+    zombie8_4,
+    zombie8_5,
+    zombie8_6
+]
+enemys_9 = [
+    zombie9_1,
+    zombie9_2,
+    zombie9_3,
+    zombie9_4,
+    zombie9_5,
+    zombie9_6
+]
+enemys_10 = [
+    zombie10_1,
+    zombie10_2,
+    zombie10_3,
+    zombie10_4,
+    zombie10_5
+]
+enemys_11 = [
+    zombie11_1,
+    zombie11_2,
+    zombie11_3,
+    zombie11_4,
+    zombie11_5
+]
+enemys_12 = [
+    zombie12_1,zombie12_2,
+    zombie12_3,zombie12_4,
+    zombie12_5
 ]
 
 # Загружаємо всі текстури
