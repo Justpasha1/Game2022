@@ -1,281 +1,448 @@
+# Імпорт бібліотек для роботи
 import pygame
 import os
 
+'''----------------------------------------&MAIN_HERO&{----------------------------------------------------'''
+# Клас головного героя
 class Character():
-    def __init__(self, x_sprite, y_sprite, width_sprite, height_sprite,speed_sprite,gravity_sprite,jump_sprite,sprite_path):
-        #путь к спрайту
-        self.Sprite_path = sprite_path
-        #координата х спрайта
-        self.X_sprite = x_sprite
-        #координата у спрайта 
-        self.Y_sprite = y_sprite
-        #ширина нашего спрайта
-        self.Width_sprite = width_sprite
-        #высота нашего спрайта
-        self.Height_sprite = height_sprite
-        #скорость нашего спрайта
-        self.Speed_sprite = speed_sprite
-        #графитация спрайта
-        self.Gravity_sprite = gravity_sprite
-        #прыжок нашего спрайта
-        self.Jump_distance = jump_sprite
-        self.start_jump_distance = jump_sprite
-        #путь к нашему спрайту
-        self.Sprite_path = sprite_path
-        self.Jump_speed = 6
-        self.move_left = True
-        self.move_right = True
-        self.index_image = 0
-        self.speed_animation = 0
-        self.fall = False
-        self.img = None
-        self.load_image()
-        self.flag_jump = False
-        self.side = False #False - Лево, True - Право
-        self.space = False
-        self.can_entern_taverna = False
-        self.diamond = 0
-        self.emeralds = 0
-        self.gold = 0
-        self.iron = 0
-        self.silver = 0
-        self.coin = 300
-        self.hp = 2
-        self.hp_max = 2
-        self.space = False
-        self.where_watching = 'right'
+    # Властивості нашого об'єкту
+    def __init__(self, x_sprite, y_sprite, width_sprite, height_sprite,speed_sprite,gravity_sprite,jump_sprite,sprite_path, damage_point, hp):
+        # ------------Записування властивостей головного персонажа в параметри екземпляра-------------------#
+        self.Sprite_path = sprite_path # Шлях до директорії знаходження спрайту об'єкта
+        self.X_sprite = x_sprite # Координата по X-осі об'єкту
+        self.Y_sprite = y_sprite # Координата по Y-осі об'єкту
+        self.Width_sprite = width_sprite # Ширина об'єкту
+        self.Height_sprite = height_sprite # Висота об'єкту
+        self.Speed_sprite = speed_sprite # Швидкість об'єкту
+        self.Gravity_sprite = gravity_sprite # Гравітація об'єкту
+        self.Jump_distance = jump_sprite # Висота стрибку об'єкта
+        self.start_jump_distance = jump_sprite # Початкова координата стрибку
+        self.Jump_speed = 6 # Швидкість стрибку
+        self.move_left = True # Рух вліво
+        self.move_right = True # Рух вправо
+        self.fall = False # Падіння
+        self.img = None # Змінна в яку записується готовий спрайт(з зміненими розмірами)
+        self.flag_jump = False # Дозвол на стрибок
+        self.jump_kd = False # 
+        self.kd = 60
+        self.can_entern_taverna = False# Можливість зайти до таверни
+        #------Наявність ресурсі------#
+        self.diamond = 0 # Діаманти
+        self.emeralds = 0 # Еміральди
+        self.gold = 0 # Золото
+        self.iron = 0 # Залізо
+        self.silver = 0 # Срібло
+        #-----------------------------#
+        self.coin = 0 # Монети
+        self.hp = hp # Очки здоров'я в даний момент
+        self.hp_max = hp # Максимальні очки здоров'я, яке може бути на рівні(змінюється після купівлі здоров'я в таверні)
+        self.where_watching = 'right' # Напрямок погляду
+        self.damage_point = damage_point
+        self.animcount = 16
+        # -------------------------------------------------------------------------------------------------#
         
+    '''#-------------------------------------------/LOAD_IMAGES/{---------------------------------------#'''
+    # Функція завантаження спрайтів для персонажа та зміна розміра за розмірами ворога та змфнення формату зображення(рендер)
     def load_image(self):
+        # Знаходження шляху до файлу
         self.img = os.path.abspath(__file__ + "/..")
+        # Запис в змінну "img" шляху до спрайту
         self.img = self.img + self.Sprite_path
+        # Завантаження та змінення формату зображення(рендер)
         self.img = pygame.image.load(self.img)
+        # Змінення розмірв зображення до розмірів персонажа
         self.img = pygame.transform.scale(self.img, (self.Width_sprite,self.Height_sprite))
+
+    # Функція показу спрайтів персонажа на екрані
     def show_image(self, screen):
+        # Малює вихідну спрайт на переданій поверхні "screen"
         screen.blit(self.img, (self.X_sprite, self.Y_sprite)) 
-    def move_character(self, list_level,walk_sound):
+    '''#}-----------------------------------------------------------------------------------------------#'''
+
+    '''#------------------------------------/MOVE_CHARACTER/{-------------------------------------------#'''
+    #--------------------------------------Функція руху персонажа---------------------------------------#
+    def move_character(self, list_level,walk_sound):# Приймає список всіх блоків на мапі та звуки кроків
+        # Робимо список натиснутих кнопок
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_LEFT] :
+    #------------------------------Перевірка руху вілво------------------------------#
+        # Перевірка: "Якщо натиснута кнопка є стрілкою вліво, то..."
+        if keys[pygame.K_LEFT]:
+            # Значення напрямку погляду змініємо на "вліво"
             self.where_watching = 'left'
-            self.colisium_left(list_level)
+            # Викликаємо функцію перевірки колізії лівого боку блоку на мапі з правим боком персонажа 
+            self.colisium_left(list_level)# Передаємо список всіх блоків на мапі
+            # Перевірка: "Якщо напрямок руху вліво, то..."
             if self.move_left == True:
-                self.side = False
-                self.X_sprite -= self.Speed_sprite
-                if self.speed_animation >= 5:
-                    self.index_image += 1
-                    self.Sprite_path = "\\image\\charl" + str(self.index_image) + ".png"
-                    self.speed_animation = 0
-                    self.load_image()
-                    if self.index_image == 2 or self.index_image == 4 and not self.flag_jump and not self.space:
-                        walk_sound.play(0)
-                    if self.index_image == 4:
-                        self.index_image = 0  
-                self.speed_animation += 1 
-
-
-        if keys[pygame.K_RIGHT]:
-            self.where_watching = 'right'
-            self.colisium_right(list_level)
-            if self.move_right == True:
-                self.side = True
-                self.X_sprite += self.Speed_sprite
-                if self.speed_animation >= 5:
-                    self.index_image += 1
-                    self.Sprite_path = "\\image\\char" + str(self.index_image) + ".png"
-                    self.speed_animation = 0
-                    self.load_image()
-                    if self.index_image == 2 or self.index_image == 4 and not self.flag_jump and not self.space:
-                        walk_sound.play(0)
-                    if self.index_image == 4:
-                        self.index_image = 0
-                self.speed_animation += 1
-        if keys[pygame.K_UP] and not self.fall and self.space == False:
-            self.flag_jump = True
-            self.space = True
-            walk_sound.stop()
-            
-        if keys[pygame.K_UP] == False:
-            self.space = False
-        if self.flag_jump:
-            self.jump(list_level,walk_sound)
-        if not self.flag_jump:
-            self.gravity(walk_sound)
-        if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT] and not self.fall and not self.flag_jump:
-            self.speed_animation = 0
-            self.index_image = 0
-            if self.where_watching == 'right':
-                self.Sprite_path = '\\image\\char1.png'
-                self.load_image()
-            if self.where_watching == 'left':
-                self.Sprite_path = '\\image\\charl1.png'
-                self.load_image()
-        self.colision_bottom(list_level)
-    #-----Падение-----#
-    def gravity(self,walk_sound):
-
-        if self.fall:
-            self.Y_sprite += self.Gravity_sprite
-            walk_sound.stop()
-            if self.side == True:
-                self.Sprite_path = "\\image\\char6.png"
-            elif self.side == False:
-                self.Sprite_path = "\\image\\charl6.png"
-            self.load_image()
-
-    #-----Прижок-----#
-    def jump(self, list_level,walk_sound):
-        self.colision_up(list_level)
-        walk_sound.stop()
-        if self.fall == False:
-            self.flag_jump = True
-            self.Y_sprite -= self.Jump_speed
-            self.Jump_distance -= self.Jump_speed
-            if self.Jump_distance <= 0:
-                self.flag_jump = False
-                self.Jump_distance = self.start_jump_distance
-            if self.side == True:
-                self.Sprite_path = "\\image\\char5.png"
-            elif self.side == False:
-                self.Sprite_path = "\\image\\charl5.png"
-            self.load_image()
-
-    #-----Верхняя коллизия-----#                
-    def colision_bottom(self,list_level):
-        for block in list_level:
-            if self.X_sprite <= block.X + block.WIDTH  and not self.flag_jump:
-                if self.X_sprite + self.Width_sprite >= block.X:
-                    if self.Y_sprite + self.Height_sprite >= block.Y and self.Y_sprite + self.Height_sprite <= block.Y + self.Gravity_sprite:
-                        self.Y_sprite = block.Y - self.Height_sprite 
-                        self.fall = False
-                        break
-                    else:
-                        self.fall = True
+                # Перевірка: "Якщо лічильник анімації більше чи дорівнює 16, то..."
+                if self.animcount >= 16:
+                    # Онулення лічильника спрайтів
+                    self.animcount = 0
+                # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
                 else:
+                    # Змінення спрайтів персонажа
+                    self.Sprite_path = "\\image\\charl"+str((self.animcount//4)+1)+".png"
+                    # Збільшення лічильника спрайтів
+                    self.animcount += 1
+                # Змінення координат по X-осі вліво
+                self.X_sprite -= self.Speed_sprite
+
+    #------------------------------Перевірка руху вправо------------------------------#
+        # Перевірка: "Якщо натиснута кнопка є стрілкою вправо, то..."
+        if keys[pygame.K_RIGHT]:
+            # Значення напрямку погляду змініємо на "вправо"
+            self.where_watching = 'right'
+            # Викликаємо функцію перевірки колізії правого боку блоку на мапі з лівим боком персонажа 
+            self.colisium_right(list_level)
+            # Перевірка: "Якщо напрямок руху вправо, то..."
+            if self.move_right == True:
+                # Перевірка: "Якщо лічильник анімації більше чи дорівнює 16, то..."
+                if self.animcount >= 16:
+                    # Онулення лічильника спрайтів
+                    self.animcount = 0
+                # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
+                else:
+                    # Змінення спрайтів персонажа
+                    self.Sprite_path = "\\image\\char"+str((self.animcount//4)+1)+".png"
+                    # Збільшення лічильника спрайтів
+                    self.animcount += 1  
+                # Змінення координат по X-осі вправо
+                self.X_sprite += self.Speed_sprite
+
+
+    #---------------------------Перевірка стану нерухомості--------------------------#
+        # Перевірка: "Якщо ніяка з кнопок не натиснута(стрілка вліво чи стрілка вправо), то..."
+        if not keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
+            # Перевірка: "Якщо напрям погляду вправо, то..."
+            if self.where_watching == 'right':
+                # Змініюємо спрайт на статичний з напрямом погляду вправо
+                self.Sprite_path = '\\image\\char1.png'
+            # Перевірка: "Якщо напрям погляду вліво, то..."
+            elif self.where_watching == 'left':
+                # Змініюємо спрайт на статичний з напрямом погляду вліво
+                self.Sprite_path = '\\image\\charl1.png'
+
+    #--------------------------------Перевірка стрибку--------------------------------#
+        # Перевірка: "Якщо натиснута стрілка вверх і падіння не є дійсним та нема заборони на сприйняття натискань стрілки вверх, то..."
+        if keys[pygame.K_UP] and not self.fall and self.jump_kd == False:
+            # Дозволяємо стрибок(Тобто змінюємо значення на True, щоб спрацював стрибок)
+            self.flag_jump = True
+            # Заборона на сприйняття натискань стрілки вверх
+            self.jump_kd = True
+        # Перевірка: "Якщо стрілка вверх не натиснута. то..."
+        if not keys[pygame.K_UP]:
+            # Знімаємо заборону на сприйняття натискань стрілки вверх
+            self.jump_kd = False
+        # Перевірка:"Якщо стрибок дозволили, то..." 
+        if self.flag_jump:
+            # Викликаємо функцію стрибку
+            self.jump(list_level)# Передаємо список всіх блоків на мапі
+        # Перевірка: "Якщо стрибок не діє, то..."
+        if not self.flag_jump:
+            # Викликаємо функцію гравітації
+            self.gravity()
+
+        # Викликаємо функцію завантаження спрайтів    
+        self.load_image()
+        # Викликаємо функцію перевірки колізії верхнього ребра блоку на мапі з нижнім ребром персонажа 
+        self.colision_bottom(list_level)
+    '''#}-----------------------------------------------------------------------------------------------#'''
+
+    '''#----------------------------------------/GRAVIRY/{----------------------------------------------#'''
+    #--------------------------------Функція гравітації головного героя---------------------------------#
+    def gravity(self):
+        # Перевірка: "Якщо падіння є дійсним, то..."
+        if self.fall:
+            # Падіння донизу
+            self.Y_sprite += self.Gravity_sprite
+            # Перевірка: "Якщо напрям погляду вправо, то..."
+            if self.where_watching == 'right':
+                # Змініюємо спрайт герою
+                self.Sprite_path = "\\image\\char6.png"
+            # Перевірка: "Якщо напрям погляду вправо, то..."
+            elif self.where_watching == 'left':
+                # Змініюємо спрайт герою
+                self.Sprite_path = "\\image\\charl6.png"
+            # Викликаємо функцію завантаження спрайтів   
+            self.load_image()
+    '''#}-----------------------------------------------------------------------------------------------#'''
+
+    '''#-----------------------------------------/JUMP/{------------------------------------------------#'''
+    #---------------------------------Функція стрибку головного героя-----------------------------------#
+    def jump(self, list_level):
+        # Викдикаємо функцію колізії верхнього ребра героя до нижнього ребра блоку по Y-осі
+        self.colision_up(list_level) # Передаємо список всіх блоків на мапі
+        # Перевірка: "Якщо падіння не є дійсним. то..."
+        if self.fall == False:
+            # Персонаж виконує стрибок
+            self.Y_sprite -= self.Jump_speed
+            # Рахується дистанція стрибку
+            self.Jump_distance -= self.Jump_speed
+            # Перевірка: "Якщо дистанція стрибку була пройдена, то..."
+            if self.Jump_distance <= 0:
+                # Вимикаємо стрибок
+                self.flag_jump = False
+                # Онулення дистанції стрибку до стартових значень
+                self.Jump_distance = self.start_jump_distance
+            # Перевірка: "Якщо напрямок погляду вправо, то..."
+            if  self.where_watching == 'right':
+                # Змінюємо спрайт героя
+                self.Sprite_path = "\\image\\char5.png"
+            # Перевірка: "Якщо напрямок погляду вліво, то..."
+            elif  self.where_watching == 'left':
+                # Змінюємо спрайт героя
+                self.Sprite_path = "\\image\\charl5.png"
+            # Викликаємо функцію завантаження спрайтів   
+            self.load_image()
+    '''#}-------------------------------------------------------------------------------------------------#'''
+
+    '''#----------------------------------------/COLISION/{-----------------------------------------------#'''
+    #----------Функція перевірки дотику нижнього ребра персонажа з верхнім ребром блока на мапі-----------#
+    def colision_bottom(self, list_level):# Передаємо список всіх блоків на мапі
+        # Перебір всіх блоків на мапі
+        for block in list_level:
+            # Перевірка: "Якщо координата лівого ребра персонажа по X-осі менша за координату правого ребра блока і стрибок не є дійсним, то..."
+            if self.X_sprite <= block.X + block.WIDTH and not self.flag_jump:
+                # Перевірка: "Якщо координата правого ребра персонажа по X-осі більша за координату лівого ребра блока, то..."
+                if self.X_sprite + self.Width_sprite >= block.X:
+                    # Перевірка: "Якщо координата нижнього ребра персонажа по Y-осі більша за координату верхнього ребра блока, то..."
+                    if self.Y_sprite + self.Height_sprite >= block.Y:
+                        # Перевірка: "Якщо координата нижнього ребра персонажа по Y-осі менша за координату нижнього ребра блока, то..."
+                        if self.Y_sprite + self.Height_sprite <= block.Y + self.Gravity_sprite:
+                            # Персонаж припиняє падіння
+                            self.Y_sprite = block.Y - self.Height_sprite 
+                            # Падіння припиняє бути дійсним
+                            self.fall = False
+                            # Припиняємо цикл перевірки
+                            break
+                        # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
+                        else:
+                            # Падіння робиться дійсним
+                            self.fall = True
+                    # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
+                    else:
+                        # Падіння робиться дійсним
+                        self.fall = True
+                # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
+                else:
+                    # Падіння робиться дійсним
                     self.fall = True
+            # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
             else:
+                # Падіння робиться дійсним
                 self.fall = True
 
-    def colision_up(self,list_level):
+    #----------Функція перевірки дотику верхнього ребра персонажа з нижнім ребром блока на мапі-----------#
+    def colision_up(self,list_level):# Передаємо список всіх блоків на мапі
+        # Перебір всіх блоків на мапі
         for block in list_level:
+            # Перевірка: "Якщо координата лівого ребра персонажа по X-осі менша за координату правого ребра блока, то..."
             if self.X_sprite <= block.X + block.WIDTH:
+                # Перевірка: "Якщо координата правого ребра персонажа по X-осі більша за координату лівого ребра блока, то..."
                 if self.X_sprite + self.Width_sprite >= block.X:
-                    if self.Y_sprite <= block.Y + block.HEIGHT + 10 and self.Y_sprite + self.Height_sprite >= block.Y + block.HEIGHT:
-                        self.Jump_distance = 0
-                        self.fall = True
+                    # Перевірка: "Якщо координата верхнього ребра персонажа по Y-осі менша за координату нижнього ребра блока, то..."
+                    if self.Y_sprite <= block.Y + block.HEIGHT + 10:
+                        # Перевірка: "Якщо координата нижнього ребра персонажа по Y-осі більша за координату нижнього ребра блока, то..."
+                        if self.Y_sprite + self.Height_sprite >= block.Y + block.HEIGHT:
+                            # Дистанція стрибку зкорочеється до 0
+                            self.Jump_distance = 0
+                            # Падіння робиться дійсним
+                            self.fall = True
+                        # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
+                        else:
+                            # Падіння припиняє бути дійсним
+                            self.fall = False
+                    # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
                     else:
+                        # Падіння припиняє бути дійсним
                         self.fall = False
+                # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
                 else:
+                    # Падіння припиняє бути дійсним
                     self.fall = False
+            # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
             else:
+                # Падіння припиняє бути дійсним
                 self.fall = False
 
-    def colisium_right(self,list_level):
+    #----------Функція перевірки дотику правого ребра персонажа з лівим ребром блока на мапі-----------#
+    def colisium_right(self,list_level):# Передаємо список всіх блоків на мапі
+        # Перебір всіх блоків на мапі
         for block in list_level:
+            # Перевірка: "Якщо координата верхнього ребра персонажа по Y-осі менша за координату нижнього ребра блока, то..."
             if self.Y_sprite + 1  <= block.Y + block.HEIGHT:
+                # Перевірка: "Якщо координата нижнього ребра персонажа по Y-осі більша за координату верхнього ребра блока, то..."
                 if self.Y_sprite + self.Height_sprite - 1 >= block.Y:
+                    # Перевірка: "Якщо координата правого ребра персонажа по X-осі більша за координату лівого ребра блока, то..."
                     if self.X_sprite + self.Width_sprite >= block.X - self.Speed_sprite :
+                        # Перевірка: "Якщо координата лівого ребра персонажа по X-осі менша за координату правого ребра блока і стрибок не є дійсним, то..."
                         if self.X_sprite <= block.X + block.WIDTH:
+                            # Персонаж припиняє переміщення в праву сторону
                             self.X_sprite = block.X - self.Width_sprite  - 1
+                            # Переміщення вправо припиняється
                             self.move_right = False
+                            # Припиняємо цикл перевірки
                             break
+                        # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
                         else:
+                            # Переміщення вправо є дійсним
                             self.move_right = True
+                    # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
                     else:
+                        # Переміщення вправо є дійсним
                         self.move_right = True
+                # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
                 else:
+                    # Переміщення вправо є дійсним
                     self.move_right = True
+            # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
             else:
+                # Переміщення вправо є дійсним
                 self.move_right = True
-         
-    def colisium_left(self,list_level):
+    
+    #----------Функція перевірки дотику лівого ребра персонажа з правим ребром блока на мапі-----------#
+    def colisium_left(self,list_level):# Передаємо список всіх блоків на мапі
+        # Перебір всіх блоків на мапі
         for block in list_level:
+            # Перевірка: "Якщо координата верхнього ребра персонажа по Y-осі менше за координату нижнього ребра блока, то..."
             if self.Y_sprite + 1  <= block.Y + block.HEIGHT:
+                # Перевірка: "Якщо координата нижнього ребра персонажа по Y-осі більше за координату верхнього ребра блока, то..."
                 if self.Y_sprite + self.Height_sprite - 1 >= block.Y:
+                    # Перевірка: "Якщо координата лівого ребра персонажа по X-осі менша за координату правого ребра блока, то..."
                     if self.X_sprite <= block.X + block.WIDTH + self.Speed_sprite:
+                        # Перевірка: "Якщо координата правого ребра персонажа по X-осі більша за координату лівого ребра блока, то..."
                         if self.X_sprite + self.Width_sprite >= block.X:
+                            # Персонаж припиняє переміщення в ліву сторону
                             self.X_sprite = block.X + block.WIDTH + 1
+                            # Переміщення вліво припиняється
                             self.move_left = False
+                            # Припиняємо цикл перевірки
                             break
+                        # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
                         else:
+                            # Переміщення вліво є дійсним
                             self.move_left = True
+                    # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
                     else:
+                        # Переміщення вліво є дійсним
                         self.move_left = True
+                # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
                 else:
+                    # Переміщення вліво є дійсним
                     self.move_left = True
+            # Перевірка: "Якщо всі попередні перевірки не є дійсними, то..."
             else:
+                # Переміщення вліво є дійсним
                 self.move_left = True
-    def ores_collision(self,list_ores,sound):
-        #Перебераем список руды
-        for i in list_ores:
-            #Условие касания с рудой
-            if self.Y_sprite + self.Height_sprite >= i.Y and  self.Y_sprite <= i.Y + i.HEIGHT and self.X_sprite + self.Width_sprite >= i.X and self.X_sprite <= i.X + i.WIDTH:
-                #Руда перемеается за экран(пропадает)
-                i.X = -100
-                #Увеличиваем счетчик руды
-                if i.TYPE == 'diamond':
-                    self.diamond += 1
-                if i.TYPE == 'emerald':
-                    self.emeralds += 1
-                if i.TYPE == 'gold':
-                    self.gold += 1
-                if i.TYPE == 'silver':
-                    self.silver += 1
-                if i.TYPE == 'iron':
-                    self.iron += 1
-                sound.play(0)
+    '''#}-------------------------------------------------------------------------------------------------#'''
+    
+    '''#-------------------------------------/ORES_COLISIONS/{--------------------------------------------#'''
+    #----------Функція перевірки дотику персонажа з рудою на мапі-----------#
+    def ores_collision(self, list_ores, sound):# Передаємо список всіх руд на мапі
+        # Перебір всіх руд на мапі
+        for ores in list_ores:
+            # Перевірка: "Якщо координата по Y-осі нижнього ребра персонажу більша за координату верхнього ребра руди, то..."
+            if self.Y_sprite + self.Height_sprite >= ores.Y:
+                # Перевірка: "Якщо координата по Y-осі верхнього ребра персонажу менша за координату нижнього ребра руди, то..."
+                if self.Y_sprite <= ores.Y + ores.HEIGHT:
+                    # Перевірка: "Якщо координата по X-осі правого ребра персонажу більша за координату лівого ребра руди, то..."
+                    if self.X_sprite + self.Width_sprite >= ores.X:
+                        # Перевірка: "Якщо координата по X-осі лівого ребра персонажу менша за координату правого ребра руди, то..."
+                        if self.X_sprite <= ores.X + ores.WIDTH:
+                            #Руда видаляється з списку і зникає з мапи
+                            list_ores.remove(ores)
+                            # Перевірка6 "Якщо тип руди є 'diamond', то..."
+                            if ores.TYPE == 'diamond':
+                                # Збільшуємо наявність цієї руди у персонажа
+                                self.diamond += 1
+                            # Перевірка6 "Якщо тип руди є 'emerald', то..."
+                            if ores.TYPE == 'emerald':
+                                # Збільшуємо наявність цієї руди у персонажа
+                                self.emeralds += 1
+                            # Перевірка6 "Якщо тип руди є 'gold', то..."
+                            if ores.TYPE == 'gold':
+                                # Збільшуємо наявність цієї руди у персонажа
+                                self.gold += 1
+                            # Перевірка6 "Якщо тип руди є 'silver', то..."
+                            if ores.TYPE == 'silver':
+                                # Збільшуємо наявність цієї руди у персонажа
+                                self.silver += 1
+                            # Перевірка6 "Якщо тип руди є 'iron', то..."
+                            if ores.TYPE == 'iron':
+                                # Збільшуємо наявність цієї руди у персонажа
+                                self.iron += 1
+                            sound.play(0)
+    '''#}-------------------------------------------------------------------------------------------------#'''
 
-    def taverna(self, button, taverna, screen):
+    '''#-----------------------------------------/TAVERNA/{-----------------------------------------------#'''
+    #---------Функція перевірки дотику  персонажа до таверни на мапі--------#
+    def taverna(self, button, taverna, screen):# Приймає кнопки, саму таверну та поверхню відображення
+        # Створюємо список натиснутих кнопок
         keys = pygame.key.get_pressed()
+        # Перевірка: "Якщо координата по X-осі правого ребра персонажу більша за координату лівого ребра таверни, то..."
         if self.X_sprite + self.Width_sprite >= taverna.X:
+            # Перевірка: "Якщо координата по X-осі лівого ребра персонажу менша за координату правого ребра руди, то..."
             if self.X_sprite <= taverna.X + taverna.WIDTH:
+                # Перевірка: "Якщо координата по Y-осі верхнього ребра персонажу менша за координату нижнього ребра руди, то..."
                 if self.Y_sprite <= taverna.Y + taverna.HEIGHT:
+                    # Перевірка: "Якщо координата по Y-осі нижнього ребра персонажу більша за координату верхнього ребра таверни, то..."
                     if self.Y_sprite + self.Height_sprite >= taverna.Y:
-                        button.show_image(screen)  
+                        # Викликаємо функцію для показу кнопок на екрані
+                        button.show_image(screen)# Передаємо поверхню показу
+                        # Перевірка: "Якщо натиснута клавіша 'X', то..."
                         if keys[pygame.K_x]:
+                            # Можливість зайти в таверну є дійсною
                             self.can_entern_taverna = True
+
+    #------------Функція перевірки виходу персонажа з таверни--------------#
     def leave_taverna(self):
+        # Створюємо список натиснутих кнопок
         keys = pygame.key.get_pressed()
+        # Перевірка: "Якщо клавіша'Esc' натиснута та можливість входу в таверну є дійсноє, то..."
         if keys[pygame.K_ESCAPE] and self.can_entern_taverna:
+            # Можливість входу в таверну припиняє бути дійсною
             self.can_entern_taverna = False
+    '''#}-------------------------------------------------------------------------------------------------#'''
 
-    def damage(self, enemies, scene):
-        for enemy in enemies:
-            if enemy.cd == 0:
-                # left
-                if self.Y_sprite + 1 <= enemy.y_enemie + enemy.height_enemie:
-                    if self.Y_sprite + self.Height_sprite - 1 >= enemy.y_enemie:
-                        if self.X_sprite <= enemy.x_enemie + enemy.width_enemie + self.Speed_sprite:
-                            if self.X_sprite + self.Width_sprite >= enemy.x_enemie:
-                                self.hp -= enemy.damage
-                                enemy.cd = 120
-                # right
-                elif self.Y_sprite + 1  <= enemy.y_enemie + enemy.height_enemie:
-                    if self.Y_sprite + self.Height_sprite - 1 >= enemy.y_enemie:
-                        if self.X_sprite + self.Width_sprite >= enemy.x_enemie - self.Speed_sprite :
-                            if self.X_sprite <= enemy.x_enemie + enemy.width_enemie:
-                                self.hp -= enemy.damage
-                                enemy.cd = 120
-
-
-            if enemy.cd > 0:
-                enemy.cd -= 1
-    def show_hp(self, screen):
+    '''#-----------------------------------------/SHOW_HP/{-----------------------------------------------#'''
+    #--------------------------------Функція показу серця на екрані---------------------------------#
+    def show_hp(self, screen):# Приймає поверхню для показу
+        # Перевірка: "Якщо поінтів здоров'я більше 80%, то..."
         if self.hp >= self.hp_max-(self.hp_max*0.2):
+            # Змінюємо спрайт серця
             self.heart_path = "\\image\\hearts\\heart5.png"
+        # Перевірка: "Якщо поінтів здоров'я більше 60%, то..."
         elif self.hp >= self.hp_max-(self.hp_max*0.4):
+            # Змінюємо спрайт серця
             self.heart_path = "\\image\\hearts\\heart4.png"
+        # Перевірка: "Якщо поінтів здоров'я більше 40%, то..."
         elif self.hp >= self.hp_max-(self.hp_max*0.6):
+            # Змінюємо спрайт серця
             self.heart_path = "\\image\\hearts\\heart3.png"
+        # Перевірка: "Якщо поінтів здоров'я більше 20%, то..."
         elif self.hp >= self.hp_max-(self.hp_max*0.8):
+            # Змінюємо спрайт серця
             self.heart_path = "\\image\\hearts\\heart2.png"
+        # Перевірка: "Якщо поінтів здоров'я більше 1%, то..."
         elif self.hp > self.hp_max-(self.hp_max*1):
+            # Змінюємо спрайт серця
             self.heart_path = "\\image\\hearts\\heart1.png"
+        # Перевірка: "Якщо поінтів здоров'я менше чи дорівнює 0%, то..."
         elif self.hp <= 0:
+            # Змінюємо спрайт серця
             self.heart_path = "\\image\\hearts\\heart0.png"
-            
+        
+        #------------------------------Відображення серця на екрані--------------------------------#
+        # Знаходження шляху до файлу
         self.heart = os.path.abspath(__file__ + "/..")
+        # Запис в змінну "heart" шляху до спрайту
         self.heart = self.heart + self.heart_path
+        # Завантаження та змінення формату зображення(рендер)
         self.heart = pygame.image.load(self.heart).convert_alpha()
+        # Змінення розмірв зображення до розмірів об'єкта
         self.heart = pygame.transform.scale(self.heart, (19*2, 25*2))
+        # Малює вихідний спрайт на переданій поверхні "screen"
         screen.blit(self.heart, (2, 2))
-      
+    '''#}-------------------------------------------------------------------------------------------------#'''
+
+'''}-------------------------------------------------------------------------------------------------------'''

@@ -6,7 +6,7 @@ import os
 # Клас статичного ворога
 class Chonky_enemie():
     # Властивості нашого об'єкту
-    def __init__(self, x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd,):
+    def __init__(self, x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd, hp):
         # ------------Записування властивостей статичного ворога в параметри екземпляра-------------------#
         self.x_enemie = x_enemie # Координати по Х
         self.y_enemie = y_enemie # Координати по Y
@@ -16,6 +16,7 @@ class Chonky_enemie():
         self.Sprite_path = sprite_path # Шлях до директорії знаходження спрайту об'єкта
         self.kd = kd # Змінна лічильника, в якому рахується перерву між нанесенняй пошкоджень(таймер)
         self.img = None # Змінна в яку записується готовий спрайт(з зміненими розмірами)
+        self.hp = hp # Очки здоров'я
         # -------------------------------------------------------------------------------------------------#
 
     '''#-------------------------------------/LOAD_IMAGES/{-----------------------------------------------#'''
@@ -38,42 +39,41 @@ class Chonky_enemie():
 
     '''#--------------------------------------------/DAMAGE/{---------------------------------------------#'''
     # функція нанесення пошкоджень головному герою
-    def damage(self, mainchar, enemy):
+    def damage(self, mainchar):
         # Перевірка значення лічильника нанесення пошкоджень головному герою(таймер)
         if self.kd == 0:
-
         #-----Функція перевірки дотику до лівої сторони ворога, ворожого об'єкту-----#
             # Перевірка: "Якщо координата по Y-осі верхнього ребра головного героя менша за координату по Y-осі нижнього ребра ворога, то..."
-            if mainchar.Y_sprite + 1 <= enemy.y_enemie + enemy.height_enemie:
+            if mainchar.Y_sprite <= self.y_enemie + self.height_enemie:
                 # Перевірка: "Якщо координата по Y-осі нижнього ребра головного героя більше за координату по Y-осі верхнього ребра ворога, то..."
-                if mainchar.Y_sprite + mainchar.Height_sprite - 1 >= enemy.y_enemie:
+                if mainchar.Y_sprite + mainchar.Height_sprite>= self.y_enemie:
                     # Перевірка: "Якщо координатна по X-осі лівого ребра головного героя менша за координату по X-осі правого ребра ворога, то..."
-                    if mainchar.X_sprite <= enemy.x_enemie + enemy.width_enemie:
+                    if mainchar.X_sprite <= self.x_enemie + self.width_enemie - 10:
                         # Перевірка: "Якщо координатна по X-осі правого ребра головного героя більша за координату по X-осі лівого ребра ворога, то..."
-                        if mainchar.X_sprite + mainchar.Width_sprite >= enemy.x_enemie:
+                        if mainchar.X_sprite + mainchar.Width_sprite >= self.x_enemie + 10:
                             # Нанесення пошкодження герою(тобто поінти здоров'я героя віднімаються)
-                            mainchar.hp -= enemy.damage_point
+                            mainchar.hp -= self.damage_point
                             # Онулення значення лічильника нанесення пошкоджень головному герою(таймер)
-                            enemy.kd = 120
+                            self.kd = 120
 
         #-----Функція перевірки дотику до правої сторони ворога, ворожого об'єкту-----#
             # Перевірка: "Якщо координата по Y-осі верхнього ребра головного героя менша за координату по Y-осі нижнього ребра ворога, то..."
-            elif mainchar.Y_sprite + 1  <= enemy.y_enemie + enemy.height_enemie:
+            elif mainchar.Y_sprite <= self.y_enemie + self.height_enemie:
                 # Перевірка: "Якщо координата по Y-осі нижнього ребра головного героя більше за координату по Y-осі верхнього ребра ворога, то..."
-                if mainchar.Y_sprite + mainchar.Height_sprite - 1 >= enemy.y_enemie:
+                if mainchar.Y_sprite + mainchar.Height_sprite >= self.y_enemie:
                     # Перевірка: "Якщо координатна по X-осі правого ребра головного героя більша за координату по X-осі лівого ребра ворога, то..."
-                    if mainchar.X_sprite + mainchar.Width_sprite >= enemy.x_enemie:
+                    if mainchar.X_sprite + mainchar.Width_sprite >= self.x_enemie:
                         # Перевірка: "Якщо координатна по X-осі лівого ребра головного героя менша за координату по X-осі правого ребра ворога, то..."
-                        if mainchar.X_sprite <= enemy.x_enemie + enemy.width_enemie:
+                        if mainchar.X_sprite <= self.x_enemie + self.width_enemie:
                             # Нанесення пошкодження герою(тобто поінти здоров'я героя віднімаються)
-                            mainchar.hp -= enemy.damage_point
+                            mainchar.hp -= self.damage_point
                             # Онулення значення лічильника нанесення пошкоджень головному герою(таймер)
-                            enemy.kd = 120
+                            self.kd = 120
 
         # Перевірка:"Якщо лічильник перерви на нанесення пошкодженнь головному герою(таймер) більше 0, то..."
-        if enemy.kd > 0:
+        if self.kd > 0:
             # Рахунок лічильника(відіймання заданого значення, поки перевірка є дійсною)
-            enemy.kd -= 1
+            self.kd -= 1
         # Викликаємо функцію завантаження спрайтів    
         self.load_image()
     '''#}-----------------------------------------------------------------------------------------------#'''
@@ -96,9 +96,9 @@ class Chonky_enemie():
 # Клас створення снаряда ворога
 class Bullet_Enemie(Chonky_enemie):
     # Властивості нашого об'єкту
-    def __init__(self, x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd, speed):
+    def __init__(self, x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd, hp, speed):
         # Властивості, які ми беремо з наслідування попереднього класу
-        super().__init__(x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd,)
+        super().__init__(x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd, hp)
         # -------------Записування властивостей статичного ворога в параметри екземпляра-------------------#
         self.speed = speed# Швидкість польоту снаряда
         self.start_x = x_enemie# Стартова точка шляху по X-осі
@@ -108,7 +108,7 @@ class Bullet_Enemie(Chonky_enemie):
 
     '''#-----------------------------------------/MOVE_BULLET/{-------------------------------------------#'''
     # Функція польоту снаряда ворога
-    def move_bullet(self, screen, mainchar, side):# Передаємо в функцію екран(screen), головного героя(mainchar), сторони погляду ворога(side)
+    def move_bullet(self, screen, side):# Передаємо в функцію екран(screen), головного героя(mainchar), сторони погляду ворога(side)
         # Перевірка:"Якщо сторона погляду ворога є вправо, то..."
         if side == 'Right':
             # Снаряд здійснює польот в напрямку лівої сторони
@@ -125,8 +125,6 @@ class Bullet_Enemie(Chonky_enemie):
         elif side == 'Bottom':
             # Снаряд здійснює польот вверх
             self.y_enemie -= self.speed
-        
-        self.damage(mainchar, self)# Викликаємо функцію нанесення пошкоджень головному герою(damage) і передаємо в неї гловного героя(mainchar) та снаряд(self)
         self.show_image(screen)# Викликаємо функцію для показу спрайтів об'єкта на екрані і передаємо в неї екран(screen) 
     '''#}----------------------------#-------------------------------------------------------------------#'''
 
@@ -212,11 +210,10 @@ class Bullet_Enemie(Chonky_enemie):
 # Клас створення статичного ворога з датністю створення снаряду
 class Static_Enemie(Bullet_Enemie):
     # Властивості нашого об'єкту
-    def __init__(self, x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd, speed, hp, position_side):
+    def __init__(self, x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd, hp, speed,  position_side):
         # Властивості, які ми беремо з наслідування попереднього класу
-        super().__init__(x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd, speed)
+        super().__init__(x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd, hp, speed)
         # -------------Записування властивостей статичного ворога в параметри екземпляра-------------------#
-        self.hp = hp # Очки здоров'я
         self.position_side = position_side # Сторона прикріплення ворога до блока
         self.animcount = 36 # Лічильник номеру спрайту яке ділиться націло 
         self.bullet_list = [] # Список снарядів
@@ -230,20 +227,20 @@ class Static_Enemie(Bullet_Enemie):
                 # Створємо об'єкт снаряду
                 bullet = Bullet_Enemie(shoot_enemy.x_enemie+((shoot_enemy.width_enemie/2)-5),
                              shoot_enemy.y_enemie+((shoot_enemy.height_enemie/2)-5),
-                            10, 10, 0.1, "\\image\\enemyshooting\\enemyshootatack.png", 120, 1)
+                            10, 10, shoot_enemy.damage_point, "\\image\\enemyshooting\\enemyshootatack.png", 0, 5, 1)
                 # Додаємо цей снаряд в список всіх снарядів
                 self.bullet_list.append(bullet)
     '''#}-----------------------------------------------------------------------------------------------#'''
 
     '''#--------------------------------------/SHOOTING_BULLET/{----------------------------------------#'''
     # Функція анімації ворога для кожної сторони
-    def animete_shoot(self, shoot_enemy, screen, mainchar, list_level, side):
+    def animete_shoot(self, screen, mainchar, list_level):
         # Перевірка: "Якщо сторона знаходження ворога право та значення лічильника дорівнює нулю, то..."
         if self.position_side == 'Right' and self.kd == 0:
             # Зміна спрайта за допомогою лічильника спрайтів
             self.Sprite_path = "\\image\\enemyshooting\\right\\enemyshootright"+str((self.animcount//6))+".png"
             # Виклик фунції створення снаряду та передача ворога в якого він утвориться
-            self.create_bullet(shoot_enemy)
+            self.create_bullet(self)
             # Зміна значення лічильника анімації
             self.animcount -= 1
         # Перевірка: "Якщо сторона знаходження ворога ліво та значення лічильника дорівнює нулю, то..."
@@ -251,7 +248,7 @@ class Static_Enemie(Bullet_Enemie):
             # Зміна спрайта за допомогою лічильника спрайтів
             self.Sprite_path = "\\image\\enemyshooting\\left\\enemyshootleft"+str((self.animcount//6))+".png"
             # Виклик фунції створення снаряду та передача ворога в якого він утвориться
-            self.create_bullet(shoot_enemy)
+            self.create_bullet(self)
             # Зміна значення лічильника анімації
             self.animcount -= 1
         # Перевірка: "Якщо сторона знаходження ворога зверху та значення лічильника дорівнює нулю, то..."
@@ -259,7 +256,7 @@ class Static_Enemie(Bullet_Enemie):
             # Зміна спрайта за допомогою лічильника спрайтів
             self.Sprite_path = "\\image\\enemyshooting\\up\\enemyshootup"+str((self.animcount//6))+".png"
             # Виклик фунції створення снаряду та передача ворога в якого він утвориться
-            self.create_bullet(shoot_enemy)
+            self.create_bullet(self)
             # Зміна значення лічильника анімації
             self.animcount -= 1
         # Перевірка: "Якщо сторона знаходження ворога знизу та значення лічильника дорівнює нулю, то..."
@@ -267,7 +264,7 @@ class Static_Enemie(Bullet_Enemie):
             # Зміна спрайта за допомогою лічильника спрайтів
             self.Sprite_path = "\\image\\enemyshooting\\bottom\\enemyshootbot"+str((self.animcount//6))+".png"
             # Виклик фунції створення снаряду та передача ворога в якого він утвориться
-            self.create_bullet(shoot_enemy)
+            self.create_bullet(self)
             # Зміна значення лічильника анімації
             self.animcount -= 1
         # Перевірка: "Якщо значення лічильника менше або дорівнює 6, то..."
@@ -282,11 +279,16 @@ class Static_Enemie(Bullet_Enemie):
             self.kd -= 1
         # Циклічний перебір снарядів в списку снарядів
         for bullet_ in self.bullet_list:
+            # Викликаємо функцію завантаження спрайтів
+            bullet_.load_image()
+            # Викликаємо функцію нанесення пошкоджень головному герою(damage) і передаємо в неї гловного героя(mainchar) та снаряд(self)
+            bullet_.damage(mainchar)
+            # Виклик функції руху снаряда
+            bullet_.move_bullet(screen, self.position_side)# Передача екрану, головного героя, сторону знаходження ворога
             # Виклик функції перевірки видалення снаряду
             bullet_.remove_bullet(list_level, self.bullet_list)# Передача списку об'єктів на мапі та списоку всіх снарядів
-            # Виклик функції руху снаряда
-            bullet_.move_bullet(screen, mainchar, side)# Передача екрану, головного героя, сторону знаходження ворога
-        # Викликаємо функцію завантаження спрайтів   
+            
+        # Викликаємо функцію завантаження спрайтів
         self.load_image()
     '''#}-----------------------------------------------------------------------------------------------#'''
 
@@ -310,24 +312,24 @@ class Static_Enemie(Bullet_Enemie):
 # Клас створення статичного ворога з датністю створення снаряду
 class Enemie(Static_Enemie):
     # Властивості нашого об'єкту
-    def __init__(self, x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd, speed, hp, position_side, move_distance, stop_timer):
+    def __init__(self, x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd, hp, speed, position_side, move_distance, stop_timer):
         # Властивості, які ми беремо з наслідування попереднього класу
-        super().__init__(x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd, speed, hp, position_side)
+        super().__init__(x_enemie, y_enemie, width_enemie, height_enemie, damage_point, sprite_path, kd, hp, speed, position_side)
 
         # -------------Записування властивостей статичного ворога в параметри екземпляра-------------------#
+        self.y_enemie = y_enemie - height_enemie
         self.speed_enemy = speed# Швидкість руху
         self.x_start = x_enemie# Початок руху
         self.x_finished = move_distance# Кінець руху
         self.move_side = True #False - вліво, True - вправо
         self.stop_timer = stop_timer# Лічильник паузи руху
-        self.y_enemie = y_enemie - height_enemie
         # -------------------------------------------------------------------------------------------------#
 
     '''#--------------------------------------/MOVE_ENEMIES/{---------------------------------------------#'''
     # Функція руху ворога
     def move(self):
         # Перевірка: "Якщо координати ворога по X-осі менші за кінцеву координату руху і напрямок руху вправо та таймер паузи 120, то..."
-        if self.x_enemie <= self.x_start + self.x_finished and self.move_side == True and self.stop_timer == 120:
+        if self.x_enemie <= self.x_start + self.x_finished and self.move_side == True and self.stop_timer >= 120:
             # Рух ворога вправо
             self.x_enemie += self.speed_enemy
             # Перевірка: "Якщо координати ворога по X-осі такі ж як і координати кінцевох точки, то..."
@@ -339,7 +341,7 @@ class Enemie(Static_Enemie):
                 # Зміна напрямку руху вліво
                 self.move_side = False
         # Перевірка: "Якщо координати ворога по X-осі більші чи дорівнюють кінцевій координаті руху і напрямок руху вліво та таймер паузи 120, то..."
-        elif self.x_enemie >= self.x_start and self.move_side == False and self.stop_timer == 120:
+        elif self.x_enemie >= self.x_start and self.move_side == False and self.stop_timer >= 120:
             # Рух ворога вілво
             self.x_enemie -= self.speed_enemy
             # Перевірка: "Якщо координати ворога по X-осі такі ж як і координати початкової точки, то..."
@@ -359,17 +361,23 @@ class Enemie(Static_Enemie):
             # Онулення лічильника спрайтів
             self.animcount = 0
         # Перевірка:"Якщо напрямлк руху ворога вліво та таймер паузи 120, то..."
-        if self.move_side == False and self.stop_timer == 120:
+        if self.move_side == False and self.stop_timer >= 120:
             # Змінення спрайтів ворога
             self.Sprite_path = "\\image\\enemiewalk\\walkingdude"+str((self.animcount//8)+1)+".png"
             # Збільшення лічильника спрайтів
             self.animcount += 1
         # Перевірка:"Якщо напрямлк руху ворога вправо та таймер паузи 120, то..."
-        elif self.move_side == True and self.stop_timer == 120:
+        elif self.move_side == True and self.stop_timer >= 120:
             # Змінення спрайтів ворога
             self.Sprite_path = "\\image\\enemiewalk\\walkingdudel"+str((self.animcount//8)+1)+".png"
             # Збільшення лічильника спрайтів
             self.animcount += 1
+        elif self.stop_timer == 0:
+            if self.move_side == True:
+                self.Sprite_path = "\\image\\enemiewalk\\walkingdudel1.png"
+            if self.move_side == False:
+                self.Sprite_path = "\\image\\enemiewalk\\walkingdude1.png"
+
 
     '''#}-----------------------------------------------------------------------------------------------#'''
 '''}-----------------------------------------------------------------------------------------------------'''

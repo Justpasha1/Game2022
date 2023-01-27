@@ -22,7 +22,7 @@ mixer.music.load(os.path.abspath(__file__ + "/..") + '\\sounds\\mainmenuost.wav'
 menu = None
 clock = pygame.time.Clock()
 mouse_position = 1
-scene = 8
+scene = 1
 page = 1
 helppage = 1
 game = True
@@ -326,13 +326,24 @@ while game:
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
+        """--------------------------------------Stay_Enemys---------------------------------------------"""
         for stay_enemy in chonkys_1:
-            stay_enemy.damage(mainchar, stay_enemy)
+            stay_enemy.damage(mainchar)
             stay_enemy.show_image(screen)
+
+        """----------------------------------------MOVE_Enemys-------------------------------------------"""
         for enemy in enemys_1:
             enemy.move()
-            enemy.damage(mainchar, enemy)
+            enemy.damage(mainchar)
             enemy.show_image(screen)
+
+        """--------------------------------------Shoot_Enemys--------------------------------------------"""
+        for shoot_enemy in shoot_enemys_1:
+            shoot_enemy.animete_shoot(screen, mainchar, list_level_1)
+            shoot_enemy.show_image(screen)
+            
+        
+        """----------------------------------------Mainchar----------------------------------------------"""
         if mainchar.X_sprite >= 1050:
             mainchar.Y_sprite = 432
             mainchar.X_sprite = 20
@@ -341,7 +352,7 @@ while game:
             mainchar.X_sprite = 900
             mainchar.Y_sprite = 720 - 27*3
             scene = 2
-        if mainchar.hp <= 0:
+        if mainchar.hp == 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -359,14 +370,29 @@ while game:
         for i in list_ores2:
             if i.X > -100:
                 i.show_image(screen)
+        """--------------------------------------Stay_Enemys---------------------------------------------"""
+        for stay_enemy in chonkys_2:
+            stay_enemy.damage(mainchar)
+            stay_enemy.show_image(screen)
+
+        """----------------------------------------MOVE_Enemys-------------------------------------------"""
+        for enemy in enemys_2:
+            enemy.move()
+            enemy.damage(mainchar)
+            enemy.show_image(screen)
+
+        # """--------------------------------------Shoot_Enemys--------------------------------------------"""
+        # for shoot_enemy in shoot_enemys_2:
+        #     shoot_enemy.animete_shoot(screen, mainchar, list_level_1)
+        #     shoot_enemy.show_image(screen)
+            
+        
+        """----------------------------------------Mainchar----------------------------------------------"""
         mainchar.move_character(list_level_2,walk_sound)
         mainchar.ores_collision(list_ores2,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        for stay_enemy in chonkys_2:
-            stay_enemy.damage(mainchar, stay_enemy)
-            stay_enemy.show_image(screen)
         if mainchar.X_sprite <= 15:
             mainchar.X_sprite = 1041
             mainchar.Y_sprite = 420
@@ -380,7 +406,7 @@ while game:
             mainchar.X_sprite = 48
             mainchar.Y_sprite = 39
             scene = 8
-        if mainchar.hp <= 0:
+        if mainchar.hp == 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -398,14 +424,30 @@ while game:
         for i in list_ores3:
             if i.X > -100:
                 i.show_image(screen)
+
+        """--------------------------------------Stay_Enemys---------------------------------------------"""
+        for stay_enemy in chonkys_3:
+            stay_enemy.damage(mainchar)
+            stay_enemy.show_image(screen)
+
+        """----------------------------------------MOVE_Enemys-------------------------------------------"""
+        for enemy in enemys_3:
+            enemy.move()
+            enemy.damage(mainchar)
+            enemy.show_image(screen)
+
+        # """--------------------------------------Shoot_Enemys--------------------------------------------"""
+        # for shoot_enemy in shoot_enemys_3:
+        #     shoot_enemy.animete_shoot(screen, mainchar, list_level_1)
+        #     shoot_enemy.show_image(screen)
+            
+
+        """----------------------------------------Mainchar----------------------------------------------"""
         mainchar.move_character(list_level_3,walk_sound)
         mainchar.ores_collision(list_ores3,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        for stay_enemy in chonkys_3:
-            stay_enemy.damage(mainchar, stay_enemy)
-            stay_enemy.show_image(screen)
         if mainchar.Y_sprite <= 14:
             mainchar.X_sprite = 930
             mainchar.Y_sprite = 663
@@ -418,7 +460,7 @@ while game:
             mainchar.X_sprite = 1047
             mainchar.Y_sprite = 150
             scene = 9
-        if mainchar.hp <= 0:
+        if mainchar.hp == 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -436,14 +478,30 @@ while game:
         for i in list_ores4:
             if i.X > -100:
                 i.show_image(screen)
+
+        
+        """--------------------------------------Stay_Enemys---------------------------------------------"""
+        for stay_enemy in chonkys_4:
+            stay_enemy.damage(mainchar)
+            stay_enemy.show_image(screen)
+
+        """----------------------------------------MOVE_Enemys-------------------------------------------"""
+        for enemy in enemys_4:
+            enemy.move()
+            enemy.damage(mainchar)
+            enemy.show_image(screen)
+
+        # """--------------------------------------Shoot_Enemys--------------------------------------------"""
+        # for shoot_enemy in shoot_enemys_4:
+        #     shoot_enemy.animete_shoot(screen, mainchar, list_level_1)
+        #     shoot_enemy.show_image(screen)
+            
+        """----------------------------------------Mainchar----------------------------------------------"""
         mainchar.move_character(list_level_4,walk_sound)
         mainchar.ores_collision(list_ores4,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        for stay_enemy in chonkys_4:
-            stay_enemy.damage(mainchar, stay_enemy)
-            stay_enemy.show_image(screen)
         if mainchar.X_sprite <= 12:
             mainchar.X_sprite = 1044
             mainchar.Y_sprite = 663
@@ -452,7 +510,7 @@ while game:
             mainchar.X_sprite = 405
             mainchar.Y_sprite = 666
             scene = 8
-        if mainchar.hp <= 0:
+        if mainchar.hp == 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -470,18 +528,28 @@ while game:
         for i in list_ores5:
             if i.X > -100:
                 i.show_image(screen)
+        """--------------------------------------Stay_Enemys---------------------------------------------"""
+        for stay_enemy in chonkys_5:
+            stay_enemy.damage(mainchar)
+            stay_enemy.show_image(screen)
+
+        """----------------------------------------MOVE_Enemys-------------------------------------------"""
+        for enemy in enemys_5:
+            enemy.move()
+            enemy.damage(mainchar)
+            enemy.show_image(screen)
+
+        # """--------------------------------------Shoot_Enemys--------------------------------------------"""
+        # for shoot_enemy in shoot_enemys_5:
+        #     shoot_enemy.animete_shoot(screen, mainchar, list_level_1)
+        #     shoot_enemy.show_image(screen)
+
+        """----------------------------------------Mainchar----------------------------------------------"""
         mainchar.move_character(list_level_5,walk_sound)
         mainchar.ores_collision(list_ores5,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        for stay_enemy in chonkys_5:
-            stay_enemy.damage(mainchar, stay_enemy)
-            stay_enemy.show_image(screen)
-        for enemy in enemys_5:
-            enemy.move()
-            enemy.damage(mainchar, enemy)
-            enemy.show_image(screen)
         if mainchar.X_sprite <=15:
             mainchar.X_sprite = 1059
             mainchar.Y_sprite = 30
@@ -490,7 +558,7 @@ while game:
             mainchar.X_sprite = 302
             mainchar.Y_sprite = 21
             scene = 7
-        if mainchar.hp <= 0:
+        if mainchar.hp == 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -508,18 +576,28 @@ while game:
         for i in list_ores6:
             if i.X > -100:
                 i.show_image(screen)
+        """--------------------------------------Stay_Enemys---------------------------------------------"""
+        for stay_enemy in chonkys_6:
+            stay_enemy.damage(mainchar)
+            stay_enemy.show_image(screen)
+
+        """----------------------------------------MOVE_Enemys-------------------------------------------"""
+        for enemy in enemys_6:
+            enemy.move()
+            enemy.damage(mainchar)
+            enemy.show_image(screen)
+
+        # """--------------------------------------Shoot_Enemys--------------------------------------------"""
+        # for shoot_enemy in shoot_enemys_6:
+        #     shoot_enemy.animete_shoot(screen, mainchar, list_level_1)
+        #     shoot_enemy.show_image(screen)
+
+        """----------------------------------------Mainchar----------------------------------------------"""
         mainchar.move_character(list_level_6,walk_sound)
         mainchar.ores_collision(list_ores6,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        for stay_enemy in chonkys_6:
-            stay_enemy.damage(mainchar, stay_enemy)
-            stay_enemy.show_image(screen)
-        for enemy in enemys_6:
-            enemy.move()
-            enemy.damage(mainchar, enemy)
-            enemy.show_image(screen)
         if mainchar.X_sprite >= 1074:
             mainchar.X_sprite = 42
             mainchar.Y_sprite = 144
@@ -528,7 +606,7 @@ while game:
             mainchar.X_sprite = 828
             mainchar.Y_sprite = 61
             scene = 10
-        if mainchar.hp <= 0:
+        if mainchar.hp == 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -546,18 +624,29 @@ while game:
         for i in list_ores7:
             if i.X > -100:
                 i.show_image(screen)
+        
+        """--------------------------------------Stay_Enemys---------------------------------------------"""
+        for stay_enemy in chonkys_7:
+            stay_enemy.damage(mainchar)
+            stay_enemy.show_image(screen)
+
+        """----------------------------------------MOVE_Enemys-------------------------------------------"""
+        for enemy in enemys_7:
+            enemy.move()
+            enemy.damage(mainchar)
+            enemy.show_image(screen)
+
+        # """--------------------------------------Shoot_Enemys--------------------------------------------"""
+        # for shoot_enemy in shoot_enemys_7:
+        #     shoot_enemy.animete_shoot(screen, mainchar, list_level_1)
+        #     shoot_enemy.show_image(screen)
+
+        """----------------------------------------Mainchar----------------------------------------------"""
         mainchar.move_character(list_level_7,walk_sound)
         mainchar.ores_collision(list_ores7,orespickup)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        for stay_enemy in chonkys_7:
-            stay_enemy.damage(mainchar, stay_enemy)
-            stay_enemy.show_image(screen)
-        for enemy in enemys_7:
-            enemy.move()
-            enemy.damage(mainchar, enemy)
-            enemy.show_image(screen)
         if mainchar.Y_sprite <= 6:
             mainchar.X_sprite = 792
             mainchar.Y_sprite = 663
@@ -566,7 +655,7 @@ while game:
         if mainchar.X_sprite>= 1075:
             mainchar.X_sprite = 50
             scene = 12
-        if mainchar.hp <= 0:
+        if mainchar.hp == 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -581,17 +670,28 @@ while game:
         kywshbg.show_image(screen)
         for i in list_level_8:
             i.show_image(screen)
+
+        """--------------------------------------Stay_Enemys---------------------------------------------"""
+        for stay_enemy in chonkys_8:
+            stay_enemy.damage(mainchar)
+            stay_enemy.show_image(screen)
+
+        """----------------------------------------MOVE_Enemys-------------------------------------------"""
+        for enemy in enemys_8:
+            enemy.move()
+            enemy.damage(mainchar)
+            enemy.show_image(screen)
+
+        # """--------------------------------------Shoot_Enemys--------------------------------------------"""
+        # for shoot_enemy in shoot_enemys_8:
+        #     shoot_enemy.animete_shoot(screen, mainchar, list_level_1)
+        #     shoot_enemy.show_image(screen)
+
+        """----------------------------------------Mainchar----------------------------------------------"""
         mainchar.move_character(list_level_8,walk_sound)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        for stay_enemy in chonkys_8:
-            stay_enemy.damage(mainchar, stay_enemy)
-            stay_enemy.show_image(screen)
-        for enemy in enemys_8:
-            enemy.move()
-            enemy.damage(mainchar, enemy)
-            enemy.show_image(screen)
         if mainchar.X_sprite <= 20:
             mainchar.X_sprite = 1050
             scene = 10
@@ -604,7 +704,7 @@ while game:
             scene = 2
             ost = True
             caveost.stop()
-        if mainchar.hp <= 0:
+        if mainchar.hp == 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -613,17 +713,28 @@ while game:
         kywshbg.show_image(screen)
         for i in list_level_9:
             i.show_image(screen)
+
+        """--------------------------------------Stay_Enemys---------------------------------------------"""
+        for stay_enemy in chonkys_9:
+            stay_enemy.damage(mainchar)
+            stay_enemy.show_image(screen)
+
+        """----------------------------------------MOVE_Enemys-------------------------------------------"""
+        for enemy in enemys_9:
+            enemy.move()
+            enemy.damage(mainchar)
+            enemy.show_image(screen)
+
+        # """--------------------------------------Shoot_Enemys--------------------------------------------"""
+        # for shoot_enemy in shoot_enemys_9:
+        #     shoot_enemy.animete_shoot(screen, mainchar, list_level_1)
+        #     shoot_enemy.show_image(screen)
+
+        """----------------------------------------Mainchar----------------------------------------------"""
         mainchar.move_character(list_level_9,walk_sound)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        for stay_enemy in chonkys_9:
-            stay_enemy.damage(mainchar, stay_enemy)
-            stay_enemy.show_image(screen)
-        for enemy in enemys_9:
-            enemy.move()
-            enemy.damage(mainchar, enemy)
-            enemy.show_image(screen)
         if mainchar.X_sprite <= 20:
             mainchar.X_sprite = 1050
             scene = 12
@@ -636,7 +747,7 @@ while game:
             scene = 2
             ost = True
             caveost.stop()
-        if mainchar.hp <= 0:
+        if mainchar.hp == 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -645,17 +756,28 @@ while game:
         kywshbg.show_image(screen)
         for i in list_level_10:
             i.show_image(screen)
+        
+        """--------------------------------------Stay_Enemys---------------------------------------------"""
+        for stay_enemy in chonkys_10:
+            stay_enemy.damage(mainchar)
+            stay_enemy.show_image(screen)
+
+        """----------------------------------------MOVE_Enemys-------------------------------------------"""
+        for enemy in enemys_10:
+            enemy.move()
+            enemy.damage(mainchar)
+            enemy.show_image(screen)
+
+        # """--------------------------------------Shoot_Enemys--------------------------------------------"""
+        # for shoot_enemy in shoot_enemys_10:
+        #     shoot_enemy.animete_shoot(screen, mainchar, list_level_1)
+        #     shoot_enemy.show_image(screen)
+
+        """----------------------------------------Mainchar----------------------------------------------"""
         mainchar.move_character(list_level_10,walk_sound)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        for stay_enemy in chonkys_10:
-            stay_enemy.damage(mainchar, stay_enemy)
-            stay_enemy.show_image(screen)
-        for enemy in enemys_10:
-            enemy.move()
-            enemy.damage(mainchar, enemy)
-            enemy.show_image(screen)
         if mainchar.X_sprite <= 20:
             mainchar.X_sprite = 1050
             scene = 13
@@ -668,7 +790,7 @@ while game:
             scene = 2
             ost = True
             caveost.stop()
-        if mainchar.hp <= 0:
+        if mainchar.hp == 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -676,17 +798,28 @@ while game:
         kywshbg.show_image(screen)
         for i in list_level_11:
             i.show_image(screen)
+        
+        """--------------------------------------Stay_Enemys---------------------------------------------"""
+        for stay_enemy in chonkys_11:
+            stay_enemy.damage(mainchar)
+            stay_enemy.show_image(screen)
+
+        """----------------------------------------MOVE_Enemys-------------------------------------------"""
+        for enemy in enemys_11:
+            enemy.move()
+            enemy.damage(mainchar)
+            enemy.show_image(screen)
+
+        # """--------------------------------------Shoot_Enemys--------------------------------------------"""
+        # for shoot_enemy in shoot_enemys_11:
+        #     shoot_enemy.animete_shoot(screen, mainchar, list_level_1)
+        #     shoot_enemy.show_image(screen)
+
+        """----------------------------------------Mainchar----------------------------------------------"""
         mainchar.move_character(list_level_11,walk_sound)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        for stay_enemy in chonkys_11:
-            stay_enemy.damage(mainchar, stay_enemy)
-            stay_enemy.show_image(screen)
-        for enemy in enemys_11:
-            enemy.move()
-            enemy.damage(mainchar, enemy)
-            enemy.show_image(screen)
         if mainchar.X_sprite <= 20:
             mainchar.X_sprite = 1050
             scene = 14
@@ -699,7 +832,7 @@ while game:
             scene = 2
             ost = True
             caveost.stop()
-        if mainchar.hp <= 0:
+        if mainchar.hp == 0:
             scene = 11
             ost = True
             caveost.stop()
@@ -708,17 +841,27 @@ while game:
         kywshbg.show_image(screen)
         for i in list_level_12:
             i.show_image(screen)
+        """--------------------------------------Stay_Enemys---------------------------------------------"""
+        for stay_enemy in chonkys_12:
+            stay_enemy.damage(mainchar)
+            stay_enemy.show_image(screen)
+
+        """----------------------------------------MOVE_Enemys-------------------------------------------"""
+        for enemy in enemys_12:
+            enemy.move()
+            enemy.damage(mainchar)
+            enemy.show_image(screen)
+
+        # """--------------------------------------Shoot_Enemys--------------------------------------------"""
+        # for shoot_enemy in shoot_enemys_12:
+        #     shoot_enemy.animete_shoot(screen, mainchar, list_level_1)
+        #     shoot_enemy.show_image(screen)
+
+        """----------------------------------------Mainchar----------------------------------------------"""
         mainchar.move_character(list_level_12,walk_sound)
         mainchar.show_hp(screen)
         rope.show_image(screen)
         mainchar.show_image(screen)
-        for stay_enemy in chonkys_12:
-            stay_enemy.damage(mainchar, stay_enemy)
-            stay_enemy.show_image(screen)
-        for enemy in enemys_12:
-            enemy.move()
-            enemy.damage(mainchar, enemy)
-            enemy.show_image(screen)
         if mainchar.Y_sprite >= 720:
             mainchar.Y_sprite = 2
             scene = 17
@@ -728,7 +871,7 @@ while game:
             scene = 2
             ost = True
             caveost.stop()
-        if mainchar.hp <= 0:
+        if mainchar.hp == 0:
             scene = 11
             ost = True
             caveost.stop()
